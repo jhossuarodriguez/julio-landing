@@ -13,6 +13,10 @@
   --color-linen: #f9f1e7;
   --color-apricot: #e08f62;
   --color-terracotta: #cc7353;
+  /* Variantes accesibles (≥4,5:1) para texto pequeño */
+  --color-terracotta-700: #a8512f;
+  --color-sage-300: #b2bf9c;
+  --color-apricot-300: #e9a882;
   --color-clay: #86563a;
   --color-cocoa: #5b3a2b;
 

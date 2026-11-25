@@ -21,11 +21,11 @@ export const site = {
   name: "Julio Cesar Sánchez Medina",
   shortName: "Julio Cesar Sánchez",
   /** Variantes del nombre usadas en otros perfiles (p. ej. Medium) — ayudan a Google a unir la identidad */
-  alternateNames: ["Julio Cesar Sánchez", "Julio Sánchez Medina", "Julio Sanchez Medina"],
+  alternateNames: ["Julio Cesar Sánchez", "Julio Sánchez", "Julio Sánchez Medina", "Julio Sanchez Medina"],
   role: "Psicólogo clínico",
   /** Cómo se presenta Julio (y cómo lo buscan): se usan en textos y datos estructurados */
   roles: ["Psicólogo clínico", "Psicoterapeuta", "Terapeuta de pareja", "Terapeuta sexual", "Sexólogo"],
-  title: "Psicólogo y Terapeuta de Pareja en Santo Domingo · Julio Sánchez",
+  title: "Psicólogo y Psicoterapeuta en Santo Domingo · Julio Sánchez",
   description:
     "Psicólogo clínico y psicoterapeuta en Santo Domingo. Terapia individual, de pareja y sexual con enfoque sistémico breve. Agenda tu cita por WhatsApp.",
   locale: "es_DO",

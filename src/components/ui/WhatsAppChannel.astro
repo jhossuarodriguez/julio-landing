@@ -12,6 +12,9 @@ import { site } from "@/config/site";
 
 <a
   id="whatsapp-channel"
+  data-hidden="true"
+  aria-hidden="true"
+  tabindex="-1"
   href={site.social.whatsappChannel}
   target="_blank"
   rel="noopener noreferrer"
@@ -25,33 +28,35 @@ import { site } from "@/config/site";
     <Icon name="whatsapp" class="size-6" />
   </span>
   <span class="hidden flex-col text-left leading-tight sm:flex">
-    <span class="text-[0.625rem] tracking-[0.2em] text-sage uppercase">Canal de WhatsApp</span>
+    <span class="text-[0.625rem] tracking-[0.2em] text-sage-300 uppercase">Canal de WhatsApp</span>
     <span class="text-sm font-medium whitespace-nowrap">Únete a nuestro canal</span>
   </span>
 </a>
 
 <script>
   const btn = document.getElementById("whatsapp-channel")!;
-  const agenda = document.getElementById("agenda");
-  let agendaVisible = false;
+  // Secciones donde el botón estorba: las tarjetas de reserva y el bloque de contacto
+  const zones = ["agenda", "contacto"].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+  const visible = new Set<Element>();
 
   // Visible solo después de pasar el hero (no tapa su contenido) y fuera de "Agenda tu cita"
   const update = () => {
-    const hide = window.scrollY < window.innerHeight * 0.6 || agendaVisible;
+    const hide = window.scrollY < window.innerHeight * 0.6 || visible.size > 0;
     btn.dataset.hidden = String(hide);
     btn.tabIndex = hide ? -1 : 0;
     btn.setAttribute("aria-hidden", String(hide));
   };
 
-  if (agenda && "IntersectionObserver" in window) {
-    new IntersectionObserver(
-      ([entry]) => {
-        agendaVisible = entry.isIntersecting;
+  if (zones.length && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) e.isIntersecting ? visible.add(e.target) : visible.delete(e.target);
         update();
       },
       // Solo cuenta si la agenda ocupa el 30 % inferior de la pantalla (donde vive el botón)
       { rootMargin: "-70% 0px 0px 0px" },
-    ).observe(agenda);
+    );
+    zones.forEach((z) => io.observe(z));
   }
   window.addEventListener("scroll", update, { passive: true });
   update();

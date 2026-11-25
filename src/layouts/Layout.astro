@@ -6,6 +6,8 @@ import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
 import "@/styles/global.css";
 import { site } from "@/config/site";
+import { getImage } from "astro:assets";
+import retrato from "@/assets/images/julio-retrato.png";
 import { buildJsonLd } from "@/lib/schema";
 import { getArticles, ARTICLES_SHOWN } from "@/lib/medium";
 // Fuente de los titulares (H1 = LCP): se precarga para no retrasar el primer pintado
@@ -20,6 +22,10 @@ interface Props {
   noindex?: boolean;
   /** Nodos JSON-LD adicionales de la página (se añaden al @graph común) */
   schema?: Record<string, unknown>[];
+  /** @id de la entidad principal de la página (p. ej. su Service) */
+  mainEntityId?: string;
+  /** @id del BreadcrumbList de la página */
+  breadcrumbId?: string;
 }
 
 const {
@@ -28,21 +34,28 @@ const {
   ogImage = "/og-image.jpg",
   noindex = false,
   schema = [],
+  mainEntityId,
+  breadcrumbId,
 } = Astro.props;
 
 // URLs absolutas: solo existen cuando `site` (SITE_URL) está configurado en astro.config.mjs
 const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
-const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : null;
+const canonical = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site).href : null;
 const ogImageUrl = abs(ogImage);
 const ogImageAlt = `${site.name}, ${site.role.toLowerCase()} en Santo Domingo`;
 
 // Datos estructurados generados desde los mismos datos que muestra la página
 const featuredArticles = (await getArticles()).slice(0, ARTICLES_SHOWN);
+// Retrato de Julio en JPG (formato universal para buscadores) para Person.image
+const portrait = await getImage({ src: retrato, width: 600, format: "jpg", quality: 80 });
 const jsonLd = buildJsonLd({
   abs,
   pageUrl: canonical ?? abs(Astro.url.pathname),
   pageTitle: title,
   imageUrl: ogImageUrl,
+  personImageUrl: abs(portrait.src),
+  mainEntityId,
+  breadcrumbId,
   articles: featuredArticles,
 });
 jsonLd["@graph"].push(...(schema as any[]));

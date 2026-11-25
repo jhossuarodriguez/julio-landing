@@ -44,6 +44,8 @@ const fmtDate = (iso: string) =>
 
 // Datos estructurados de la página: el servicio y las migas de pan
 const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
+const serviceId = abs(`${service.path}#servicio`);
+const breadcrumbId = abs(`${service.path}#migas`);
 const santoDomingo = {
   "@type": "City",
   name: "Santo Domingo",
@@ -52,20 +54,17 @@ const santoDomingo = {
 const schema = [
   {
     "@type": "Service",
-    "@id": abs(`${service.path}#servicio`),
+    "@id": serviceId,
     name: service.title,
     serviceType: "Psicoterapia",
     description: page.description,
     url: abs(service.path),
     provider: { "@id": abs("/#persona") },
     areaServed: santoDomingo,
-    availableChannel: {
-      "@type": "ServiceChannel",
-      name: "Presencial y online, coordinado a través de los centros asociados",
-    },
   },
   {
     "@type": "BreadcrumbList",
+    "@id": breadcrumbId,
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Inicio", item: abs("/") },
       { "@type": "ListItem", position: 2, name: service.title, item: abs(service.path) },
@@ -74,12 +73,18 @@ const schema = [
 ];
 ---
 
-<Layout title={page.seoTitle} description={page.description} schema={schema}>
+<Layout
+  title={page.seoTitle}
+  description={page.description}
+  schema={schema}
+  mainEntityId={serviceId}
+  breadcrumbId={breadcrumbId}
+>
   <Header bookingHref="#agenda" />
   <main id="contenido">
     <!-- Encabezado -->
     <section class="relative isolate overflow-hidden bg-forest text-linen">
-      <BgTexture class="-z-20" eager />
+      <BgTexture class="-z-20" eager lowPriority={false} />
       <div
         class="container-page grid items-center gap-12 pt-32 pb-16 md:pt-36 lg:grid-cols-[1.2fr_0.8fr] lg:gap-16 lg:pb-24"
       >
@@ -92,9 +97,10 @@ const schema = [
             </ol>
           </nav>
           <h1 class="mt-4">
-            <span class="eyebrow block leading-relaxed tracking-[0.22em] text-sage">
+            <span class="eyebrow block leading-relaxed tracking-[0.22em] text-sage-300">
               {site.role} · Presencial y online
             </span>
+            {" "}
             <span class="mt-5 block font-display text-[2.5rem] leading-[1.08] text-cream sm:text-5xl lg:text-6xl">
               {page.h1}
             </span>
@@ -129,7 +135,7 @@ const schema = [
     <section class="py-20 sm:py-28">
       <div class="container-page grid gap-12 lg:grid-cols-[0.9fr_1.1fr]">
         <div class="reveal">
-          <p class="eyebrow text-terracotta">¿Cuándo puede ayudarte?</p>
+          <p class="eyebrow text-terracotta-700">¿Cuándo puede ayudarte?</p>
           <h2 class="mt-5 font-display text-3xl leading-tight text-forest sm:text-4xl">
             Motivos frecuentes de consulta
           </h2>
@@ -139,7 +145,7 @@ const schema = [
           {
             page.when.map((item) => (
               <li class="flex items-start gap-4 rounded-2xl border border-forest/10 bg-white/60 px-5 py-4">
-                <Icon name="check" class="mt-0.5 size-5 shrink-0 text-terracotta" strokeWidth={2} />
+                <Icon name="check" class="mt-0.5 size-5 shrink-0 text-terracotta-700" strokeWidth={2} />
                 <span class="leading-relaxed text-forest/85">{item}</span>
               </li>
             ))
@@ -152,7 +158,7 @@ const schema = [
     <section class="bg-white/55 py-20 sm:py-28">
       <div class="container-page grid gap-12 lg:grid-cols-[1.1fr_0.9fr]">
         <div class="reveal">
-          <p class="eyebrow text-terracotta">Cómo trabajo</p>
+          <p class="eyebrow text-terracotta-700">Cómo trabajo</p>
           <h2 class="mt-5 font-display text-3xl leading-tight text-forest sm:text-4xl">
             Enfoque sistémico breve, orientado a soluciones
           </h2>
@@ -161,7 +167,7 @@ const schema = [
           </div>
         </div>
         <aside class="reveal self-start rounded-[2rem] bg-forest p-7 text-linen sm:p-9" aria-label="Formación relacionada">
-          <p class="eyebrow text-sage">Formación relacionada</p>
+          <p class="eyebrow text-sage-300">Formación relacionada</p>
           <p class="mt-4 font-display text-2xl text-cream">{site.name}</p>
           <ul class="mt-6 space-y-4">
             {
@@ -180,7 +186,7 @@ const schema = [
             <span>Exequátur {credentials.exequatur}</span>
             <span>CODOPSI {credentials.codopsi}</span>
           </p>
-          <a href="/#sobre-mi" class="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-apricot hover:text-linen">
+          <a href="/#sobre-mi" class="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-apricot-300 hover:text-linen">
             Ver formación completa
             <Icon name="arrow" class="size-4" />
           </a>
@@ -192,7 +198,7 @@ const schema = [
     <section class="py-20 sm:py-28">
       <div class="container-page">
         <div class="reveal max-w-2xl">
-          <p class="eyebrow text-terracotta">Paso a paso</p>
+          <p class="eyebrow text-terracotta-700">Paso a paso</p>
           <h2 class="mt-5 font-display text-3xl leading-tight text-forest sm:text-4xl">Cómo es el proceso</h2>
         </div>
         <ol class="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -225,7 +231,7 @@ const schema = [
     <section id="preguntas" class="bg-white/55 py-20 sm:py-28">
       <div class="container-page max-w-3xl">
         <div class="reveal">
-          <p class="eyebrow text-terracotta">Preguntas frecuentes</p>
+          <p class="eyebrow text-terracotta-700">Preguntas frecuentes</p>
           <h2 class="mt-5 font-display text-3xl leading-tight text-forest sm:text-4xl">Resolvemos tus dudas</h2>
         </div>
         <div class="reveal mt-10 divide-y divide-forest/10 border-y border-forest/10">
@@ -252,7 +258,7 @@ const schema = [
           <div class="container-page">
             <div class="reveal flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <div>
-                <p class="eyebrow text-terracotta">Lecturas recomendadas</p>
+                <p class="eyebrow text-terracotta-700">Lecturas recomendadas</p>
                 <h2 class="mt-5 font-display text-3xl leading-tight text-forest sm:text-4xl">Artículos sobre la vida en pareja</h2>
               </div>
               <a href={site.social.medium} target="_blank" rel="noopener noreferrer" class="btn-outline-dark self-start md:self-auto">
@@ -272,7 +278,7 @@ const schema = [
                     <span class="text-xs tracking-[0.2em] text-olive uppercase">
                       <time datetime={a.date}>{fmtDate(a.date)}</time> · {a.readingMinutes} min
                     </span>
-                    <span class="mt-2 font-display text-xl leading-snug text-forest group-hover:text-terracotta">{a.title}</span>
+                    <span class="mt-2 font-display text-xl leading-snug text-forest group-hover:text-terracotta-700">{a.title}</span>
                     <span class="mt-2 line-clamp-2 text-sm leading-relaxed text-forest/70">{a.excerpt}</span>
                   </a>
                 </li>
@@ -297,7 +303,7 @@ const schema = [
                   href={o.path}
                   class="group flex h-full flex-col rounded-3xl border border-forest/10 bg-white/60 p-7 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10"
                 >
-                  <span class="font-display text-2xl text-forest group-hover:text-terracotta">{o.title}</span>
+                  <span class="font-display text-2xl text-forest group-hover:text-terracotta-700">{o.title}</span>
                   <span class="mt-2 flex-1 text-sm leading-relaxed text-forest/75">{o.text}</span>
                   <span class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-forest">
                     Saber más

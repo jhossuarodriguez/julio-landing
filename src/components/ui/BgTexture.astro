@@ -13,9 +13,11 @@ interface Props {
   class?: string;
   /** true solo si la textura está visible al cargar la página (Hero) */
   eager?: boolean;
+  /** Con `eager`, baja su prioridad para no competir con el LCP (H1). Pon false si la textura es el LCP. */
+  lowPriority?: boolean;
 }
 
-const { width = 1600, sizes = "100vw", class: className = "", eager = false } = Astro.props;
+const { width = 1600, sizes = "100vw", class: className = "", eager = false, lowPriority = true } = Astro.props;
 const widths = [480, 960, 1600].filter((w) => w <= width);
 ---
 
@@ -28,6 +30,6 @@ const widths = [480, 960, 1600].filter((w) => w <= width);
   sizes={sizes}
   class:list={["pointer-events-none absolute inset-0 size-full object-cover", className]}
   loading={eager ? "eager" : "lazy"}
-  fetchpriority={eager ? "low" : undefined}
+  fetchpriority={eager && lowPriority ? "low" : undefined}
   aria-hidden="true"
 />

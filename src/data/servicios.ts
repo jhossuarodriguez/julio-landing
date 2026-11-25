@@ -126,7 +126,8 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       modalityFaq,
       feesFaq,
     ],
-    whatsappMessage: "Hola, me gustaría agendar una cita de terapia sexual con el psicólogo Julio Cesar Sánchez.",
+    // Neutro a propósito: el mensaje lo leen recepciones de terceros y la página promete discreción
+    whatsappMessage: "Hola, me gustaría agendar una cita con el psicólogo Julio Cesar Sánchez.",
     image: "julio-de-pie",
     imageAlt: "Julio Cesar Sánchez Medina, psicólogo y terapeuta sexual en Santo Domingo",
   },
@@ -216,7 +217,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
 
   individual: {
     slug: "individual",
-    seoTitle: "Psicólogo en Santo Domingo · Terapia Individual · Julio Sánchez",
+    seoTitle: "Terapia Psicológica Individual en Santo Domingo · Julio Sánchez",
     description:
       "Terapia psicológica individual en Santo Domingo con un psicólogo clínico. Ansiedad, estrés, autoestima, duelo y relaciones. Presencial u online.",
     h1: "Terapia psicológica individual en Santo Domingo",

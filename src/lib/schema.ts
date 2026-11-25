@@ -16,6 +16,12 @@ type Options = {
   pageUrl: string;
   pageTitle: string;
   imageUrl: string;
+  /** Retrato de Julio (URL absoluta) para Person.image */
+  personImageUrl?: string;
+  /** Entidad principal de la página (p. ej. el Service en páginas de servicio) */
+  mainEntityId?: string;
+  /** @id del BreadcrumbList de la página, si lo tiene */
+  breadcrumbId?: string;
   articles: Article[];
 };
 
@@ -27,10 +33,9 @@ const slugify = (s: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, articles }: Options) {
+export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl, mainEntityId, breadcrumbId, articles }: Options) {
   const id = {
     site: abs("/#sitio"),
-    page: abs("/#pagina"),
     person: abs("/#persona"),
     service: abs("/#servicio"),
     blog: abs("/#blog"),
@@ -43,10 +48,12 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, articles }: Opt
   // Credenciales: solo lo confirmado por Julio en @/config/site
   const codopsi = {
     "@type": "Organization",
+    "@id": abs("/#codopsi"),
     name: "Colegio Dominicano de Psicólogos (CODOPSI)",
     address: { "@type": "PostalAddress", addressCountry: "DO" },
   };
-  const institutions = [...new Set(credentials.education.map((e) => e.institution))].map((name) => ({
+  const universities = credentials.education.filter((e) => e.kind !== "certificate").map((e) => e.institution);
+  const institutions = [...new Set(universities)].map((name) => ({
     "@type": "EducationalOrganization",
     name,
   }));
@@ -63,7 +70,7 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, articles }: Opt
       name: "Colegiatura en el Colegio Dominicano de Psicólogos",
       credentialCategory: "license",
       identifier: credentials.codopsi,
-      recognizedBy: codopsi,
+      recognizedBy: { "@id": codopsi["@id"] },
     },
     ...credentials.education.map((e) => ({
       "@type": "EducationalOccupationalCredential",
@@ -97,13 +104,15 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, articles }: Opt
       },
       {
         "@type": "WebPage",
-        "@id": id.page,
+        "@id": `${pageUrl}#pagina`,
         url: pageUrl,
         name: pageTitle,
         inLanguage: "es",
         isPartOf: { "@id": id.site },
         about: { "@id": id.person },
-        primaryImageOfPage: { "@type": "ImageObject", url: imageUrl },
+        ...(mainEntityId ? { mainEntity: { "@id": mainEntityId } } : {}),
+        ...(breadcrumbId ? { breadcrumb: { "@id": breadcrumbId } } : {}),
+        primaryImageOfPage: { "@type": "ImageObject", url: imageUrl, width: 1200, height: 630 },
       },
       {
         "@type": "Person",
@@ -113,7 +122,7 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, articles }: Opt
         jobTitle: site.role,
         description: site.description,
         url: abs("/"),
-        image: imageUrl,
+        image: personImageUrl ?? imageUrl,
         email: site.contact.email,
         telephone: e164(site.contact.phone),
         knowsLanguage: "es",
@@ -160,6 +169,8 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, articles }: Opt
             "@type": "Offer",
             itemOffered: {
               "@type": "Service",
+              "@id": abs(`${s.path}#servicio`),
+              url: abs(s.path),
               name: s.title,
               serviceType: "Psicoterapia",
               description: s.text,

@@ -81,12 +81,22 @@ Sin dominio, el build avisa y omite esas URLs en lugar de generar unas incorrect
 
 ## Publicar en Cloudflare
 
-**Cloudflare Pages (conectado a Git):** comando de build `pnpm build`, directorio de salida `dist`,
-variable de entorno `NODE_VERSION=22` (pnpm se detecta por `pnpm-lock.yaml` y la versión exacta por `packageManager`). `public/_headers` aplica cabeceras de seguridad (HSTS, CSP…) y caché,
-y `404.html` se sirve automáticamente con estado 404.
+Se publica como **Cloudflare Worker con static assets** (`wrangler.jsonc` sirve la carpeta `dist/`).
+En **Workers & Pages → Create → Import a repository**:
+
+| Campo | Valor |
+|---|---|
+| Build command | `pnpm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Variable de build | `NODE_VERSION` = `22` |
+
+El nombre del Worker en el panel debe ser **`julio-landing`** (igual que `name` en `wrangler.jsonc`).
+`public/_headers` aplica cabeceras de seguridad (HSTS, CSP…) y caché, y las rutas inexistentes
+devuelven `404.html` con estado 404. Para validar sin publicar: `pnpm wrangler deploy --dry-run`.
 
 En el panel de Cloudflare del dominio:
 - **SSL/TLS → Full (strict)** y **Always Use HTTPS** activado.
+- **Settings → Domains & Routes** del Worker: añadir `juliocesarsanchez.com` y `www.juliocesarsanchez.com`.
 - **Redirect Rule** `www.juliocesarsanchez.com/*` → `https://juliocesarsanchez.com/$1` (301).
 - Tras el primer deploy: enviar `https://juliocesarsanchez.com/sitemap-index.xml` en Google Search Console
   y Bing Webmaster Tools, y ejecutar `pnpm indexnow`.

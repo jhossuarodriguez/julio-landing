@@ -1,0 +1,18 @@
+// Configuración de Cloudflare Workers (static assets) para la landing.
+// El sitio es 100 % estático: Cloudflare sirve la carpeta dist/ generada por `pnpm build`.
+// Docs: https://developers.cloudflare.com/workers/static-assets/
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Debe coincidir con el nombre del Worker en el panel de Cloudflare
+  "name": "julio-landing",
+  "compatibility_date": "2026-11-25",
+  "assets": {
+    "directory": "./dist",
+    // Rutas inexistentes → dist/404.html con estado 404
+    "not_found_handling": "404-page",
+    "html_handling": "auto-trailing-slash"
+  },
+  // El dominio se conecta desde el panel (Settings → Domains & Routes)
+  "workers_dev": true,
+  "preview_urls": true
+}

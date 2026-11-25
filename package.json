@@ -25,7 +25,8 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.12",
     "@types/node": "^22.20.7",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "wrangler": "^4.168.0"
   },
   "packageManager": "pnpm@12.23.0"
 }

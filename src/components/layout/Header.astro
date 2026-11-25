@@ -2,6 +2,12 @@
 import Logo from "@/components/ui/Logo.astro";
 import Icon from "@/components/ui/Icon.astro";
 import { navLinks, BOOKING_HREF } from "@/config/site";
+
+interface Props {
+  /** Destino de "Agenda tu cita" (en páginas con su propia sección de reserva: "#agenda") */
+  bookingHref?: string;
+}
+const { bookingHref = BOOKING_HREF } = Astro.props;
 ---
 
 <header
@@ -21,7 +27,7 @@ import { navLinks, BOOKING_HREF } from "@/config/site";
           </a>
         ))
       }
-      <a href={BOOKING_HREF} class="btn-primary py-2.5">
+      <a href={bookingHref} class="btn-primary py-2.5">
         <Icon name="calendar" class="size-4" />
         Agenda tu cita
       </a>
@@ -49,7 +55,7 @@ import { navLinks, BOOKING_HREF } from "@/config/site";
           </a>
         ))
       }
-      <a href={BOOKING_HREF} class="btn-primary mt-4 w-full">
+      <a href={bookingHref} class="btn-primary mt-4 w-full">
         <Icon name="calendar" class="size-4" />
         Agenda tu cita
       </a>

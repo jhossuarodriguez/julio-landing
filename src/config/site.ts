@@ -87,19 +87,23 @@ export const bookingInfo = {
 export type ServiceSlug = "individual" | "pareja" | "sexual";
 
 /** Servicios (se muestran en "Servicios" y en los datos estructurados). */
-export const services: { slug: ServiceSlug; title: string; text: string }[] = [
+/** `path`: página propia del servicio (contenido en @/data/servicios). */
+export const services: { slug: ServiceSlug; path: string; title: string; text: string }[] = [
   {
     slug: "individual",
+    path: "/terapia-individual/",
     title: "Terapia individual",
     text: "Procesos para conocerte mejor, fortalecer tus recursos y construir la vida que deseas.",
   },
   {
     slug: "pareja",
+    path: "/terapia-de-pareja/",
     title: "Terapia de pareja",
     text: "Herramientas para mejorar la comunicación, resolver conflictos y fortalecer el vínculo.",
   },
   {
     slug: "sexual",
+    path: "/terapia-sexual/",
     title: "Terapia sexual",
     text: "Un espacio confiable para acompañarte a superar e integrar tus preocupaciones relacionadas con tu sexualidad, en pareja o de forma individual.",
   },

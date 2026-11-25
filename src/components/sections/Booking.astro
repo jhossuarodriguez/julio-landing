@@ -3,7 +3,13 @@ import { Image } from "astro:assets";
 import BgTexture from "@/components/ui/BgTexture.astro";
 import Icon from "@/components/ui/Icon.astro";
 import brainWhite from "@/assets/brand/brain-white.png";
-import { bookingCenters, bookingInfo, whatsappUrl, telUrl } from "@/config/site";
+import { bookingCenters, bookingInfo, whatsappUrl, telUrl, BOOKING_MESSAGE } from "@/config/site";
+
+interface Props {
+  /** Mensaje prellenado de WhatsApp (p. ej. específico de un servicio) */
+  message?: string;
+}
+const { message = BOOKING_MESSAGE } = Astro.props;
 
 const steps = [
   { n: "01", title: "Elige un centro", text: "Selecciona el lugar que te quede más cómodo." },
@@ -89,7 +95,7 @@ const steps = [
 
             <div class="flex flex-col justify-start gap-2.5 pt-7">
               <a
-                href={whatsappUrl(c.phone)}
+                href={whatsappUrl(c.phone, message)}
                 target="_blank"
                 rel="noopener noreferrer"
                 class="btn-primary w-full"

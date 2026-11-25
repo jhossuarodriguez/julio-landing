@@ -18,6 +18,8 @@ interface Props {
   ogImage?: string;
   /** Excluir de buscadores (p. ej. la página 404) */
   noindex?: boolean;
+  /** Nodos JSON-LD adicionales de la página (se añaden al @graph común) */
+  schema?: Record<string, unknown>[];
 }
 
 const {
@@ -25,6 +27,7 @@ const {
   description = site.description,
   ogImage = "/og-image.jpg",
   noindex = false,
+  schema = [],
 } = Astro.props;
 
 // URLs absolutas: solo existen cuando `site` (SITE_URL) está configurado en astro.config.mjs
@@ -42,6 +45,7 @@ const jsonLd = buildJsonLd({
   imageUrl: ogImageUrl,
   articles: featuredArticles,
 });
+jsonLd["@graph"].push(...(schema as any[]));
 ---
 
 <!doctype html>

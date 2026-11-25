@@ -1,6 +1,6 @@
 ---
 import Logo from "@/components/ui/Logo.astro";
-import { navLinks, site, BOOKING_HREF } from "@/config/site";
+import { navLinks, site, services, BOOKING_HREF } from "@/config/site";
 
 const year = new Date().getFullYear();
 ---
@@ -20,6 +20,16 @@ const year = new Date().getFullYear();
         ))
       }
       <a href={BOOKING_HREF} class="inline-flex min-h-11 items-center text-apricot hover:text-linen">Agenda tu cita</a>
+    </nav>
+
+    <nav aria-label="Servicios" class="-mt-6 flex flex-wrap justify-center gap-x-6 gap-y-1 text-sm text-cream/60">
+      {
+        services.map((sv) => (
+          <a href={sv.path} class="inline-flex min-h-11 items-center hover:text-linen">
+            {sv.title}
+          </a>
+        ))
+      }
     </nav>
 
     <p class="text-xs text-linen/65">© {year} {site.name}. Todos los derechos reservados.</p>

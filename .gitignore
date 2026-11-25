@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Claude Code (ajustes locales)
 .claude/settings.local.json
+
+# Informes de auditoría SEO (locales)
+juliocesarsanchez.com-audit/

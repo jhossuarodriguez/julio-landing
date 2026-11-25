@@ -20,6 +20,8 @@ if (!SITE_URL) {
 // https://astro.build/config
 export default defineConfig({
   site: SITE_URL || undefined,
+  // CSS en línea en el HTML: evita una petición bloqueante que retrasa el LCP (H1)
+  build: { inlineStylesheets: "always" },
   integrations: SITE_URL ? [sitemap({ filter: (page) => !page.includes("/404") })] : [],
   // Portadas de los artículos de Medium (se optimizan en el build)
   image: {

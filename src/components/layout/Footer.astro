@@ -14,14 +14,14 @@ const year = new Date().getFullYear();
     <nav aria-label="Pie de página" class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-cream/70">
       {
         navLinks.map((l) => (
-          <a href={l.href} class="py-1 hover:text-linen">
+          <a href={l.href} class="inline-flex min-h-11 items-center hover:text-linen">
             {l.label}
           </a>
         ))
       }
-      <a href={BOOKING_HREF} class="py-1 text-apricot hover:text-linen">Agenda tu cita</a>
+      <a href={BOOKING_HREF} class="inline-flex min-h-11 items-center text-apricot hover:text-linen">Agenda tu cita</a>
     </nav>
 
-    <p class="text-xs text-linen/45">© {year} {site.name}. Todos los derechos reservados.</p>
+    <p class="text-xs text-linen/65">© {year} {site.name}. Todos los derechos reservados.</p>
   </div>
 </footer>

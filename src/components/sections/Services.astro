@@ -1,27 +1,14 @@
 ---
 import Icon, { type IconName } from "@/components/ui/Icon.astro";
-import { BOOKING_HREF } from "@/config/site";
+import { BOOKING_HREF, services, type ServiceSlug } from "@/config/site";
 
-const services: { icon: IconName; title: string; text: string; accent: string }[] = [
-  {
-    icon: "psi",
-    title: "Terapia individual",
-    text: "Procesos para conocerte mejor, fortalecer tus recursos y construir la vida que deseas.",
-    accent: "bg-sage/25 text-forest",
-  },
-  {
-    icon: "heart",
-    title: "Terapia de pareja",
-    text: "Herramientas para mejorar la comunicación, resolver conflictos y fortalecer el vínculo.",
-    accent: "bg-apricot/20 text-terracotta",
-  },
-  {
-    icon: "flame",
-    title: "Terapia sexual",
-    text: "Un espacio confiable para acompañarte a superar e integrar tus preocupaciones relacionadas con tu sexualidad, en pareja o de forma individual.",
-    accent: "bg-terracotta/15 text-clay",
-  },
-];---
+// Textos en @/config/site (compartidos con los datos estructurados); aquí solo lo visual.
+const visual: Record<ServiceSlug, { icon: IconName; accent: string }> = {
+  individual: { icon: "psi", accent: "bg-sage/25 text-forest" },
+  pareja: { icon: "heart", accent: "bg-apricot/20 text-terracotta" },
+  sexual: { icon: "flame", accent: "bg-terracotta/15 text-clay" },
+};
+---
 
 <section id="servicios" class="bg-white/55 py-24 sm:py-32">
   <div class="container-page">
@@ -38,8 +25,8 @@ const services: { icon: IconName; title: string; text: string; accent: string }[
       {
         services.map((s) => (
           <article class="reveal group flex flex-col rounded-3xl border border-forest/10 bg-linen p-7 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10">
-            <span class:list={["inline-flex size-14 items-center justify-center rounded-2xl", s.accent]}>
-              <Icon name={s.icon} class="size-7" />
+            <span class:list={["inline-flex size-14 items-center justify-center rounded-2xl", visual[s.slug].accent]}>
+              <Icon name={visual[s.slug].icon} class="size-7" />
             </span>
             <h3 class="mt-6 font-display text-2xl text-forest">{s.title}</h3>
             <p class="mt-3 flex-1 text-sm leading-relaxed text-forest/75">{s.text}</p>

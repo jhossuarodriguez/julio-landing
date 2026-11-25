@@ -9,6 +9,9 @@ import { fetchFeed, parseFeed, type Article } from "@/lib/medium-feed";
 
 export type { Article };
 
+/** Cuántos artículos se destacan en la landing (y se describen en los datos estructurados). */
+export const ARTICLES_SHOWN = 4;
+
 let cache: Promise<Article[]> | undefined;
 
 export function getArticles(): Promise<Article[]> {

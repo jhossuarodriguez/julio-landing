@@ -6,6 +6,10 @@ import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
 import "@/styles/global.css";
 import { site } from "@/config/site";
+import { buildJsonLd } from "@/lib/schema";
+import { getArticles, ARTICLES_SHOWN } from "@/lib/medium";
+// Fuente de los titulares (H1 = LCP): se precarga para no retrasar el primer pintado
+import gildaWoff2 from "@fontsource/gilda-display/files/gilda-display-latin-400-normal.woff2?url";
 
 interface Props {
   title?: string;
@@ -29,36 +33,15 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : nu
 const ogImageUrl = abs(ogImage);
 const ogImageAlt = `${site.name}, ${site.role.toLowerCase()} en Santo Domingo`;
 
-const personId = abs("/#persona");
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "WebSite",
-      "@id": abs("/#sitio"),
-      url: abs("/"),
-      name: site.name,
-      inLanguage: "es",
-      publisher: { "@id": personId },
-    },
-    {
-      "@type": "Person",
-      "@id": personId,
-      name: site.name,
-      jobTitle: site.role,
-      description: site.description,
-      url: abs("/"),
-      image: ogImageUrl,
-      email: `mailto:${site.contact.email}`,
-      telephone: site.contact.phone,
-      knowsLanguage: "es",
-      knowsAbout: ["Psicoterapia", "Terapia individual", "Terapia de pareja", "Terapia sexual", "Salud mental"],
-      areaServed: { "@type": "City", name: "Santo Domingo", containedInPlace: { "@type": "Country", name: "República Dominicana" } },
-      address: { "@type": "PostalAddress", addressLocality: "Santo Domingo", addressCountry: "DO" },
-      sameAs: [site.social.medium, site.social.whatsappChannel],
-    },
-  ],
-};
+// Datos estructurados generados desde los mismos datos que muestra la página
+const featuredArticles = (await getArticles()).slice(0, ARTICLES_SHOWN);
+const jsonLd = buildJsonLd({
+  abs,
+  pageUrl: canonical ?? abs(Astro.url.pathname),
+  pageTitle: title,
+  imageUrl: ogImageUrl,
+  articles: featuredArticles,
+});
 ---
 
 <!doctype html>
@@ -71,6 +54,7 @@ const jsonLd = {
     {canonical && <link rel="canonical" href={canonical} />}
     {noindex && <meta name="robots" content="noindex, follow" />}
     <meta name="theme-color" content="#3f4537" />
+    <link rel="preload" href={gildaWoff2} as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <meta property="og:type" content="website" />

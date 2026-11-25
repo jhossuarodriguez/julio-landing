@@ -28,5 +28,6 @@ const widths = [480, 960, 1600].filter((w) => w <= width);
   sizes={sizes}
   class:list={["pointer-events-none absolute inset-0 size-full object-cover", className]}
   loading={eager ? "eager" : "lazy"}
+  fetchpriority={eager ? "low" : undefined}
   aria-hidden="true"
 />

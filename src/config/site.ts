@@ -14,9 +14,14 @@ export const whatsappUrl = (phone: string, message = BOOKING_MESSAGE) =>
 
 export const telUrl = (phone: string) => `tel:+${digitsOnly(phone)}`;
 
+/** Formato E.164 para datos estructurados: "+1 (809) 769-1361" → "+18097691361". */
+export const e164 = (phone: string) => `+${digitsOnly(phone)}`;
+
 export const site = {
   name: "Julio Cesar Sánchez Medina",
   shortName: "Julio Cesar Sánchez",
+  /** Variantes del nombre usadas en otros perfiles (p. ej. Medium) — ayudan a Google a unir la identidad */
+  alternateNames: ["Julio Cesar Sánchez", "Julio Sánchez Medina", "Julio Sanchez Medina"],
   role: "Psicoterapeuta",
   title: "Julio Cesar Sánchez Medina · Psicoterapeuta en Santo Domingo",
   description:
@@ -28,7 +33,7 @@ export const site = {
     whatsappChannel: "https://whatsapp.com/channel/0029VbCWN3L89inroLqmzc1C",
   },
   contact: {
-    email: "psi.juliosancez@gmail.com",
+    email: "psi.juliosanchez@gmail.com",
     phone: "+1 (809) 769-1361",
   },
 } as const;
@@ -45,9 +50,36 @@ export type BookingCenter = {
 
 /** Centros donde se puede agendar cita (botón "Agenda tu cita"). */
 export const bookingCenters: BookingCenter[] = [
-  { name: "Psicobienetar Centro Terapéutico", phone: "+1 (849) 629-1603", allowCalls: false },
+  { name: "Psicobienestar Centro Terapéutico", phone: "+1 (849) 629-1603", allowCalls: false },
   { name: "Centro Integral Lotus", label: "Centro Integral Lotus", phone: "+1 (809) 851-1386" },
   { name: "Mentalmente", label: "Mentalmente", phone: "+1 (829) 783-8519", allowCalls: false },
+];
+
+/** Modalidad y honorarios (se muestran en "Agenda tu cita" y en los datos estructurados). */
+export const bookingInfo = {
+  modality: "Sesiones presenciales y online, coordinadas a través de cada centro.",
+  fees: "Los honorarios y la facturación los gestiona cada centro: al escribir te informarán de tarifas y disponibilidad.",
+} as const;
+
+export type ServiceSlug = "individual" | "pareja" | "sexual";
+
+/** Servicios (se muestran en "Servicios" y en los datos estructurados). */
+export const services: { slug: ServiceSlug; title: string; text: string }[] = [
+  {
+    slug: "individual",
+    title: "Terapia individual",
+    text: "Procesos para conocerte mejor, fortalecer tus recursos y construir la vida que deseas.",
+  },
+  {
+    slug: "pareja",
+    title: "Terapia de pareja",
+    text: "Herramientas para mejorar la comunicación, resolver conflictos y fortalecer el vínculo.",
+  },
+  {
+    slug: "sexual",
+    title: "Terapia sexual",
+    text: "Un espacio confiable para acompañarte a superar e integrar tus preocupaciones relacionadas con tu sexualidad, en pareja o de forma individual.",
+  },
 ];
 
 export const navLinks = [

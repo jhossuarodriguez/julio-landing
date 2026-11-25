@@ -4,11 +4,11 @@ import Icon from "@/components/ui/Icon.astro";
 import BgTexture from "@/components/ui/BgTexture.astro";
 import markWhite from "@/assets/brand/logo-mark-white.png";
 import brainDark from "@/assets/brand/brain-dark.png";
-import { getArticles } from "@/lib/medium";
+import { getArticles, ARTICLES_SHOWN } from "@/lib/medium";
 import { site } from "@/config/site";
 
-/** Cuántos artículos se muestran en la landing (el primero va destacado). */
-const SHOWN = 4;
+/** Cuántos artículos se muestran (el primero va destacado): ver ARTICLES_SHOWN en @/lib/medium. */
+const SHOWN = ARTICLES_SHOWN;
 
 const all = await getArticles();
 
@@ -53,7 +53,7 @@ const fmtDate = (iso: string) =>
       <div class="max-w-2xl">
         <p class="eyebrow text-terracotta">Artículos</p>
         <h2 id="articulos-title" class="mt-5 font-display text-4xl leading-tight text-forest sm:text-5xl">
-          Reflexion para un bienetar en pareja
+          Reflexión para un bienestar en pareja
         </h2>
         <p class="mt-5 leading-relaxed font-light text-forest/75">
           Escribo sobre relaciones de pareja, sanación emocional y lo que observo en consulta, para que puedas

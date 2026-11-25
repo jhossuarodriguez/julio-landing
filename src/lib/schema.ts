@@ -4,10 +4,10 @@
  * desincronicen. Solo usa hechos visibles en la web: no añadir credenciales, reseñas ni
  * direcciones que no estén publicadas.
  *
- * Tipos: WebSite · WebPage · Person · ProfessionalService (+3 Service) · 3 Organization (centros)
+ * Tipos: WebSite · WebPage · Person (con credenciales) · ProfessionalService (+3 Service) · 3 Organization (centros)
  *        · Blog con BlogPosting (artículos de Medium).
  */
-import { site, services, bookingCenters, bookingInfo, e164 } from "@/config/site";
+import { site, services, bookingCenters, bookingInfo, credentials, e164 } from "@/config/site";
 import type { Article } from "@/lib/medium";
 
 type Options = {
@@ -40,6 +40,39 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, articles }: Opt
     name: "Santo Domingo",
     containedInPlace: { "@type": "Country", name: "República Dominicana" },
   };
+  // Credenciales: solo lo confirmado por Julio en @/config/site
+  const codopsi = {
+    "@type": "Organization",
+    name: "Colegio Dominicano de Psicólogos (CODOPSI)",
+    address: { "@type": "PostalAddress", addressCountry: "DO" },
+  };
+  const institutions = [...new Set(credentials.education.map((e) => e.institution))].map((name) => ({
+    "@type": "EducationalOrganization",
+    name,
+  }));
+  const credentialCategory = { degree: "degree", course: "course", certificate: "certificate" } as const;
+  const hasCredential = [
+    {
+      "@type": "EducationalOccupationalCredential",
+      name: "Exequátur para el ejercicio profesional de la psicología",
+      credentialCategory: "license",
+      identifier: credentials.exequatur,
+    },
+    {
+      "@type": "EducationalOccupationalCredential",
+      name: "Colegiatura en el Colegio Dominicano de Psicólogos",
+      credentialCategory: "license",
+      identifier: credentials.codopsi,
+      recognizedBy: codopsi,
+    },
+    ...credentials.education.map((e) => ({
+      "@type": "EducationalOccupationalCredential",
+      name: e.title,
+      credentialCategory: credentialCategory[e.kind],
+      recognizedBy: { "@type": "EducationalOrganization", name: e.institution },
+    })),
+  ];
+
   const centers = bookingCenters
     .filter((c) => c.name)
     .map((c) => ({
@@ -83,12 +116,29 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, articles }: Opt
         email: site.contact.email,
         telephone: e164(site.contact.phone),
         knowsLanguage: "es",
-        knowsAbout: ["Psicoterapia", ...services.map((s) => s.title), "Salud mental", "Educación emocional"],
-        hasOccupation: { "@type": "Occupation", name: site.role, occupationLocation: santoDomingo },
+        knowsAbout: [
+          "Psicología clínica",
+          "Psicoterapia",
+          ...services.map((s) => s.title),
+          "Terapia familiar",
+          "Sexología",
+          "Terapia sistémica breve",
+          "Psicoterapia de grupo",
+          "Salud mental",
+        ],
+        hasOccupation: {
+          "@type": "Occupation",
+          name: site.role,
+          alternateName: site.roles.filter((r) => r !== site.role),
+          occupationLocation: santoDomingo,
+        },
+        hasCredential,
+        alumniOf: institutions,
+        memberOf: codopsi,
         affiliation: centers.map((c) => ({ "@id": c["@id"] })),
         areaServed: santoDomingo,
         address: { "@type": "PostalAddress", addressLocality: "Santo Domingo", addressCountry: "DO" },
-        sameAs: [site.social.medium, site.social.whatsappChannel],
+        sameAs: [site.social.linkedin, site.social.medium, site.social.whatsappChannel],
       },
       {
         "@type": "ProfessionalService",

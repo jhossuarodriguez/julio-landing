@@ -4,7 +4,7 @@ import BgTexture from "@/components/ui/BgTexture.astro";
 import Icon from "@/components/ui/Icon.astro";
 import retrato from "@/assets/images/julio-retrato.png";
 import brainWhite from "@/assets/brand/brain-white.png";
-import { BOOKING_HREF } from "@/config/site";
+import { BOOKING_HREF, site } from "@/config/site";
 ---
 
 <section
@@ -24,9 +24,13 @@ import { BOOKING_HREF } from "@/config/site";
 
   <div class="container-page grid items-center gap-14 pt-32 pb-20 md:pt-40 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:pb-28">
     <div class="reveal">
-      <p class="eyebrow text-sage">Psicoterapeuta · Santo Domingo</p>
-      <h1 class="mt-6 font-display text-[2.75rem] leading-[1.05] text-cream sm:text-6xl lg:text-[4.1rem]">
-        Un espacio seguro para sanar, comprender y crecer.
+      <h1>
+        <span class="eyebrow block leading-relaxed tracking-[0.22em] text-sage">
+          Psicólogo clínico · Terapeuta de pareja · Santo Domingo
+        </span>
+        <span class="mt-6 block font-display text-[2.75rem] leading-[1.05] text-cream sm:text-6xl lg:text-[4.1rem]">
+          Un espacio seguro para sanar, comprender y crecer.
+        </span>
       </h1>
       <p class="mt-7 max-w-xl text-base leading-relaxed font-light text-linen/80 sm:text-lg">
         Acompaño a personas, parejas y familias en procesos de sanación emocional mediante psicoterapia basada en
@@ -73,7 +77,7 @@ import { BOOKING_HREF } from "@/config/site";
         class="absolute -bottom-6 -left-4 rounded-2xl bg-linen px-5 py-4 text-forest shadow-xl sm:-left-10"
       >
         <p class="font-display text-xl leading-tight">Julio Cesar Sánchez</p>
-        <p class="mt-1 text-xs tracking-[0.25em] text-olive uppercase">Psicoterapeuta</p>
+        <p class="mt-1 text-xs tracking-[0.25em] text-olive uppercase">{site.role}</p>
       </div>
     </div>
   </div>

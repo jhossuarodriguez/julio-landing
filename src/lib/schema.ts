@@ -70,6 +70,7 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, articles }: Opt
       name: e.title,
       credentialCategory: credentialCategory[e.kind],
       recognizedBy: { "@type": "EducationalOrganization", name: e.institution },
+      ...("year" in e && e.year ? { dateCreated: String(e.year) } : {}),
     })),
   ];
 

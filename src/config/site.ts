@@ -60,18 +60,17 @@ export const bookingCenters: BookingCenter[] = [
 
 /**
  * Formación y credenciales, confirmadas por Julio (nov. 2026). Se muestran en "Sobre mí"
- * y en los datos estructurados. Pendiente de confirmar por él: nombre exacto del título
- * de grado y año de graduación, y si suma experiencia anterior a 2020.
+ * y en los datos estructurados.
  */
 export const credentials = {
   exequatur: "13016",
   codopsi: "20-15839",
-  /** Psicoterapeuta familiar y de pareja desde diciembre de 2020 */
+  /** Psicoterapeuta familiar y de pareja desde diciembre de 2020 (sin experiencia clínica previa) */
   practiceSince: 2020,
   approach: "Sistémico breve, orientado a la construcción de soluciones",
   education: [
-    { kind: "degree", title: "Psicólogo clínico", institution: "Universidad Católica Santo Domingo", short: "UCSD" },
-    { kind: "degree", title: "Maestría en Terapia Familiar y de Pareja", institution: "Universidad Católica Santo Domingo", short: "UCSD" },
+    { kind: "degree", title: "Psicólogo clínico", institution: "Universidad Católica de Santo Domingo", short: "UCSD", year: 2019 },
+    { kind: "degree", title: "Maestría en Terapia Familiar y de Pareja", institution: "Universidad Católica de Santo Domingo", short: "UCSD" },
     { kind: "degree", title: "Maestría en Psicología de la Salud", institution: "Universidad Europea del Atlántico" },
     { kind: "course", title: "Formación en Sexualidad Humana y Terapia de Pareja", institution: "Universidad Autónoma de Santo Domingo", short: "UASD" },
     { kind: "certificate", title: "Certificación en Terapia Breve de Resolución de Problemas", institution: "Brief Therapy Center México" },

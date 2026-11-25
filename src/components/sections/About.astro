@@ -97,6 +97,7 @@ import { credentials, site } from "@/config/site";
                 <p class="mt-1 text-sm text-forest/70">
                   {e.institution}
                   {"short" in e && e.short && ` (${e.short})`}
+                  {"year" in e && e.year && ` · ${e.year}`}
                 </p>
               </div>
             </li>

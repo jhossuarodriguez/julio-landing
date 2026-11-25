@@ -1,0 +1,32 @@
+---
+/**
+ * Textura verde de la marca como fondo, servida con <Image /> en AVIF.
+ * Se coloca de forma absoluta: el contenedor padre debe ser `relative` (o `isolate`).
+ */
+import { Image } from "astro:assets";
+import textura from "@/assets/images/textura-verde.png";
+
+interface Props {
+  /** Ancho máximo generado; ajústalo al tamaño en el que se muestra */
+  width?: number;
+  sizes?: string;
+  class?: string;
+  /** true solo si la textura está visible al cargar la página (Hero) */
+  eager?: boolean;
+}
+
+const { width = 1600, sizes = "100vw", class: className = "", eager = false } = Astro.props;
+const widths = [480, 960, 1600].filter((w) => w <= width);
+---
+
+<Image
+  src={textura}
+  alt=""
+  format="avif"
+  quality={55}
+  widths={widths.length ? widths : [width]}
+  sizes={sizes}
+  class:list={["pointer-events-none absolute inset-0 size-full object-cover", className]}
+  loading={eager ? "eager" : "lazy"}
+  aria-hidden="true"
+/>

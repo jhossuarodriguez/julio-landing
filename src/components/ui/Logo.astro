@@ -1,0 +1,57 @@
+---
+import { Image } from "astro:assets";
+import markWhite from "@/assets/brand/logo-mark-white.png";
+import markDark from "@/assets/brand/logo-mark-dark.png";
+
+interface Props {
+  /** "light" = logo blanco para fondos oscuros; "dark" = logo verde para fondos claros */
+  tone?: "light" | "dark";
+  /** "inline" = símbolo + texto en fila; "stacked" = símbolo arriba y texto centrado */
+  layout?: "inline" | "stacked" | "mark";
+  class?: string;
+  markClass?: string;
+  /** Solo el logo del header (visible al cargar) debe ser eager; el resto, lazy */
+  eager?: boolean;
+}
+
+const { tone = "light", layout = "inline", class: className = "", markClass, eager = false } = Astro.props;
+const mark = tone === "light" ? markWhite : markDark;
+const color = tone === "light" ? "text-linen" : "text-forest";
+const stacked = layout === "stacked";
+---
+
+<span
+  class:list={[
+    "inline-flex select-none",
+    stacked ? "flex-col items-center gap-4 text-center" : "items-center gap-3",
+    color,
+    className,
+  ]}
+>
+  <Image
+    format="avif"
+    src={mark}
+    alt={layout === "mark" ? "Julio Cesar Sánchez Medina" : ""}
+    width={stacked ? 220 : 96}
+    class:list={[markClass ?? (stacked ? "w-36" : "w-11"), "h-auto"]}
+    loading={eager ? "eager" : "lazy"}
+  />
+  {
+    layout !== "mark" && (
+      <span class="flex flex-col leading-none font-light">
+        <span class:list={["tracking-[0.28em]", stacked ? "text-2xl" : "text-[0.8rem]"]}>JULIO CESAR</span>
+        <span class:list={["mt-1 tracking-[0.08em]", stacked ? "text-xl" : "text-[0.72rem]"]}>SÁNCHEZ MEDINA</span>
+        <span
+          class:list={[
+            "mt-1.5 flex items-center gap-2 opacity-80",
+            stacked ? "text-[0.7rem] tracking-[0.35em]" : "text-[0.625rem] tracking-[0.14em]",
+          ]}
+        >
+          {stacked && <span class="h-px flex-1 bg-current opacity-70" />}
+          PSICOTERAPEUTA
+          {stacked && <span class="h-px flex-1 bg-current opacity-70" />}
+        </span>
+      </span>
+    )
+  }
+</span>

@@ -1,0 +1,28 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/layout/Header.astro";
+import Footer from "@/components/layout/Footer.astro";
+import FloatingBooking from "@/components/ui/FloatingBooking.astro";
+import WhatsAppChannel from "@/components/ui/WhatsAppChannel.astro";
+import Hero from "@/components/sections/Hero.astro";
+import About from "@/components/sections/About.astro";
+import Services from "@/components/sections/Services.astro";
+import Articles from "@/components/sections/Articles.astro";
+import Booking from "@/components/sections/Booking.astro";
+import Contact from "@/components/sections/Contact.astro";
+---
+
+<Layout>
+  <Header />
+  <main id="contenido">
+    <Hero />
+    <About />
+    <Services />
+    <Articles />
+    <Booking />
+    <Contact />
+  </main>
+  <Footer />
+  <FloatingBooking />
+  <WhatsAppChannel />
+</Layout>

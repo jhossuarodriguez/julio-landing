@@ -1,0 +1,27 @@
+---
+import Logo from "@/components/ui/Logo.astro";
+import { navLinks, site, BOOKING_HREF } from "@/config/site";
+
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-forest-900 text-linen">
+  <div class="container-page flex flex-col items-center gap-10 pt-16 pb-28 text-center sm:pb-16">
+    <a href="/" aria-label="Inicio">
+      <Logo tone="light" layout="stacked" markClass="w-28" />
+    </a>
+
+    <nav aria-label="Pie de página" class="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-cream/70">
+      {
+        navLinks.map((l) => (
+          <a href={l.href} class="py-1 hover:text-linen">
+            {l.label}
+          </a>
+        ))
+      }
+      <a href={BOOKING_HREF} class="py-1 text-apricot hover:text-linen">Agenda tu cita</a>
+    </nav>
+
+    <p class="text-xs text-linen/45">© {year} {site.name}. Todos los derechos reservados.</p>
+  </div>
+</footer>

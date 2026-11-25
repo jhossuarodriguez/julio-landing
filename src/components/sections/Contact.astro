@@ -1,0 +1,65 @@
+---
+import { Image } from "astro:assets";
+import Icon, { type IconName } from "@/components/ui/Icon.astro";
+import sonrisa from "@/assets/images/julio-sonrisa.png";
+import { site, telUrl, BOOKING_HREF } from "@/config/site";
+
+const { contact } = site;
+
+const items: { icon: IconName; label: string; value: string; href: string; external?: boolean }[] = [
+  { icon: "mail", label: "Correo", value: contact.email, href: `mailto:${contact.email}` },
+  { icon: "phone", label: "Teléfono", value: contact.phone, href: telUrl(contact.phone) },
+];
+---
+
+<section id="contacto" class="py-24 sm:py-32">
+  <div class="container-page">
+    <div class="grid overflow-hidden rounded-[2rem] bg-white/70 shadow-xl shadow-forest/5 lg:grid-cols-[1fr_0.8fr]">
+      <div class="reveal p-8 sm:p-12 lg:p-16">
+        <p class="eyebrow text-terracotta">Contacto</p>
+        <h2 class="mt-5 font-display text-4xl leading-tight text-forest sm:text-5xl">Información de contacto</h2>
+        <p class="mt-5 max-w-md leading-relaxed font-light text-forest/75">
+          ¿Tienes dudas antes de agendar? Escríbeme y con gusto te oriento sobre el proceso terapéutico.
+        </p>
+
+        <ul class="mt-10 space-y-6">
+          {
+            items.map((i) => (
+              <li>
+                <a
+                  href={i.href}
+                  class="group flex items-center gap-4"
+                  {...(i.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                >
+                  <span class="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-sage/25 text-forest transition group-hover:bg-forest group-hover:text-linen">
+                    <Icon name={i.icon} class="size-5" />
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block text-xs tracking-[0.2em] text-olive uppercase">{i.label}</span>
+                    <span class="block truncate text-forest group-hover:text-terracotta sm:text-lg">{i.value}</span>
+                  </span>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+
+        <a href={BOOKING_HREF} class="btn-primary mt-12 px-8">
+          <Icon name="calendar" class="size-4" />
+          Agenda tu cita
+        </a>
+      </div>
+
+      <div class="relative hidden min-h-[28rem] bg-sand/30 lg:block">
+        <Image
+          format="avif"
+          src={sonrisa}
+          alt="Julio Cesar Sánchez Medina de pie, sonriendo"
+          widths={[480, 683]}
+          sizes="30rem"
+          class="absolute inset-0 size-full object-cover object-top"
+        />
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,30 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/layout/Header.astro";
+import Footer from "@/components/layout/Footer.astro";
+import BgTexture from "@/components/ui/BgTexture.astro";
+import Icon from "@/components/ui/Icon.astro";
+import { BOOKING_HREF, site } from "@/config/site";
+---
+
+<Layout title={`Página no encontrada · ${site.shortName}`} noindex>
+  <Header />
+  <main id="contenido" class="relative isolate flex min-h-[80vh] items-center overflow-hidden bg-forest text-linen">
+    <BgTexture class="-z-10" eager />
+    <div class="container-page py-40 text-center">
+      <p class="eyebrow text-sage">Error 404</p>
+      <h1 class="mt-6 font-display text-5xl leading-tight text-cream sm:text-6xl">Esta página no existe</h1>
+      <p class="mx-auto mt-6 max-w-md leading-relaxed font-light text-linen/80">
+        Puede que el enlace haya cambiado. Vuelve al inicio o agenda tu cita directamente.
+      </p>
+      <div class="mt-10 flex flex-col justify-center gap-3 sm:flex-row">
+        <a href="/" class="btn-outline-light px-8">Volver al inicio</a>
+        <a href={BOOKING_HREF} class="btn-primary px-8">
+          <Icon name="calendar" class="size-4" />
+          Agenda tu cita
+        </a>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>

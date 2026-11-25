@@ -1,0 +1,81 @@
+---
+import Logo from "@/components/ui/Logo.astro";
+import Icon from "@/components/ui/Icon.astro";
+import { navLinks, BOOKING_HREF } from "@/config/site";
+---
+
+<header
+  id="site-header"
+  class="fixed inset-x-0 top-0 z-50 border-b border-transparent transition-colors duration-300 data-[scrolled=true]:border-linen/10 data-[scrolled=true]:bg-forest/95 data-[scrolled=true]:backdrop-blur"
+>
+  <div class="container-page flex h-20 items-center justify-between gap-6">
+    <a href="/" aria-label="Inicio — Julio Cesar Sánchez Medina, psicoterapeuta">
+      <Logo tone="light" eager />
+    </a>
+
+    <nav aria-label="Principal" class="hidden items-center gap-8 lg:flex">
+      {
+        navLinks.map((link) => (
+          <a href={link.href} class="text-sm text-cream/80 transition hover:text-linen">
+            {link.label}
+          </a>
+        ))
+      }
+      <a href={BOOKING_HREF} class="btn-primary py-2.5">
+        <Icon name="calendar" class="size-4" />
+        Agenda tu cita
+      </a>
+    </nav>
+
+    <button
+      id="menu-toggle"
+      type="button"
+      class="group inline-flex size-11 items-center justify-center rounded-full border border-cream/30 text-linen lg:hidden"
+      aria-controls="mobile-menu"
+      aria-expanded="false"
+      aria-label="Abrir menú"
+    >
+      <Icon name="menu" class="size-5 group-aria-expanded:hidden" />
+      <Icon name="close" class="hidden size-5 group-aria-expanded:block" />
+    </button>
+  </div>
+
+  <div id="mobile-menu" class="hidden border-t border-linen/10 bg-forest lg:hidden" data-open="false">
+    <nav aria-label="Móvil" class="container-page flex flex-col gap-1 py-6">
+      {
+        navLinks.map((link) => (
+          <a href={link.href} class="rounded-xl px-3 py-3 text-base text-cream/90 hover:bg-linen/5">
+            {link.label}
+          </a>
+        ))
+      }
+      <a href={BOOKING_HREF} class="btn-primary mt-4 w-full">
+        <Icon name="calendar" class="size-4" />
+        Agenda tu cita
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const header = document.getElementById("site-header")!;
+  const toggle = document.getElementById("menu-toggle")!;
+  const menu = document.getElementById("mobile-menu")!;
+
+  const setOpen = (open: boolean) => {
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+    menu.classList.toggle("hidden", !open);
+    header.dataset.scrolled = String(open || window.scrollY > 24);
+  };
+
+  toggle.addEventListener("click", () => setOpen(toggle.getAttribute("aria-expanded") !== "true"));
+  menu.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
+
+  const onScroll = () => {
+    const open = toggle.getAttribute("aria-expanded") === "true";
+    header.dataset.scrolled = String(open || window.scrollY > 24);
+  };
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+</script>

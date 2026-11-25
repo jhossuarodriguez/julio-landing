@@ -1,0 +1,50 @@
+---
+/**
+ * Registro de iconos. Cada icono vive en su propio archivo en `src/assets/icons/*.svg`
+ * y se importa como componente de Astro (se incrusta como <svg> en línea, sin peticiones extra).
+ *
+ * Para añadir uno: crea `src/assets/icons/nombre.svg` (viewBox 24×24, `currentColor`)
+ * e impórtalo abajo en `icons`.
+ */
+import Arrow from "@/assets/icons/arrow.svg";
+import Calendar from "@/assets/icons/calendar.svg";
+import Check from "@/assets/icons/check.svg";
+import Close from "@/assets/icons/close.svg";
+import Flame from "@/assets/icons/flame.svg";
+import Heart from "@/assets/icons/heart.svg";
+import Mail from "@/assets/icons/mail.svg";
+import Megaphone from "@/assets/icons/megaphone.svg";
+import Menu from "@/assets/icons/menu.svg";
+import Phone from "@/assets/icons/phone.svg";
+import Psi from "@/assets/icons/psi.svg";
+import Whatsapp from "@/assets/icons/whatsapp.svg";
+
+const icons = {
+  arrow: Arrow,
+  calendar: Calendar,
+  check: Check,
+  close: Close,
+  flame: Flame,
+  heart: Heart,
+  mail: Mail,
+  megaphone: Megaphone,
+  menu: Menu,
+  phone: Phone,
+  psi: Psi,
+  whatsapp: Whatsapp,
+} as const;
+
+export type IconName = keyof typeof icons;
+
+interface Props {
+  name: IconName;
+  class?: string;
+  /** Grosor del trazo (solo iconos de línea); por defecto el del archivo .svg (1.5) */
+  strokeWidth?: number;
+}
+
+const { name, class: className = "size-5", strokeWidth } = Astro.props;
+const Svg = icons[name];
+---
+
+<Svg class={className} aria-hidden="true" {...strokeWidth ? { "stroke-width": strokeWidth } : {}} />

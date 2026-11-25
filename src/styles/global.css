@@ -1,0 +1,104 @@
+@import "tailwindcss";
+
+/* Paleta y tipografías del manual de marca */
+@theme {
+  --color-sage: #9dab87;
+  --color-sage-600: #7e886f;
+  --color-olive: #686752;
+  --color-forest: #3f4537;
+  --color-forest-800: #363b2f;
+  --color-forest-900: #2a2e24;
+  --color-cream: #dfd7b2;
+  --color-sand: #b1ac8e;
+  --color-linen: #f9f1e7;
+  --color-apricot: #e08f62;
+  --color-terracotta: #cc7353;
+  --color-clay: #86563a;
+  --color-cocoa: #5b3a2b;
+
+  /* "The Seasons" es la fuente primaria de la marca (licencia comercial);
+     Gilda Display es la alternativa libre más cercana. */
+  --font-display: "Gilda Display", "Times New Roman", serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5.5rem;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply bg-linen font-sans text-forest antialiased;
+  }
+
+  ::selection {
+    @apply bg-sage text-forest-900;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-4 outline-apricot;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@utility container-page {
+  @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+}
+
+@utility eyebrow {
+  @apply text-xs font-medium tracking-[0.3em] uppercase;
+}
+
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium transition duration-200 ease-out;
+}
+
+@utility btn-primary {
+  @apply btn bg-apricot text-forest-900 shadow-lg shadow-forest-900/10 hover:-translate-y-0.5 hover:bg-terracotta hover:text-linen;
+}
+
+@utility btn-outline-light {
+  @apply btn border border-cream/40 text-cream hover:border-cream hover:bg-cream/10;
+}
+
+@utility btn-outline-dark {
+  @apply btn border border-forest/25 text-forest hover:border-forest hover:bg-forest hover:text-linen;
+}
+
+/* Aparición suave al hacer scroll (ver script en Layout).
+   Se usa una animación —no `transition`— para no pisar las transiciones
+   de hover de Tailwind (duration-*, ease-*) en los elementos con .reveal. */
+@keyframes reveal-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.reveal {
+  opacity: 0;
+}
+.reveal.is-visible {
+  opacity: 1;
+  animation: reveal-in 0.8s ease both;
+}
+.no-js .reveal {
+  opacity: 1;
+  animation: none;
+}

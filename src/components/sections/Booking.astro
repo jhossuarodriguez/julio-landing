@@ -1,0 +1,109 @@
+---
+import { Image } from "astro:assets";
+import BgTexture from "@/components/ui/BgTexture.astro";
+import Icon from "@/components/ui/Icon.astro";
+import brainWhite from "@/assets/brand/brain-white.png";
+import { bookingCenters, whatsappUrl, telUrl } from "@/config/site";
+
+const steps = [
+  { n: "01", title: "Elige un centro", text: "Selecciona el lugar que te quede más cómodo." },
+  { n: "02", title: "Escríbenos", text: "Por WhatsApp o llamada, con total confidencialidad." },
+  { n: "03", title: "Coordina tu sesión", text: "Acordamos juntos el día y la hora de tu cita." },
+];
+---
+
+<section
+  id="agenda"
+  class="relative isolate overflow-hidden bg-forest py-24 text-linen sm:py-32"
+  aria-labelledby="agenda-title"
+>
+  <BgTexture class="-z-20" />
+  <Image
+    format="avif"
+    src={brainWhite}
+    alt=""
+    width={900}
+    class="pointer-events-none absolute -top-24 -right-48 -z-10 w-[44rem] max-w-none opacity-[0.06]"
+  />
+
+  <div class="container-page">
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p class="eyebrow text-sage">Da el primer paso</p>
+      <h2 id="agenda-title" class="mt-5 font-display text-5xl leading-tight text-cream sm:text-6xl">
+        Agenda tu cita
+      </h2>
+      <p class="mt-5 leading-relaxed font-light text-linen/80">
+        Elige el centro de tu preferencia y escríbenos por WhatsApp. Te responderemos para coordinar el día y la hora de
+        tu sesión.
+      </p>
+    </div>
+
+    <ol class="reveal mx-auto mt-14 grid max-w-4xl gap-6 sm:grid-cols-3">
+      {
+        steps.map((s) => (
+          <li class="flex gap-4 sm:flex-col sm:gap-2 sm:text-center">
+            <span class="font-display text-3xl text-apricot">{s.n}</span>
+            <div>
+              <h3 class="font-medium text-cream">{s.title}</h3>
+              <p class="mt-1 text-sm text-linen/65">{s.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+
+    <div class="mt-16 grid gap-5 md:grid-cols-3">
+      {
+        bookingCenters.map((c) => (
+          <article class="reveal row-span-3 grid grid-rows-subgrid gap-y-0 rounded-3xl bg-linen p-7 text-forest shadow-2xl shadow-forest-900/30">
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                {c.label && c.label !== c.name && (
+                  <p class="text-xs tracking-[0.2em] text-olive uppercase">{c.label}</p>
+                )}
+                <h3 class="mt-1 font-display text-2xl leading-snug">{c.name}</h3>
+              </div>
+              <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-sage/25 text-forest">
+                <Icon name="calendar" class="size-5" />
+              </span>
+            </div>
+
+            <a
+              href={telUrl(c.phone)}
+              class="mt-5 inline-flex items-center gap-2 self-start text-lg font-medium tracking-wide text-forest/90 hover:text-terracotta"
+            >
+              <Icon name="phone" class="size-4 text-terracotta" />
+              {c.phone}
+            </a>
+
+            <div class="flex flex-col justify-start gap-2.5 pt-7">
+              <a
+                href={whatsappUrl(c.phone)}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="btn-primary w-full"
+                aria-label={`Agendar cita por WhatsApp con ${c.name} (se abre en una pestaña nueva)`}
+              >
+                <Icon name="whatsapp" class="size-[18px]" />
+                Agendar por WhatsApp
+              </a>
+              {c.allowCalls !== false && (
+                <a href={telUrl(c.phone)} class="btn-outline-dark w-full" aria-label={`Llamar a ${c.name}`}>
+                  <Icon name="phone" class="size-4" />
+                  Llamar ahora
+                </a>
+              )}
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="reveal mx-auto mt-10 max-w-2xl text-center text-xs leading-relaxed text-linen/55">
+      Si estás atravesando una crisis o tu vida corre peligro, no esperes: llama al <a
+        href="tel:911"
+        class="underline underline-offset-2 hover:text-linen">911</a
+      > o acude a la emergencia más cercana.
+    </p>
+  </div>
+</section>

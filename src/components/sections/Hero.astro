@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+import BgTexture from "@/components/ui/BgTexture.astro";
+import Icon from "@/components/ui/Icon.astro";
+import retrato from "@/assets/images/julio-retrato.png";
+import brainWhite from "@/assets/brand/brain-white.png";
+import { BOOKING_HREF } from "@/config/site";
+---
+
+<section
+  class="relative isolate overflow-hidden bg-forest text-linen"
+>
+  <BgTexture class="-z-20" eager />
+  <!-- Red neuronal decorativa -->
+  <Image
+    format="avif"
+    src={brainWhite}
+    alt=""
+    width={900}
+    loading="eager"
+    class="pointer-events-none absolute -right-40 -bottom-24 -z-10 w-[46rem] max-w-none opacity-[0.07] sm:-right-24"
+  />
+
+  <div class="container-page grid items-center gap-14 pt-32 pb-20 md:pt-40 lg:grid-cols-[1.1fr_0.9fr] lg:gap-10 lg:pb-28">
+    <div class="reveal">
+      <p class="eyebrow text-sage">Psicoterapeuta · Santo Domingo</p>
+      <h1 class="mt-6 font-display text-[2.75rem] leading-[1.05] text-cream sm:text-6xl lg:text-[4.1rem]">
+        Un espacio seguro para sanar, comprender y crecer.
+      </h1>
+      <p class="mt-7 max-w-xl text-base leading-relaxed font-light text-linen/80 sm:text-lg">
+        Acompaño a personas, parejas y familias en procesos de sanación emocional mediante psicoterapia basada en
+        evidencia científica.
+      </p>
+      <div class="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
+        <a href={BOOKING_HREF} class="btn-primary px-8 py-3.5 text-base">
+          <Icon name="calendar" class="size-5" />
+          Agenda tu cita
+        </a>
+        <a href="/#sobre-mi" class="btn-outline-light px-8 py-3.5 text-base">
+          Conóceme
+          <Icon name="arrow" class="size-4" />
+        </a>
+      </div>
+
+      <ul class="mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm text-cream/70">
+        {
+          ["Terapia individual", "Terapia de pareja", "Terapia sexual"].map((item) => (
+            <li class="flex items-center gap-2">
+              <Icon name="check" class="size-4 text-sage" strokeWidth={2} />
+              {item}
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="reveal relative mx-auto w-full max-w-sm lg:max-w-md">
+      <div class="absolute -inset-3 rounded-t-full border border-cream/25" aria-hidden="true"></div>
+      <div class="relative overflow-hidden rounded-t-full bg-sage/30 shadow-2xl shadow-forest-900/40">
+        <Image
+          format="avif"
+          src={retrato}
+          alt="Julio Cesar Sánchez Medina, psicoterapeuta, sonriendo con traje azul"
+          widths={[400, 640, 853]}
+          sizes="(min-width: 1024px) 28rem, (min-width: 640px) 24rem, 90vw"
+          class="aspect-[4/5] h-auto w-full object-cover object-top"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </div>
+      <div
+        class="absolute -bottom-6 -left-4 rounded-2xl bg-linen px-5 py-4 text-forest shadow-xl sm:-left-10"
+      >
+        <p class="font-display text-xl leading-tight">Julio Cesar Sánchez</p>
+        <p class="mt-1 text-xs tracking-[0.25em] text-olive uppercase">Psicoterapeuta</p>
+      </div>
+    </div>
+  </div>
+</section>

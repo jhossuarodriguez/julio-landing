@@ -1,0 +1,38 @@
+---
+import Icon from "@/components/ui/Icon.astro";
+import { BOOKING_HREF } from "@/config/site";
+---
+
+<!-- Botón flotante: aparece al bajar y se oculta cuando la sección de agenda está visible -->
+<a
+  id="floating-booking"
+  href={BOOKING_HREF}
+  class="fixed right-4 bottom-4 z-40 inline-flex translate-y-24 items-center gap-2 rounded-full bg-apricot p-3.5 text-sm font-medium text-forest-900 opacity-0 shadow-2xl shadow-forest-900/30 transition duration-300 hover:bg-terracotta hover:text-linen data-[visible=true]:translate-y-0 data-[visible=true]:opacity-100 sm:right-6 sm:bottom-6 sm:px-5"
+  aria-label="Agenda tu cita"
+  tabindex="-1"
+>
+  <Icon name="calendar" class="size-5" />
+  <span class="hidden sm:inline">Agenda tu cita</span>
+</a>
+
+<script>
+  const btn = document.getElementById("floating-booking")!;
+  const agenda = document.getElementById("agenda");
+  let agendaVisible = false;
+
+  const update = () => {
+    const show = window.scrollY > window.innerHeight * 0.8 && !agendaVisible;
+    btn.dataset.visible = String(show);
+    btn.tabIndex = show ? 0 : -1;
+    btn.setAttribute("aria-hidden", String(!show));
+  };
+
+  if (agenda && "IntersectionObserver" in window) {
+    new IntersectionObserver(([entry]) => {
+      agendaVisible = entry.isIntersecting;
+      update();
+    }).observe(agenda);
+  }
+  window.addEventListener("scroll", update, { passive: true });
+  update();
+</script>

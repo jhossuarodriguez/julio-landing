@@ -25,7 +25,7 @@ const visual: Record<ServiceSlug, { icon: IconName; accent: string }> = {
     <div class="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
         services.map((s) => (
-          <article class="reveal group flex flex-col rounded-3xl border border-forest/10 bg-linen p-7 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10">
+          <div class="reveal group flex flex-col rounded-3xl border border-forest/10 bg-linen p-7 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10">
             <span class:list={["inline-flex size-14 items-center justify-center rounded-2xl", visual[s.slug].accent]}>
               <Icon name={visual[s.slug].icon} class="size-7" />
             </span>
@@ -38,7 +38,7 @@ const visual: Record<ServiceSlug, { icon: IconName; accent: string }> = {
               Saber más<span class="sr-only"> sobre {s.title.toLowerCase()}</span>
               <Icon name="arrow" class="size-4 transition group-hover:translate-x-1" />
             </a>
-          </article>
+          </div>
         ))
       }
     </div>

@@ -99,7 +99,8 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
       // Centro de salud con dirección física: MedicalBusiness (subtipo de LocalBusiness)
       "@type": "MedicalBusiness",
       "@id": abs(`/#centro-${slugify(c.name!)}`),
-      name: c.name,
+      name: c.listingName ?? c.name,
+      ...(c.listingName ? { alternateName: c.name } : {}),
       telephone: e164(c.phone),
       areaServed: santoDomingo,
       ...(c.address

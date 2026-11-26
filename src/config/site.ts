@@ -64,6 +64,8 @@ export type BookingCenter = {
     neighborhood?: string;
     postalCode?: string;
   };
+  /** Nombre tal como figura en su ficha de Google (si difiere del visible); se usa en los datos estructurados */
+  listingName?: string;
   /** Enlace a Google Maps ("Cómo llegar") */
   mapsUrl?: string;
   /** Coordenadas, solo si vienen de la ficha real del centro */
@@ -71,8 +73,6 @@ export type BookingCenter = {
   /** Horario de atención del centro (los días no listados, cerrado) */
   hours?: OpeningHours[];
 };
-
-const mapsSearch = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
 
 /** Centros donde se puede agendar cita (botón "Agenda tu cita"). Datos facilitados por Julio (nov. 2026). */
 export const bookingCenters: BookingCenter[] = [
@@ -93,7 +93,9 @@ export const bookingCenters: BookingCenter[] = [
     label: "Centro Integral Lotus",
     phone: "+1 (809) 851-1386",
     address: { street: "Torre Ejecutiva Sonora, Suite 702, Av. Abraham Lincoln No. 1069", neighborhood: "Serrallés" },
-    mapsUrl: mapsSearch("Torre Ejecutiva Sonora, Av. Abraham Lincoln 1069, Serrallés, Santo Domingo"),
+    // Ficha del edificio (Torre Ejecutiva Sonora); coordenadas del edificio
+    mapsUrl: "https://maps.app.goo.gl/uHbUzQEjcEtjyeDZA",
+    geo: { lat: 18.4813319, lng: -69.9384818 },
     hours: [
       { days: ["Mo", "Tu", "We", "Th", "Fr"], opens: "09:00", closes: "20:00" },
       { days: ["Sa"], opens: "09:00", closes: "13:00" },
@@ -104,8 +106,10 @@ export const bookingCenters: BookingCenter[] = [
     label: "Mentalmente",
     phone: "+1 (829) 783-8519",
     allowCalls: false,
-    address: { street: "Plaza Galerías Comerciales, local 309, Av. 27 de Febrero No. 54", neighborhood: "El Vergel" },
-    mapsUrl: mapsSearch("Plaza Galerías Comerciales, Av. 27 de Febrero 54, El Vergel, Santo Domingo"),
+    listingName: "Mentalmente Centro Integral de Salud Mental",
+    address: { street: "Plaza Galerías Comerciales, local 309, Av. 27 de Febrero No. 54", neighborhood: "El Vergel", postalCode: "10107" },
+    mapsUrl: "https://maps.app.goo.gl/BvqRkxKV56SDFXxT8",
+    geo: { lat: 18.4737444, lng: -69.9172487 },
     hours: [
       { days: ["Mo", "Tu", "We", "Th", "Fr"], opens: "09:00", closes: "19:00" },
       { days: ["Sa"], opens: "09:00", closes: "16:00" },

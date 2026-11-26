@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import BgTexture from "@/components/ui/BgTexture.astro";
 import Icon from "@/components/ui/Icon.astro";
 import brainWhite from "@/assets/brand/brain-white.png";
-import { bookingCenters, bookingInfo, whatsappUrl, telUrl, BOOKING_MESSAGE } from "@/config/site";
+import { bookingCenters, bookingInfo, whatsappUrl, telUrl, formatHours, formatAddress, BOOKING_MESSAGE } from "@/config/site";
 
 interface Props {
   /** Mensaje prellenado de WhatsApp (p. ej. específico de un servicio) */
@@ -72,7 +72,7 @@ const steps = [
     <div class="mt-12 grid gap-5 md:grid-cols-3">
       {
         bookingCenters.map((c) => (
-          <article class="reveal row-span-3 grid grid-rows-subgrid gap-y-0 rounded-3xl bg-linen p-7 text-forest shadow-2xl shadow-forest-900/30">
+          <article class="reveal row-span-4 grid grid-rows-subgrid gap-y-0 rounded-3xl bg-linen p-7 text-forest shadow-2xl shadow-forest-900/30">
             <div class="flex items-start justify-between gap-4">
               <div>
                 {c.label && c.label !== c.name && (
@@ -83,6 +83,37 @@ const steps = [
               <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-sage/25 text-forest">
                 <Icon name="calendar" class="size-5" />
               </span>
+            </div>
+
+            <div class="mt-4 space-y-3 text-sm leading-relaxed text-forest/85">
+              {c.address && (
+                <p class="flex gap-2.5">
+                  <Icon name="pin" class="mt-0.5 size-4 shrink-0 text-terracotta-700" />
+                  <span>
+                    {formatAddress(c.address)}{" "}
+                    {c.mapsUrl && (
+                      <a
+                        href={c.mapsUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="font-medium whitespace-nowrap text-forest underline underline-offset-2 hover:text-terracotta-700"
+                        aria-label={`Cómo llegar a ${c.name} en Google Maps (se abre en una pestaña nueva)`}
+                      >
+                        Cómo llegar
+                      </a>
+                    )}
+                  </span>
+                </p>
+              )}
+              {c.hours && (
+                <div class="flex gap-2.5">
+                  <Icon name="clock" class="mt-0.5 size-4 shrink-0 text-terracotta-700" />
+                  <p>
+                    <span class="sr-only">Horario del centro: </span>
+                    {formatHours(c.hours).map((line, i) => (i === 0 ? line : <><br />{line}</>))}
+                  </p>
+                </div>
+              )}
             </div>
 
             <a

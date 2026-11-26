@@ -7,7 +7,7 @@
  * Tipos: WebSite · WebPage · Person (con credenciales) · ProfessionalService (+3 Service) · 3 Organization (centros)
  *        · Blog con BlogPosting (artículos de Medium).
  */
-import { site, services, bookingCenters, bookingInfo, credentials, e164 } from "@/config/site";
+import { site, services, bookingCenters, bookingInfo, credentials, e164, type Day } from "@/config/site";
 import type { Article } from "@/lib/medium";
 
 type Options = {
@@ -25,6 +25,16 @@ type Options = {
   /** Última revisión del contenido de la página (AAAA-MM-DD) */
   dateModified?: string;
   articles: Article[];
+};
+
+const dayOfWeek: Record<Day, string> = {
+  Mo: "https://schema.org/Monday",
+  Tu: "https://schema.org/Tuesday",
+  We: "https://schema.org/Wednesday",
+  Th: "https://schema.org/Thursday",
+  Fr: "https://schema.org/Friday",
+  Sa: "https://schema.org/Saturday",
+  Su: "https://schema.org/Sunday",
 };
 
 const slugify = (s: string) =>
@@ -86,11 +96,36 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
   const centers = bookingCenters
     .filter((c) => c.name)
     .map((c) => ({
-      "@type": "Organization",
+      // Centro de salud con dirección física: MedicalBusiness (subtipo de LocalBusiness)
+      "@type": "MedicalBusiness",
       "@id": abs(`/#centro-${slugify(c.name!)}`),
       name: c.name,
       telephone: e164(c.phone),
       areaServed: santoDomingo,
+      ...(c.address
+        ? {
+            address: {
+              "@type": "PostalAddress",
+              streetAddress: c.address.street,
+              ...(c.address.neighborhood ? { addressLocality: `${c.address.neighborhood}, Santo Domingo` } : { addressLocality: "Santo Domingo" }),
+              addressRegion: "Distrito Nacional",
+              ...(c.address.postalCode ? { postalCode: c.address.postalCode } : {}),
+              addressCountry: "DO",
+            },
+          }
+        : {}),
+      ...(c.geo ? { geo: { "@type": "GeoCoordinates", latitude: c.geo.lat, longitude: c.geo.lng } } : {}),
+      ...(c.mapsUrl ? { hasMap: c.mapsUrl } : {}),
+      ...(c.hours
+        ? {
+            openingHoursSpecification: c.hours.map((h) => ({
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: h.days.map((d) => dayOfWeek[d]),
+              opens: h.opens,
+              closes: h.closes,
+            })),
+          }
+        : {}),
     }));
 
   return {
@@ -149,6 +184,8 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
         alumniOf: institutions,
         memberOf: codopsi,
         affiliation: centers.map((c) => ({ "@id": c["@id"] })),
+        // Lugares donde atiende (centros con dirección física)
+        workLocation: centers.filter((c) => "address" in c).map((c) => ({ "@id": c["@id"] })),
         areaServed: santoDomingo,
         address: { "@type": "PostalAddress", addressLocality: "Santo Domingo", addressCountry: "DO" },
         sameAs: [site.social.linkedin, site.social.medium, site.social.whatsappChannel],

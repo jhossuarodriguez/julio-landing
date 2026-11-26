@@ -43,6 +43,11 @@ export const site = {
   },
 } as const;
 
+export type Day = "Mo" | "Tu" | "We" | "Th" | "Fr" | "Sa" | "Su";
+
+/** Franja de horario: días + apertura/cierre en 24 h ("09:00") */
+export type OpeningHours = { days: Day[]; opens: string; closes: string };
+
 export type BookingCenter = {
   /** Nombre visible del centro / canal de citas */
   name?: string;
@@ -51,14 +56,87 @@ export type BookingCenter = {
   phone: string;
   /** Muestra el botón "Llamar ahora" (por defecto true). Pon false si el número solo atiende por WhatsApp. */
   allowCalls?: boolean;
+  /** Dirección del centro (publicada con su permiso) */
+  address?: {
+    /** Calle, número, edificio/local */
+    street: string;
+    /** Sector o barrio */
+    neighborhood?: string;
+    postalCode?: string;
+  };
+  /** Enlace a Google Maps ("Cómo llegar") */
+  mapsUrl?: string;
+  /** Coordenadas, solo si vienen de la ficha real del centro */
+  geo?: { lat: number; lng: number };
+  /** Horario de atención del centro (los días no listados, cerrado) */
+  hours?: OpeningHours[];
 };
 
-/** Centros donde se puede agendar cita (botón "Agenda tu cita"). */
+const mapsSearch = (q: string) => `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(q)}`;
+
+/** Centros donde se puede agendar cita (botón "Agenda tu cita"). Datos facilitados por Julio (nov. 2026). */
 export const bookingCenters: BookingCenter[] = [
-  { name: "Psicobienestar Centro Terapéutico", phone: "+1 (849) 629-1603", allowCalls: false },
-  { name: "Centro Integral Lotus", label: "Centro Integral Lotus", phone: "+1 (809) 851-1386" },
-  { name: "Mentalmente", label: "Mentalmente", phone: "+1 (829) 783-8519", allowCalls: false },
+  {
+    name: "Psicobienestar Centro Terapéutico",
+    phone: "+1 (849) 629-1603",
+    allowCalls: false,
+    address: { street: "C. Eugenio Deschamps 40", postalCode: "10131" },
+    mapsUrl: "https://maps.app.goo.gl/SgiDaiuN9QY8KucFA",
+    geo: { lat: 18.4731599, lng: -69.9600407 },
+    hours: [
+      { days: ["Mo", "Tu", "We", "Th", "Fr"], opens: "09:00", closes: "20:00" },
+      { days: ["Sa"], opens: "09:00", closes: "17:00" },
+    ],
+  },
+  {
+    name: "Centro Integral Lotus",
+    label: "Centro Integral Lotus",
+    phone: "+1 (809) 851-1386",
+    address: { street: "Torre Ejecutiva Sonora, Suite 702, Av. Abraham Lincoln No. 1069", neighborhood: "Serrallés" },
+    mapsUrl: mapsSearch("Torre Ejecutiva Sonora, Av. Abraham Lincoln 1069, Serrallés, Santo Domingo"),
+    hours: [
+      { days: ["Mo", "Tu", "We", "Th", "Fr"], opens: "09:00", closes: "20:00" },
+      { days: ["Sa"], opens: "09:00", closes: "13:00" },
+    ],
+  },
+  {
+    name: "Mentalmente",
+    label: "Mentalmente",
+    phone: "+1 (829) 783-8519",
+    allowCalls: false,
+    address: { street: "Plaza Galerías Comerciales, local 309, Av. 27 de Febrero No. 54", neighborhood: "El Vergel" },
+    mapsUrl: mapsSearch("Plaza Galerías Comerciales, Av. 27 de Febrero 54, El Vergel, Santo Domingo"),
+    hours: [
+      { days: ["Mo", "Tu", "We", "Th", "Fr"], opens: "09:00", closes: "19:00" },
+      { days: ["Sa"], opens: "09:00", closes: "16:00" },
+    ],
+  },
 ];
+
+const dayNames: Record<Day, string> = { Mo: "Lun", Tu: "Mar", We: "Mié", Th: "Jue", Fr: "Vie", Sa: "Sáb", Su: "Dom" };
+const allDays: Day[] = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
+const time12 = (t: string) => {
+  const [h, m] = t.split(":").map(Number);
+  const suffix = h < 12 ? "a. m." : "p. m.";
+  const h12 = h % 12 === 0 ? 12 : h % 12;
+  return `${h12}:${String(m).padStart(2, "0")} ${suffix}`;
+};
+
+/** Horario legible: ["Lun–Vie: 9:00 a. m. – 8:00 p. m.", "Sáb: 9:00 a. m. – 5:00 p. m.", "Dom: cerrado"] */
+export const formatHours = (hours: OpeningHours[] = []) => {
+  const lines = hours.map((h) => {
+    const days = h.days.length > 1 ? `${dayNames[h.days[0]]}–${dayNames[h.days.at(-1)!]}` : dayNames[h.days[0]];
+    return `${days}: ${time12(h.opens)} – ${time12(h.closes)}`;
+  });
+  const open = new Set(hours.flatMap((h) => h.days));
+  const closed = allDays.filter((d) => !open.has(d));
+  if (closed.length) lines.push(`${closed.map((d) => dayNames[d]).join(", ")}: cerrado`);
+  return lines;
+};
+
+/** Dirección en una línea: "Calle…, Sector, Santo Domingo" */
+export const formatAddress = (a?: BookingCenter["address"]) =>
+  a ? [a.street, a.neighborhood, "Santo Domingo"].filter(Boolean).join(", ") : "";
 
 /**
  * Formación y credenciales, confirmadas por Julio (nov. 2026). Se muestran en "Sobre mí"

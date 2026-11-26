@@ -22,6 +22,8 @@ type Options = {
   mainEntityId?: string;
   /** @id del BreadcrumbList de la página, si lo tiene */
   breadcrumbId?: string;
+  /** Última revisión del contenido de la página (AAAA-MM-DD) */
+  dateModified?: string;
   articles: Article[];
 };
 
@@ -33,7 +35,7 @@ const slugify = (s: string) =>
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)/g, "");
 
-export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl, mainEntityId, breadcrumbId, articles }: Options) {
+export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl, mainEntityId, breadcrumbId, dateModified, articles }: Options) {
   const id = {
     site: abs("/#sitio"),
     person: abs("/#persona"),
@@ -112,6 +114,7 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
         about: { "@id": id.person },
         ...(mainEntityId ? { mainEntity: { "@id": mainEntityId } } : {}),
         ...(breadcrumbId ? { breadcrumb: { "@id": breadcrumbId } } : {}),
+        ...(dateModified ? { dateModified } : {}),
         primaryImageOfPage: { "@type": "ImageObject", url: imageUrl, width: 1200, height: 630 },
       },
       {

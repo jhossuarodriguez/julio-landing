@@ -36,7 +36,9 @@ import { site } from "@/config/site";
 <script>
   const btn = document.getElementById("whatsapp-channel")!;
   // Secciones donde el botón estorba: las tarjetas de reserva y el bloque de contacto
-  const zones = ["agenda", "contacto"].map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
+  // En móvil también sobre la cuadrícula de servicios, donde taparía los enlaces "Saber más"
+  const ids = ["agenda", "contacto", ...(window.matchMedia("(max-width: 639px)").matches ? ["servicios"] : [])];
+  const zones = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
   const visible = new Set<Element>();
 
   // Visible solo después de pasar el hero (no tapa su contenido) y fuera de "Agenda tu cita"

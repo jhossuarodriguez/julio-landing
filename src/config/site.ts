@@ -29,6 +29,8 @@ export const site = {
   description:
     "Psicólogo clínico y psicoterapeuta en Santo Domingo. Terapia individual, de pareja, sexual y familiar con enfoque sistémico breve. Agenda por WhatsApp.",
   locale: "es_DO",
+  /** Última revisión del contenido de la home (AAAA-MM-DD). Actualízala al cambiar textos, no en cada deploy. */
+  contentUpdated: "2026-11-26",
   social: {
     mediumUser: "medina.juliocesar16",
     medium: "https://medium.com/@medina.juliocesar16",

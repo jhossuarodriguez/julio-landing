@@ -26,6 +26,8 @@ interface Props {
   mainEntityId?: string;
   /** @id del BreadcrumbList de la página */
   breadcrumbId?: string;
+  /** Última revisión del contenido (AAAA-MM-DD); por defecto, la de la home */
+  dateModified?: string;
 }
 
 const {
@@ -36,6 +38,7 @@ const {
   schema = [],
   mainEntityId,
   breadcrumbId,
+  dateModified = site.contentUpdated,
 } = Astro.props;
 
 // URLs absolutas: solo existen cuando `site` (SITE_URL) está configurado en astro.config.mjs
@@ -56,6 +59,7 @@ const jsonLd = buildJsonLd({
   personImageUrl: abs(portrait.src),
   mainEntityId,
   breadcrumbId,
+  dateModified: noindex ? undefined : dateModified,
   articles: featuredArticles,
 });
 jsonLd["@graph"].push(...(schema as any[]));

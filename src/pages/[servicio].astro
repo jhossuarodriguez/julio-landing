@@ -80,6 +80,7 @@ const schema = [
   schema={schema}
   mainEntityId={serviceId}
   breadcrumbId={breadcrumbId}
+  dateModified={page.updated}
 >
   <Header bookingHref="#agenda" />
   <main id="contenido">
@@ -208,7 +209,7 @@ const schema = [
               <li class="reveal rounded-3xl border border-forest/10 bg-white/60 p-6">
                 <span class="font-display text-3xl text-apricot">{String(i + 1).padStart(2, "0")}</span>
                 <h3 class="mt-3 font-medium text-forest">{s.title}</h3>
-                <p class="mt-2 text-sm leading-relaxed text-forest/75">{s.text}</p>
+                <p class="mt-2 text-sm leading-relaxed text-forest/85">{s.text}</p>
               </li>
             ))
           }
@@ -250,6 +251,9 @@ const schema = [
             ))
           }
         </div>
+        <p class="mt-8 text-sm text-forest/85">
+          Última actualización: <time datetime={page.updated}>{fmtDate(page.updated + "T12:00:00Z")}</time>
+        </p>
       </div>
     </section>
 
@@ -278,9 +282,9 @@ const schema = [
                   >
                     <span class="text-xs tracking-[0.2em] text-olive uppercase">
                       <time datetime={a.date}>{fmtDate(a.date)}</time> · {a.readingMinutes} min
-                    </span>
-                    <span class="mt-2 font-display text-xl leading-snug text-forest group-hover:text-terracotta-700">{a.title}</span>
-                    <span class="mt-2 line-clamp-2 text-sm leading-relaxed text-forest/70">{a.excerpt}</span>
+                    </span>{" "}
+                    <span class="mt-2 font-display text-xl leading-snug text-forest group-hover:text-terracotta-700">{a.title}</span>{" "}
+                    <span class="mt-2 line-clamp-2 text-sm leading-relaxed text-forest/85">{a.excerpt}</span>
                   </a>
                 </li>
               ))}
@@ -304,8 +308,8 @@ const schema = [
                   href={o.path}
                   class="group flex h-full flex-col rounded-3xl border border-forest/10 bg-white/60 p-7 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10"
                 >
-                  <span class="font-display text-2xl text-forest group-hover:text-terracotta-700">{o.title}</span>
-                  <span class="mt-2 flex-1 text-sm leading-relaxed text-forest/75">{o.text}</span>
+                  <span class="font-display text-2xl text-forest group-hover:text-terracotta-700">{o.title}</span>{" "}
+                  <span class="mt-2 flex-1 text-sm leading-relaxed text-forest/85">{o.text}</span>
                   <span class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-forest">
                     Saber más
                     <Icon name="arrow" class="size-4 transition group-hover:translate-x-1" />

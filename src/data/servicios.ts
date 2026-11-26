@@ -13,6 +13,8 @@ export type ServicePage = {
   slug: ServiceSlug;
   /** <title> (≈60 caracteres) */
   seoTitle: string;
+  /** Última revisión del contenido (AAAA-MM-DD): se muestra y va en dateModified */
+  updated: string;
   /** Meta descripción (≤160 caracteres) */
   description: string;
   h1: string;
@@ -51,6 +53,7 @@ const feesFaq: Faq = {
 export const servicePages: Record<ServiceSlug, ServicePage> = {
   sexual: {
     slug: "sexual",
+    updated: "2026-11-26",
     seoTitle: "Terapia Sexual en Santo Domingo · Julio Sánchez, Psicólogo",
     description:
       "Terapia sexual en Santo Domingo: comunicación sobre la intimidad, diferencias de deseo y cambios en la vida sexual. Individual o en pareja, sin juicios.",
@@ -131,6 +134,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
 
   pareja: {
     slug: "pareja",
+    updated: "2026-11-26",
     seoTitle: "Terapia de Pareja en Santo Domingo · Julio Sánchez, Psicólogo",
     description:
       "Terapia de pareja en Santo Domingo con un psicólogo con maestría en Terapia Familiar y de Pareja: comunicación, conflictos y crisis de confianza.",
@@ -207,6 +211,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
 
   individual: {
     slug: "individual",
+    updated: "2026-11-26",
     seoTitle: "Terapia Psicológica Individual en Santo Domingo · Julio Sánchez",
     description:
       "Terapia individual en Santo Domingo con un psicólogo clínico: ansiedad, tristeza, estrés, duelo, rupturas y condiciones crónicas. Presencial u online.",
@@ -285,6 +290,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
 
   familiar: {
     slug: "familiar",
+    updated: "2026-11-26",
     seoTitle: "Terapia Familiar en Santo Domingo · Julio Sánchez, Psicólogo",
     description:
       "Terapia familiar en Santo Domingo para familias con hijos adultos: comunicación, conflictos recurrentes y relaciones más claras. Presencial u online.",

@@ -7,7 +7,11 @@ import Icon from "@/components/ui/Icon.astro";
 import { BOOKING_HREF, site } from "@/config/site";
 ---
 
-<Layout title={`Página no encontrada · ${site.shortName}`} noindex>
+<Layout
+  title={`Página no encontrada · ${site.shortName}`}
+  description="La página que buscas no existe o cambió de dirección. Vuelve al inicio o agenda tu cita con Julio Cesar Sánchez, psicólogo en Santo Domingo."
+  noindex
+>
   <Header />
   <main id="contenido" class="relative isolate flex min-h-[80vh] items-center overflow-hidden bg-forest text-linen">
     <BgTexture class="-z-10" eager />

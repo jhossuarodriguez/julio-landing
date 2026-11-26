@@ -16,7 +16,7 @@ const visual: Record<ServiceSlug, { icon: IconName; accent: string }> = {
     <div class="reveal mx-auto max-w-2xl text-center">
       <p class="eyebrow text-terracotta-700">Servicios</p>
       <h2 class="mt-5 font-display text-4xl leading-tight text-forest sm:text-5xl">¿Cómo puedo ayudarte?</h2>
-      <p class="mt-5 leading-relaxed font-light text-forest/75">
+      <p class="mt-5 leading-relaxed font-light text-forest/85">
         Como psicólogo clínico y psicoterapeuta familiar, de pareja y sexual, acompaño a personas, parejas y familias que
         buscan sentirse mejor y vivir con mayor bienestar emocional.
       </p>
@@ -29,8 +29,8 @@ const visual: Record<ServiceSlug, { icon: IconName; accent: string }> = {
             <span class:list={["inline-flex size-14 items-center justify-center rounded-2xl", visual[s.slug].accent]}>
               <Icon name={visual[s.slug].icon} class="size-7" />
             </span>
-            <h3 class="mt-6 font-display text-2xl text-forest">{s.title}</h3>
-            <p class="mt-3 flex-1 text-sm leading-relaxed text-forest/75">{s.text}</p>
+            <h3 class="mt-6 font-display text-2xl text-forest">{s.title}</h3>{" "}
+            <p class="mt-3 flex-1 text-sm leading-relaxed text-forest/85">{s.text}</p>
             <a
               href={s.path}
               class="mt-5 inline-flex min-h-11 items-center gap-2 self-start text-sm font-medium text-forest hover:text-terracotta-700"

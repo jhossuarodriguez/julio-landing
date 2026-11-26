@@ -13,7 +13,7 @@ if (!site.startsWith("https://")) {
 }
 const host = new URL(site).host;
 // Home + páginas de servicio
-const urlList = [`${site}/`, ...services.map((s) => `${site}${s.path}`)];
+const urlList = [`${site}/`, ...services.map((s) => `${site}${s.path}`), `${site}/privacidad/`];
 
 const res = await fetch("https://api.indexnow.org/indexnow", {
   method: "POST",

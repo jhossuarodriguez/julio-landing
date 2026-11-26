@@ -45,6 +45,11 @@ export type ServicePage = {
 /** Confidencialidad: texto de Julio (Código de Ética y Disciplina del CODOPSI). */
 const CONFIDENCIALIDAD =
   "La información que compartes en consulta se maneja de forma confidencial. Puede compartirse con tu consentimiento escrito o, sin este, cuando exista un peligro inminente para ti o para otras personas, conforme al Código de Ética y Disciplina del CODOPSI y a las normas aplicables.";
+/** Resumen para el bloque de privacidad (el texto completo va en la FAQ "¿Es confidencial?"). */
+const CONFIDENCIALIDAD_RESUMEN =
+  "Lo que compartes en consulta se maneja de forma confidencial, con los límites que establece el Código de Ética y Disciplina del CODOPSI.";
+const CONFIDENCIALIDAD_RESUMEN_USTEDES =
+  "Lo que comparten en consulta se maneja de forma confidencial, con los límites que establece el Código de Ética y Disciplina del CODOPSI.";
 /** Misma idea, dirigida a varias personas (pareja, familia). */
 const CONFIDENCIALIDAD_USTEDES =
   "La información que comparten en consulta se maneja de forma confidencial. Puede compartirse con su consentimiento escrito o, sin este, cuando exista un peligro inminente para ustedes o para otras personas, conforme al Código de Ética y Disciplina del CODOPSI y a las normas aplicables.";
@@ -91,7 +96,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     steps: [
       {
         title: "Escribe al centro que prefieras",
-        text: "Por WhatsApp, con total discreción. No necesitas explicar el motivo en el mensaje: basta con pedir una cita.",
+        text: "Por WhatsApp, con discreción. No necesitas explicar el motivo en el mensaje: basta con pedir una cita.",
       },
       {
         title: "Primera sesión",
@@ -109,7 +114,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     privacy: {
       title: "Tu privacidad, primero",
       text: [
-        CONFIDENCIALIDAD,
+        CONFIDENCIALIDAD_RESUMEN,
         "Puedes venir solo o sola aunque el tema involucre a tu pareja, y si te resulta más cómodo, la sesión puede ser online.",
       ],
     },
@@ -192,7 +197,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     privacy: {
       title: "Un espacio neutral y confidencial",
       text: [
-        CONFIDENCIALIDAD_USTEDES,
+        CONFIDENCIALIDAD_RESUMEN_USTEDES,
         "Ninguno de los dos tiene que sentirse juzgado: el foco es la relación, no quién tiene la razón.",
       ],
     },
@@ -278,7 +283,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     privacy: {
       title: "Un espacio seguro",
       text: [
-        CONFIDENCIALIDAD,
+        CONFIDENCIALIDAD_RESUMEN,
         "Aquí no hay juicios: puedes hablar de lo que sientes con tranquilidad y a tu ritmo.",
       ],
     },
@@ -355,7 +360,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     privacy: {
       title: "Un espacio respetuoso para cada integrante",
       text: [
-        CONFIDENCIALIDAD_USTEDES,
+        CONFIDENCIALIDAD_RESUMEN_USTEDES,
         "Nadie tiene que sentirse juzgado: el foco es la relación entre ustedes, respetando las necesidades de cada persona adulta.",
       ],
     },

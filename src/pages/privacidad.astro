@@ -1,0 +1,143 @@
+---
+/**
+ * Política de privacidad y confidencialidad.
+ * Describe solo lo que el sitio hace de verdad (verificado: sin cookies, sin formularios,
+ * sin almacenamiento local; única conexión a terceros: Cloudflare Web Analytics).
+ * Si se añade un formulario, analítica con cookies u otro servicio, actualizar esta página.
+ */
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/layout/Header.astro";
+import Footer from "@/components/layout/Footer.astro";
+import BgTexture from "@/components/ui/BgTexture.astro";
+import { site, credentials, bookingCenters } from "@/config/site";
+
+const updated = "2026-11-26";
+const fmtDate = (iso: string) =>
+  new Intl.DateTimeFormat("es-DO", { day: "numeric", month: "long", year: "numeric", timeZone: "America/Santo_Domingo" }).format(
+    new Date(`${iso}T12:00:00Z`),
+  );
+const centerNames = bookingCenters.map((c) => c.name).join(", ");
+
+const sections = [
+  {
+    id: "responsable",
+    title: "Quién es el responsable",
+    body: [
+      `Este sitio web pertenece a ${site.name}, ${site.role.toLowerCase()} en Santo Domingo, República Dominicana (Exequátur ${credentials.exequatur}, CODOPSI ${credentials.codopsi}).`,
+      `Para cualquier consulta sobre privacidad puedes escribir a ${site.contact.email} o llamar al ${site.contact.phone}.`,
+    ],
+  },
+  {
+    id: "confidencialidad",
+    title: "Confidencialidad en consulta",
+    body: [
+      "La información que compartes en consulta se maneja de forma confidencial. Puede compartirse con tu consentimiento escrito o, sin este, cuando exista un peligro inminente para ti o para otras personas, conforme al Código de Ética y Disciplina del CODOPSI y a las normas aplicables.",
+    ],
+  },
+  {
+    id: "sitio",
+    title: "Qué datos recoge este sitio web",
+    body: [
+      "Este sitio no tiene formularios ni áreas de registro, y no utiliza cookies ni guarda información en tu navegador.",
+      "Para conocer cuántas personas lo visitan se usa Cloudflare Web Analytics, una herramienta de estadísticas que no utiliza cookies ni sigue a los visitantes entre sitios web. Como cualquier servidor, Cloudflare —que aloja el sitio— procesa datos técnicos de la conexión (como la dirección IP) para entregar las páginas y protegerlas frente a ataques.",
+      "Las fuentes tipográficas y las imágenes, incluidas las portadas de los artículos, se sirven desde este mismo dominio, sin conexiones a otros servicios.",
+    ],
+  },
+  {
+    id: "whatsapp",
+    title: "Citas por WhatsApp o teléfono",
+    body: [
+      `Al pulsar «Agendar por WhatsApp» o «Llamar ahora» se abre WhatsApp (un servicio de Meta) o tu aplicación de teléfono, y te comunicas directamente con el centro que elijas (${centerNames}). Este sitio no recibe ni guarda esos mensajes o llamadas.`,
+      "Los datos que compartas por esos medios los gestiona el centro correspondiente, y WhatsApp los trata según su propia política de privacidad.",
+      "Para agendar no necesitas explicar el motivo de la consulta: basta con pedir una cita. Te recomendamos no enviar información clínica por mensaje.",
+    ],
+  },
+  {
+    id: "enlaces",
+    title: "Enlaces a otros sitios",
+    body: [
+      "Este sitio enlaza a servicios de terceros —como Medium (artículos), Google Maps («Cómo llegar»), LinkedIn y el canal de WhatsApp—, que tienen sus propias políticas de privacidad. Al visitarlos, se aplican sus condiciones.",
+    ],
+  },
+  {
+    id: "derechos",
+    title: "Tus derechos",
+    body: [
+      `Puedes solicitar acceso, rectificación o eliminación de los datos personales que hayas compartido directamente con ${site.shortName} escribiendo a ${site.contact.email}, conforme a la normativa dominicana de protección de datos personales (Ley 172-13).`,
+    ],
+  },
+  {
+    id: "cambios",
+    title: "Cambios en esta política",
+    body: [
+      "Si el sitio incorpora nuevas funciones que afecten a tus datos (por ejemplo, un formulario de contacto), esta página se actualizará e indicará la fecha de la última revisión.",
+    ],
+  },
+];
+---
+
+<Layout
+  title={`Privacidad y confidencialidad · ${site.shortName}`}
+  description="Cómo se protege tu información: confidencialidad en consulta según el código del CODOPSI, qué datos recoge este sitio (sin cookies) y cómo funcionan las citas por WhatsApp."
+  dateModified={updated}
+>
+  <Header />
+  <main id="contenido">
+    <section class="relative isolate overflow-hidden bg-forest text-linen">
+      <BgTexture class="-z-10" eager lowPriority={false} />
+      <div class="container-page pt-32 pb-14 md:pt-36">
+        <nav aria-label="Migas de pan" class="text-sm text-cream/75">
+          <ol class="flex flex-wrap items-center gap-2">
+            <li><a href="/" class="inline-flex min-h-11 items-center hover:text-linen">Inicio</a></li>
+            <li aria-hidden="true">›</li>
+            <li aria-current="page" class="text-cream">Privacidad</li>
+          </ol>
+        </nav>
+        <h1 class="mt-4 font-display text-4xl leading-tight text-cream sm:text-5xl">Privacidad y confidencialidad</h1>
+        <p class="mt-5 max-w-2xl leading-relaxed font-light text-linen/85">
+          Tu tranquilidad es parte del proceso terapéutico. Aquí te explicamos cómo se protege tu información, en consulta
+          y en este sitio web.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-16 sm:py-20">
+      <div class="container-page max-w-3xl">
+        <nav aria-label="Contenido de la página" class="rounded-2xl border border-forest/10 bg-white/60 p-6">
+          <p class="eyebrow text-terracotta-700">En esta página</p>
+          <ul class="mt-3 grid gap-x-6 sm:grid-cols-2">
+            {
+              sections.map((s) => (
+                <li>
+                  <a href={`#${s.id}`} class="inline-flex min-h-11 items-center text-forest/85 hover:text-terracotta-700">
+                    {s.title}
+                  </a>
+                </li>
+              ))
+            }
+          </ul>
+        </nav>
+
+        <div class="mt-12 space-y-12">
+          {
+            sections.map((s) => (
+              <section id={s.id} class="scroll-mt-28">
+                <h2 class="font-display text-3xl text-forest">{s.title}</h2>
+                <div class="mt-4 space-y-4 leading-relaxed text-forest/85">
+                  {s.body.map((p) => (
+                    <p>{p}</p>
+                  ))}
+                </div>
+              </section>
+            ))
+          }
+        </div>
+
+        <p class="mt-14 border-t border-forest/10 pt-6 text-sm text-forest/85">
+          Última actualización: <time datetime={updated}>{fmtDate(updated)}</time>
+        </p>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

@@ -6,8 +6,6 @@ import "@fontsource/poppins/500.css";
 import "@fontsource/poppins/600.css";
 import "@/styles/global.css";
 import { site } from "@/config/site";
-import { getImage } from "astro:assets";
-import retrato from "@/assets/images/julio-retrato.png";
 import { buildJsonLd } from "@/lib/schema";
 import { getArticles, ARTICLES_SHOWN } from "@/lib/medium";
 // Fuente de los titulares (H1 = LCP): se precarga para no retrasar el primer pintado
@@ -49,14 +47,13 @@ const ogImageAlt = `${site.name}, ${site.role.toLowerCase()} en Santo Domingo`;
 
 // Datos estructurados generados desde los mismos datos que muestra la página
 const featuredArticles = (await getArticles()).slice(0, ARTICLES_SHOWN);
-// Retrato de Julio en JPG (formato universal para buscadores) para Person.image
-const portrait = await getImage({ src: retrato, width: 600, format: "jpg", quality: 80 });
+// Retrato de Julio con URL fija (public/), para que no cambie en cada build
 const jsonLd = buildJsonLd({
   abs,
   pageUrl: canonical ?? abs(Astro.url.pathname),
   pageTitle: title,
   imageUrl: ogImageUrl,
-  personImageUrl: abs(portrait.src),
+  personImageUrl: abs("/julio-cesar-sanchez.jpg"),
   mainEntityId,
   breadcrumbId,
   dateModified: noindex ? undefined : dateModified,

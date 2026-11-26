@@ -96,7 +96,7 @@ const steps = [
                 <p class="flex gap-2.5">
                   <Icon name="pin" class="mt-0.5 size-4 shrink-0 text-terracotta-700" />
                   <span>
-                    {formatAddress(c.address)}
+                    {formatAddress(c.address)}{" "}
                     {c.mapsUrl && (
                       <a
                         href={c.mapsUrl}
@@ -115,7 +115,7 @@ const steps = [
                 <div class="flex gap-2.5">
                   <Icon name="clock" class="mt-0.5 size-4 shrink-0 text-terracotta-700" />
                   <p>
-                    <span class="block font-medium text-forest">Horario del centro</span>
+                    <span class="block font-medium text-forest">Horario del centro:</span>{" "}
                     {formatHours(c.hours).map((line, i) => (i === 0 ? line : <><br />{line}</>))}
                   </p>
                 </div>

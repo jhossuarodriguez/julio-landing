@@ -7,6 +7,7 @@ const visual: Record<ServiceSlug, { icon: IconName; accent: string }> = {
   individual: { icon: "psi", accent: "bg-sage/25 text-forest" },
   pareja: { icon: "heart", accent: "bg-apricot/20 text-terracotta-700" },
   sexual: { icon: "flame", accent: "bg-terracotta/15 text-clay" },
+  familiar: { icon: "users", accent: "bg-cream/70 text-olive" },
 };
 ---
 
@@ -16,12 +17,12 @@ const visual: Record<ServiceSlug, { icon: IconName; accent: string }> = {
       <p class="eyebrow text-terracotta-700">Servicios</p>
       <h2 class="mt-5 font-display text-4xl leading-tight text-forest sm:text-5xl">¿Cómo puedo ayudarte?</h2>
       <p class="mt-5 leading-relaxed font-light text-forest/75">
-        Como psicólogo clínico, terapeuta de pareja y terapeuta sexual, acompaño a adultos y parejas que buscan sentirse
-        mejor y vivir con mayor bienestar emocional.
+        Como psicólogo clínico y psicoterapeuta familiar, de pareja y sexual, acompaño a personas, parejas y familias que
+        buscan sentirse mejor y vivir con mayor bienestar emocional.
       </p>
     </div>
 
-    <div class="mx-auto mt-16 grid max-w-5xl gap-5 md:grid-cols-3">
+    <div class="mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
       {
         services.map((s) => (
           <article class="reveal group flex flex-col rounded-3xl border border-forest/10 bg-linen p-7 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10">

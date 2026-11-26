@@ -18,6 +18,7 @@ import { getArticles, ARTICLES_SHOWN } from "@/lib/medium";
 import julioDePie from "@/assets/images/julio-de-pie.png";
 import julioSonrisa from "@/assets/images/julio-sonrisa.png";
 import julioBn from "@/assets/images/julio-bn.png";
+import julioSentado from "@/assets/images/julio-sentado.png";
 
 export function getStaticPaths() {
   return services.map((s) => ({
@@ -30,7 +31,7 @@ const { slug } = Astro.props as { slug: ServiceSlug };
 const page = servicePages[slug];
 const service = services.find((s) => s.slug === slug)!;
 const others = services.filter((s) => s.slug !== slug);
-const images = { "julio-de-pie": julioDePie, "julio-sonrisa": julioSonrisa, "julio-bn": julioBn };
+const images = { "julio-de-pie": julioDePie, "julio-sonrisa": julioSonrisa, "julio-bn": julioBn, "julio-sentado": julioSentado };
 const relevant = credentials.education.filter((e) => page.relevantCredentials.includes(e.title));
 const articles = page.showArticles ? (await getArticles()).slice(0, ARTICLES_SHOWN) : [];
 
@@ -295,7 +296,7 @@ const schema = [
     <section class="py-20 sm:py-24">
       <div class="container-page">
         <h2 class="reveal font-display text-3xl text-forest">Otros servicios</h2>
-        <ul class="mt-8 grid gap-5 md:grid-cols-2">
+        <ul class="mt-8 grid gap-5 md:grid-cols-3">
           {
             others.map((o) => (
               <li class="reveal">

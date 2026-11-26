@@ -32,7 +32,7 @@ export type ServicePage = {
   /** Mensaje prellenado de WhatsApp para este servicio */
   whatsappMessage: string;
   /** Imagen del encabezado (nombre en src/assets/images) */
-  image: "julio-de-pie" | "julio-sonrisa" | "julio-bn";
+  image: "julio-de-pie" | "julio-sonrisa" | "julio-bn" | "julio-sentado";
   imageAlt: string;
   /** Mostrar artículos de Medium relacionados */
   showArticles?: boolean;
@@ -53,19 +53,17 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     slug: "sexual",
     seoTitle: "Terapia Sexual en Santo Domingo · Julio Sánchez, Psicólogo",
     description:
-      "Terapia sexual en Santo Domingo con un psicólogo clínico formado en sexualidad humana. Individual o en pareja, presencial u online y confidencial.",
+      "Terapia sexual en Santo Domingo con un psicólogo con máster en Sexualidad Humana y Terapia de Pareja. Respetuosa, confidencial, individual o en pareja.",
     h1: "Terapia sexual en Santo Domingo",
-    lead: "Un espacio confidencial y sin juicios para hablar de tu sexualidad, comprender lo que te preocupa y encontrar soluciones, a solas o en pareja.",
+    lead: "Un espacio de acompañamiento para conversar sobre tus inquietudes en torno a la sexualidad y la intimidad, de manera respetuosa y sin juicios, a solas o en pareja.",
     whenIntro:
-      "La sexualidad forma parte de nuestro bienestar, y es normal que en algún momento aparezcan dudas o dificultades. Hablarlo con un profesional suele ser el primer paso para recuperar la tranquilidad. La terapia sexual puede ayudarte si vives, por ejemplo:",
+      "La sexualidad y la intimidad forman parte de nuestro bienestar. El proceso terapéutico puede ayudarte a explorar cómo tus preocupaciones se relacionan con tu bienestar personal o con tu vida de pareja, y a identificar objetivos de trabajo acordes con lo que necesitas. Puede ayudarte, por ejemplo, si tienes:",
     when: [
-      "Bajo deseo sexual, o diferencias de deseo que generan tensión en la pareja.",
-      "Dificultades de erección o de eyaculación (precoz o retardada).",
-      "Dificultad para alcanzar el orgasmo o para disfrutar de los encuentros.",
-      "Dolor o incomodidad en las relaciones sexuales (trabajado junto a una valoración médica).",
-      "Ansiedad, vergüenza o culpa relacionadas con la sexualidad.",
-      "Problemas para hablar de intimidad en pareja, o cambios en la vida sexual tras una infidelidad, un embarazo o una etapa difícil.",
-      "Dudas sobre tu vida sexual, tu orientación o tu identidad que quieras explorar con calma.",
+      "Inquietudes o dudas sobre tu sexualidad que quieras conversar con un profesional.",
+      "Preocupaciones sobre tu vida íntima que están afectando tu bienestar personal.",
+      "Dificultades en la sexualidad o la intimidad de la pareja.",
+      "Dificultad para hablar de sexualidad e intimidad con tu pareja.",
+      "Cambios en la intimidad después de una crisis de pareja o de una etapa difícil.",
     ],
     approach: [
       "La terapia sexual es una forma de psicoterapia: se trabaja conversando. No hay exploraciones físicas ni ejercicios que te hagan sentir incómodo o incómoda; todo se hace a tu ritmo y con tu consentimiento.",
@@ -73,7 +71,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       "Si una dificultad puede tener un origen físico u hormonal, te recomendaré una valoración médica (por ejemplo, con urología o ginecología) para abordarla de forma integral y en paralelo.",
     ],
     relevantCredentials: [
-      "Formación en Sexualidad Humana y Terapia de Pareja",
+      "Máster en Sexualidad Humana y Terapia de Pareja",
       "Maestría en Terapia Familiar y de Pareja",
       "Psicólogo clínico",
     ],
@@ -136,19 +134,18 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     slug: "pareja",
     seoTitle: "Terapia de Pareja en Santo Domingo · Julio Sánchez, Psicólogo",
     description:
-      "Terapia de pareja en Santo Domingo con un psicólogo con maestría en Terapia Familiar y de Pareja. Comunicación, celos, infidelidad. Presencial u online.",
+      "Terapia de pareja en Santo Domingo con un psicólogo con maestría en Terapia Familiar y de Pareja. Comunicación, crisis e infidelidad. Presencial u online.",
     h1: "Terapia de pareja en Santo Domingo",
-    lead: "Herramientas para mejorar la comunicación, resolver conflictos y fortalecer el vínculo, de la mano de un psicoterapeuta con maestría en Terapia Familiar y de Pareja.",
+    lead: "Para parejas que desean comprender sus patrones de conflicto, mejorar la comunicación o afrontar momentos de distancia y crisis, con un psicoterapeuta con maestría en Terapia Familiar y de Pareja.",
     whenIntro:
       "Toda relación atraviesa etapas difíciles. Pedir ayuda no significa que la relación haya fracasado: muchas parejas llegan a terapia precisamente porque quieren cuidarla. Puede ayudarles si, por ejemplo:",
     when: [
-      "Discuten a menudo por los mismos temas y sienten que no llegan a nada.",
-      "Notan distancia emocional, poco tiempo de calidad o que viven «como compañeros de piso».",
-      "Hay celos, inseguridad o desconfianza que desgastan la relación.",
-      "Atraviesan una infidelidad y quieren decidir cómo seguir, o reconstruir la confianza.",
-      "Les cuesta ponerse de acuerdo en decisiones importantes: convivencia, hijos, familia, dinero.",
-      "La intimidad o la vida sexual se ha vuelto un tema difícil de hablar.",
-      "Están considerando separarse y quieren hacerlo con respeto, especialmente si hay hijos.",
+      "Discuten a menudo por los mismos temas y quieren comprender sus patrones de conflicto.",
+      "Sienten que no se escuchan o no se entienden, y quieren mejorar la comunicación.",
+      "Atraviesan un momento de distancia emocional o de crisis en la relación.",
+      "Hay celos o desconfianza que desgastan la relación.",
+      "Vivieron una infidelidad o una traición y han decidido continuar juntos: quieren explorar lo ocurrido, trabajar la confianza y definir cómo seguir adelante.",
+      "Necesitan tomar decisiones importantes sobre su relación.",
     ],
     approach: [
       "Trabajo desde un enfoque sistémico breve: miramos la relación como un sistema. Más que buscar culpables, observamos los patrones que se repiten entre ustedes —cómo discuten, cómo se piden las cosas, qué pasa cuando uno se aleja— y buscamos juntos formas nuevas de relacionarse.",
@@ -157,7 +154,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     ],
     relevantCredentials: [
       "Maestría en Terapia Familiar y de Pareja",
-      "Formación en Sexualidad Humana y Terapia de Pareja",
+      "Máster en Sexualidad Humana y Terapia de Pareja",
       "Certificación en Terapia Breve de Resolución de Problemas",
     ],
     steps: [
@@ -196,11 +193,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
       {
         q: "¿Sirve la terapia después de una infidelidad?",
-        a: "Sí. Puede ayudarles a entender lo ocurrido, a gestionar el dolor y a decidir si quieren reconstruir la confianza, sin prisas y respetando los tiempos de cada uno.",
-      },
-      {
-        q: "¿También atiendes a parejas que se están separando?",
-        a: "Sí. La terapia puede ayudar a separarse con respeto, reducir el conflicto y organizar la crianza compartida cuando hay hijos.",
+        a: "Sí. Acompaño a parejas que, después de una infidelidad o una traición, deciden continuar juntas: el proceso les permite explorar lo ocurrido, trabajar la confianza y definir cómo seguir adelante, respetando los tiempos de cada uno.",
       },
       {
         q: "¿Cuántas sesiones vamos a necesitar?",
@@ -219,19 +212,18 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     slug: "individual",
     seoTitle: "Terapia Psicológica Individual en Santo Domingo · Julio Sánchez",
     description:
-      "Terapia psicológica individual en Santo Domingo con un psicólogo clínico. Ansiedad, estrés, autoestima, duelo y relaciones. Presencial u online.",
+      "Terapia psicológica individual en Santo Domingo con un psicólogo clínico. Ansiedad, tristeza, estrés, duelo y condiciones crónicas. Presencial u online.",
     h1: "Terapia psicológica individual en Santo Domingo",
-    lead: "Un proceso para conocerte mejor, fortalecer tus recursos y construir la vida que deseas, acompañado por un psicólogo clínico.",
+    lead: "Para comprender lo que sientes y afrontar situaciones que afectan tu bienestar, tus relaciones o tu vida cotidiana, acompañado por un psicólogo clínico.",
     whenIntro:
-      "No hace falta estar «muy mal» para ir a terapia. Muchas personas consultan porque algo les pesa, porque quieren entenderse mejor o porque atraviesan un cambio. Puede ayudarte si, por ejemplo:",
+      "No hace falta estar «muy mal» para ir a terapia. El proceso se adapta a las necesidades de cada persona. Puede ayudarte si, por ejemplo, vives:",
     when: [
-      "Sientes ansiedad, estrés o preocupación constante que te cuesta manejar.",
-      "Te notas triste, desmotivado o desmotivada, o sin ganas de las cosas que antes disfrutabas.",
-      "Tu autoestima o la forma en que te hablas a ti mismo o misma te hace daño.",
-      "Atraviesas un duelo o una pérdida, incluida una ruptura de pareja.",
-      "Hay conflictos que se repiten con tu familia, tu pareja o en el trabajo.",
-      "Enfrentas una decisión o un cambio importante en tu vida.",
-      "Quieres conocerte mejor y crecer a nivel personal.",
+      "Ansiedad o preocupación constante que te cuesta manejar.",
+      "Tristeza o desánimo que no termina de pasar.",
+      "Estrés que afecta tu día a día, tu descanso o tu trabajo.",
+      "Un duelo o una pérdida, incluida una ruptura de pareja.",
+      "Los desafíos emocionales de vivir con una condición de salud crónica.",
+      "Situaciones que afectan tus relaciones o tu vida cotidiana y que quieres comprender mejor.",
     ],
     approach: [
       "Trabajo desde un enfoque sistémico breve, orientado a la construcción de soluciones. Eso significa que, además de entender lo que te ocurre, ponemos el foco en tus recursos, en lo que ya funciona y en los pasos concretos que puedes dar.",
@@ -291,5 +283,76 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     whatsappMessage: "Hola, me gustaría agendar una cita de terapia individual con el psicólogo Julio Cesar Sánchez.",
     image: "julio-bn",
     imageAlt: "Retrato de Julio Cesar Sánchez Medina, psicólogo clínico en Santo Domingo",
+  },
+
+  familiar: {
+    slug: "familiar",
+    seoTitle: "Terapia Familiar en Santo Domingo · Julio Sánchez, Psicólogo",
+    description:
+      "Terapia familiar en Santo Domingo para familias con hijos adultos: comunicación, conflictos recurrentes y relaciones más claras. Presencial u online.",
+    h1: "Terapia familiar en Santo Domingo",
+    lead: "Para familias con hijos adultos que desean mejorar la comunicación, comprender conflictos recurrentes o encontrar maneras más claras de relacionarse y apoyarse.",
+    whenIntro:
+      "Cuando los hijos crecen, la familia cambia: aparecen nuevas formas de relacionarse, nuevas expectativas y, a veces, tensiones que se repiten. La terapia familiar ofrece un espacio para hablarlo con ayuda profesional. Puede ayudarles si, por ejemplo:",
+    when: [
+      "Les cuesta comunicarse con claridad entre padres e hijos adultos.",
+      "Hay conflictos que se repiten y quieren comprender por qué ocurren.",
+      "Quieren encontrar maneras más claras de relacionarse y de apoyarse como familia.",
+      "Necesitan que cada integrante pueda expresar su perspectiva y sentirse escuchado.",
+      "Buscan un equilibrio entre el apoyo familiar y la autonomía de cada persona adulta.",
+    ],
+    approach: [
+      "Trabajo desde un enfoque sistémico breve: miramos a la familia como un sistema en el que lo que hace cada integrante influye en los demás. Más que buscar culpables, observamos los patrones que se repiten y buscamos juntos formas nuevas de relacionarse.",
+      "El trabajo considera la perspectiva de cada integrante y la dinámica familiar en conjunto, respetando la autonomía y las necesidades de las personas adultas.",
+    ],
+    relevantCredentials: [
+      "Maestría en Terapia Familiar y de Pareja",
+      "Certificación en Coordinación y Psicoterapia de Grupo",
+      "Psicólogo clínico",
+    ],
+    steps: [
+      {
+        title: "Escriban al centro que prefieran",
+        text: "Por WhatsApp. Puede escribir cualquier integrante de la familia; basta con pedir una cita de terapia familiar.",
+      },
+      {
+        title: "Primera sesión",
+        text: "Conversamos sobre lo que les trae y lo que cada uno quisiera que cambiara. Es un espacio seguro para todos.",
+      },
+      {
+        title: "Objetivos en común",
+        text: "Acordamos qué quieren trabajar como familia, quiénes participarán y con qué frecuencia.",
+      },
+      {
+        title: "Seguimiento",
+        text: "Revisamos juntos los avances y ajustamos el proceso según lo que vaya funcionando.",
+      },
+    ],
+    privacy: {
+      title: "Un espacio respetuoso para cada integrante",
+      text: [
+        "Lo que se habla en consulta es confidencial, de acuerdo con el código de ética profesional del psicólogo.",
+        "Nadie tiene que sentirse juzgado: el foco es la relación entre ustedes, respetando las necesidades de cada persona adulta.",
+      ],
+    },
+    faqs: [
+      {
+        q: "¿A qué familias está dirigida?",
+        a: "A familias con hijos adultos que desean mejorar la comunicación, comprender conflictos recurrentes o encontrar maneras más claras de relacionarse y apoyarse.",
+      },
+      {
+        q: "¿Tomas partido por alguien de la familia?",
+        a: "No. El trabajo considera la perspectiva de cada integrante y la dinámica familiar en conjunto, respetando la autonomía de cada persona adulta.",
+      },
+      {
+        q: "¿Es confidencial?",
+        a: "Sí. Lo que se comparte en consulta está protegido por el secreto profesional.",
+      },
+      modalityFaq,
+      feesFaq,
+    ],
+    whatsappMessage: "Hola, nos gustaría agendar una cita de terapia familiar con el psicólogo Julio Cesar Sánchez.",
+    image: "julio-sentado",
+    imageAlt: "Julio Cesar Sánchez Medina, psicólogo y terapeuta familiar en Santo Domingo",
   },
 };

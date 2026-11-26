@@ -126,7 +126,7 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
         email: site.contact.email,
         telephone: e164(site.contact.phone),
         knowsLanguage: "es",
-        knowsAbout: [
+        knowsAbout: [...new Set([
           "Psicología clínica",
           "Psicoterapia",
           ...services.map((s) => s.title),
@@ -135,7 +135,7 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
           "Terapia sistémica breve",
           "Psicoterapia de grupo",
           "Salud mental",
-        ],
+        ])],
         hasOccupation: {
           "@type": "Occupation",
           name: site.role,

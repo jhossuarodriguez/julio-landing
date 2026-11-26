@@ -24,10 +24,10 @@ export const site = {
   alternateNames: ["Julio Cesar Sánchez", "Julio Sánchez", "Julio Sánchez Medina", "Julio Sanchez Medina"],
   role: "Psicólogo clínico",
   /** Cómo se presenta Julio (y cómo lo buscan): se usan en textos y datos estructurados */
-  roles: ["Psicólogo clínico", "Psicoterapeuta", "Terapeuta de pareja", "Terapeuta sexual", "Sexólogo"],
+  roles: ["Psicólogo clínico", "Psicoterapeuta", "Terapeuta de pareja", "Terapeuta familiar", "Terapeuta sexual", "Sexólogo"],
   title: "Psicólogo y Psicoterapeuta en Santo Domingo · Julio Sánchez",
   description:
-    "Psicólogo clínico y psicoterapeuta en Santo Domingo. Terapia individual, de pareja y sexual con enfoque sistémico breve. Agenda tu cita por WhatsApp.",
+    "Psicólogo clínico y psicoterapeuta en Santo Domingo. Terapia individual, de pareja, sexual y familiar con enfoque sistémico breve. Agenda por WhatsApp.",
   locale: "es_DO",
   social: {
     mediumUser: "medina.juliocesar16",
@@ -72,7 +72,7 @@ export const credentials = {
     { kind: "degree", title: "Psicólogo clínico", institution: "Universidad Católica de Santo Domingo", short: "UCSD", year: 2019 },
     { kind: "degree", title: "Maestría en Terapia Familiar y de Pareja", institution: "Universidad Católica de Santo Domingo", short: "UCSD" },
     { kind: "degree", title: "Maestría en Psicología de la Salud", institution: "Universidad Europea del Atlántico" },
-    { kind: "course", title: "Formación en Sexualidad Humana y Terapia de Pareja", institution: "Universidad Autónoma de Santo Domingo", short: "UASD" },
+    { kind: "degree", title: "Máster en Sexualidad Humana y Terapia de Pareja", institution: "Universidad Autónoma de Santo Domingo", short: "UASD" },
     { kind: "certificate", title: "Certificación en Terapia Breve de Resolución de Problemas", institution: "Brief Therapy Center México" },
     { kind: "certificate", title: "Certificación en Coordinación y Psicoterapia de Grupo", institution: "Escuela Sistémica de Argentina" },
   ],
@@ -84,7 +84,7 @@ export const bookingInfo = {
   fees: "Los honorarios y la facturación los gestiona cada centro: al escribir te informarán de tarifas y disponibilidad.",
 } as const;
 
-export type ServiceSlug = "individual" | "pareja" | "sexual";
+export type ServiceSlug = "individual" | "pareja" | "sexual" | "familiar";
 
 /** Servicios (se muestran en "Servicios" y en los datos estructurados). */
 /** `path`: página propia del servicio (contenido en @/data/servicios). */
@@ -93,19 +93,25 @@ export const services: { slug: ServiceSlug; path: string; title: string; text: s
     slug: "individual",
     path: "/terapia-individual/",
     title: "Terapia individual",
-    text: "Procesos para conocerte mejor, fortalecer tus recursos y construir la vida que deseas.",
+    text: "Para comprender lo que sientes y afrontar la ansiedad, la tristeza, el estrés, el duelo o los desafíos emocionales de una condición crónica.",
   },
   {
     slug: "pareja",
     path: "/terapia-de-pareja/",
     title: "Terapia de pareja",
-    text: "Herramientas para mejorar la comunicación, resolver conflictos y fortalecer el vínculo.",
+    text: "Para comprender sus patrones de conflicto, mejorar la comunicación y afrontar momentos de distancia, crisis o una infidelidad.",
   },
   {
     slug: "sexual",
     path: "/terapia-sexual/",
     title: "Terapia sexual",
-    text: "Un espacio confiable para acompañarte a superar e integrar tus preocupaciones relacionadas con tu sexualidad, en pareja o de forma individual.",
+    text: "Un espacio respetuoso y sin juicios para conversar sobre tus inquietudes en torno a la sexualidad y la intimidad, a solas o en pareja.",
+  },
+  {
+    slug: "familiar",
+    path: "/terapia-familiar/",
+    title: "Terapia familiar",
+    text: "Para familias con hijos adultos que desean comunicarse mejor, comprender sus conflictos y relacionarse de forma más clara.",
   },
 ];
 

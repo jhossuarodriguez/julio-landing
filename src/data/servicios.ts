@@ -135,7 +135,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
   pareja: {
     slug: "pareja",
     updated: "2026-11-26",
-    seoTitle: "Terapia de Pareja en Santo Domingo · Julio Sánchez, Psicólogo",
+    seoTitle: "Terapia de Pareja en Santo Domingo · Julio Sánchez",
     description:
       "Terapia de pareja en Santo Domingo con un psicólogo con maestría en Terapia Familiar y de Pareja: comunicación, conflictos y crisis de confianza.",
     h1: "Terapia de pareja en Santo Domingo",
@@ -212,7 +212,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
   individual: {
     slug: "individual",
     updated: "2026-11-26",
-    seoTitle: "Terapia Psicológica Individual en Santo Domingo · Julio Sánchez",
+    seoTitle: "Terapia Psicológica en Santo Domingo · Julio Sánchez",
     description:
       "Terapia individual en Santo Domingo con un psicólogo clínico: ansiedad, tristeza, estrés, duelo, rupturas y condiciones crónicas. Presencial u online.",
     h1: "Terapia psicológica individual en Santo Domingo",

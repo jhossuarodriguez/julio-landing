@@ -13,7 +13,7 @@ const { message = BOOKING_MESSAGE } = Astro.props;
 
 const steps = [
   { n: "01", title: "Elige un centro", text: "Selecciona el lugar que te quede más cómodo." },
-  { n: "02", title: "Escríbenos", text: "Por WhatsApp o llamada, con total confidencialidad." },
+  { n: "02", title: "Escríbenos", text: "Por WhatsApp o llamada, con discreción." },
   { n: "03", title: "Coordina tu sesión", text: "Acordamos juntos el día y la hora de tu cita." },
 ];
 ---
@@ -39,8 +39,8 @@ const steps = [
         Agenda tu cita
       </h2>
       <p class="mt-5 leading-relaxed font-light text-linen/80">
-        Elige el centro de tu preferencia y escríbenos por WhatsApp. Te responderemos para coordinar el día y la hora de
-        tu sesión.
+        Elige el centro de tu preferencia y escríbenos por WhatsApp. Te responderán para coordinar el día y la hora de tu
+        sesión y confirmarte la disponibilidad de Julio en ese centro.
       </p>
     </div>
 
@@ -90,13 +90,13 @@ const steps = [
                 <p class="flex gap-2.5">
                   <Icon name="pin" class="mt-0.5 size-4 shrink-0 text-terracotta-700" />
                   <span>
-                    {formatAddress(c.address)}{" "}
+                    {formatAddress(c.address)}
                     {c.mapsUrl && (
                       <a
                         href={c.mapsUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        class="font-medium whitespace-nowrap text-forest underline underline-offset-2 hover:text-terracotta-700"
+                        class="-my-1 flex min-h-11 items-center font-medium whitespace-nowrap text-forest underline underline-offset-2 hover:text-terracotta-700"
                         aria-label={`Cómo llegar a ${c.name} en Google Maps (se abre en una pestaña nueva)`}
                       >
                         Cómo llegar
@@ -109,7 +109,7 @@ const steps = [
                 <div class="flex gap-2.5">
                   <Icon name="clock" class="mt-0.5 size-4 shrink-0 text-terracotta-700" />
                   <p>
-                    <span class="sr-only">Horario del centro: </span>
+                    <span class="block font-medium text-forest">Horario del centro</span>
                     {formatHours(c.hours).map((line, i) => (i === 0 ? line : <><br />{line}</>))}
                   </p>
                 </div>

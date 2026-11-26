@@ -40,6 +40,13 @@ export type ServicePage = {
   showArticles?: boolean;
 };
 
+/** Confidencialidad: texto de Julio (Código de Ética y Disciplina del CODOPSI). */
+const CONFIDENCIALIDAD =
+  "La información que compartes en consulta se maneja de forma confidencial. Puede compartirse con tu consentimiento escrito o, sin este, cuando exista un peligro inminente para ti o para otras personas, conforme al Código de Ética y Disciplina del CODOPSI y a las normas aplicables.";
+/** Misma idea, dirigida a varias personas (pareja, familia). */
+const CONFIDENCIALIDAD_USTEDES =
+  "La información que comparten en consulta se maneja de forma confidencial. Puede compartirse con su consentimiento escrito o, sin este, cuando exista un peligro inminente para ustedes o para otras personas, conforme al Código de Ética y Disciplina del CODOPSI y a las normas aplicables.";
+
 const modalityFaq: Faq = {
   q: "¿Puedo hacer la terapia online?",
   a: "Sí. Las sesiones pueden ser presenciales u online, y se coordinan a través de cada centro. Al escribir por WhatsApp te indicarán la disponibilidad de cada modalidad.",
@@ -98,7 +105,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     privacy: {
       title: "Tu privacidad, primero",
       text: [
-        "Lo que hablas en consulta es confidencial, de acuerdo con el código de ética profesional del psicólogo.",
+        CONFIDENCIALIDAD,
         "Puedes venir solo o sola aunque el tema involucre a tu pareja, y si te resulta más cómodo, la sesión puede ser online.",
       ],
     },
@@ -113,7 +120,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
       {
         q: "¿Es confidencial?",
-        a: "Sí. Todo lo que compartes en consulta está protegido por el secreto profesional.",
+        a: CONFIDENCIALIDAD,
       },
       {
         q: "¿Y si el problema tiene una causa médica?",
@@ -179,7 +186,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     privacy: {
       title: "Un espacio neutral y confidencial",
       text: [
-        "Lo que se habla en consulta es confidencial, de acuerdo con el código de ética profesional del psicólogo.",
+        CONFIDENCIALIDAD_USTEDES,
         "Ninguno de los dos tiene que sentirse juzgado: el foco es la relación, no quién tiene la razón.",
       ],
     },
@@ -195,6 +202,10 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       {
         q: "¿Sirve la terapia después de una infidelidad?",
         a: "Sí, si deciden continuar juntos. El proceso les permite explorar lo ocurrido, comprender cómo les ha afectado y abordar la reconstrucción de la confianza, respetando los tiempos de cada uno.",
+      },
+      {
+        q: "¿Es confidencial?",
+        a: CONFIDENCIALIDAD_USTEDES,
       },
       {
         q: "¿Cuántas sesiones vamos a necesitar?",
@@ -259,7 +270,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     privacy: {
       title: "Un espacio seguro",
       text: [
-        "Lo que hablas en consulta es confidencial, de acuerdo con el código de ética profesional del psicólogo.",
+        CONFIDENCIALIDAD,
         "Aquí no hay juicios: puedes hablar de lo que sientes con tranquilidad y a tu ritmo.",
       ],
     },
@@ -278,7 +289,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
       {
         q: "¿Es confidencial?",
-        a: "Sí. Todo lo que compartes en consulta está protegido por el secreto profesional.",
+        a: CONFIDENCIALIDAD,
       },
       modalityFaq,
       feesFaq,
@@ -335,7 +346,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     privacy: {
       title: "Un espacio respetuoso para cada integrante",
       text: [
-        "Lo que se habla en consulta es confidencial, de acuerdo con el código de ética profesional del psicólogo.",
+        CONFIDENCIALIDAD_USTEDES,
         "Nadie tiene que sentirse juzgado: el foco es la relación entre ustedes, respetando las necesidades de cada persona adulta.",
       ],
     },
@@ -354,7 +365,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
       {
         q: "¿Es confidencial?",
-        a: "Sí. Lo que se comparte en consulta está protegido por el secreto profesional.",
+        a: CONFIDENCIALIDAD_USTEDES,
       },
       modalityFaq,
       feesFaq,

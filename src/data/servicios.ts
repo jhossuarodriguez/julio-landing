@@ -53,21 +53,20 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     slug: "sexual",
     seoTitle: "Terapia Sexual en Santo Domingo · Julio Sánchez, Psicólogo",
     description:
-      "Terapia sexual en Santo Domingo con un psicólogo con máster en Sexualidad Humana y Terapia de Pareja. Respetuosa, confidencial, individual o en pareja.",
+      "Terapia sexual en Santo Domingo: comunicación sobre la intimidad, diferencias de deseo y cambios en la vida sexual. Individual o en pareja, sin juicios.",
     h1: "Terapia sexual en Santo Domingo",
-    lead: "Un espacio de acompañamiento para conversar sobre tus inquietudes en torno a la sexualidad y la intimidad, de manera respetuosa y sin juicios, a solas o en pareja.",
+    lead: "Un espacio de acompañamiento respetuoso, libre de juicios y discriminación, para conversar sobre inquietudes relacionadas con la sexualidad y la intimidad.",
     whenIntro:
-      "La sexualidad y la intimidad forman parte de nuestro bienestar. El proceso terapéutico puede ayudarte a explorar cómo tus preocupaciones se relacionan con tu bienestar personal o con tu vida de pareja, y a identificar objetivos de trabajo acordes con lo que necesitas. Puede ayudarte, por ejemplo, si tienes:",
+      "El proceso se adapta a las necesidades de cada persona o pareja y busca comprender cómo estas preocupaciones se manifiestan en el presente y qué factores personales, emocionales o relacionales pueden estar relacionados. En las sesiones pueden explorar:",
     when: [
-      "Inquietudes o dudas sobre tu sexualidad que quieras conversar con un profesional.",
-      "Preocupaciones sobre tu vida íntima que están afectando tu bienestar personal.",
-      "Dificultades en la sexualidad o la intimidad de la pareja.",
-      "Dificultad para hablar de sexualidad e intimidad con tu pareja.",
-      "Cambios en la intimidad después de una crisis de pareja o de una etapa difícil.",
+      "Dificultades para comunicarse sobre la intimidad.",
+      "Diferencias en las necesidades o el deseo.",
+      "Cambios en la vida sexual.",
+      "Otras preocupaciones que estén afectando el bienestar o la relación.",
     ],
     approach: [
       "La terapia sexual es una forma de psicoterapia: se trabaja conversando. No hay exploraciones físicas ni ejercicios que te hagan sentir incómodo o incómoda; todo se hace a tu ritmo y con tu consentimiento.",
-      "Trabajo desde un enfoque sistémico breve, orientado a la construcción de soluciones. Más que quedarnos solo en el problema, buscamos entender cómo se mantiene la dificultad en tu vida y en tu relación, y construimos pasos concretos para cambiarla. Cuando ayuda, propongo pequeñas tareas para practicar entre sesiones.",
+      "Trabajo desde un enfoque sistémico breve, orientado a la construcción de soluciones. Más que quedarnos solo en el problema, buscamos entender cómo se mantiene la dificultad en tu vida y en tu relación, y construimos pasos concretos para cambiarla. Juntos definiremos metas de trabajo realistas y respuestas acordes con sus circunstancias.",
       "Si una dificultad puede tener un origen físico u hormonal, te recomendaré una valoración médica (por ejemplo, con urología o ginecología) para abordarla de forma integral y en paralelo.",
     ],
     relevantCredentials: [
@@ -107,7 +106,7 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
       {
         q: "¿Hay algún tipo de contacto físico o exploración?",
-        a: "No. La terapia sexual es psicoterapia: se trabaja conversando y, cuando ayuda, con tareas que realizas en tu intimidad entre sesiones.",
+        a: "No. La terapia sexual es psicoterapia: se trabaja conversando, a tu ritmo y con tu consentimiento.",
       },
       {
         q: "¿Es confidencial?",
@@ -134,23 +133,21 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     slug: "pareja",
     seoTitle: "Terapia de Pareja en Santo Domingo · Julio Sánchez, Psicólogo",
     description:
-      "Terapia de pareja en Santo Domingo con un psicólogo con maestría en Terapia Familiar y de Pareja. Comunicación, crisis e infidelidad. Presencial u online.",
+      "Terapia de pareja en Santo Domingo con un psicólogo con maestría en Terapia Familiar y de Pareja: comunicación, conflictos y crisis de confianza.",
     h1: "Terapia de pareja en Santo Domingo",
-    lead: "Para parejas que desean comprender sus patrones de conflicto, mejorar la comunicación o afrontar momentos de distancia y crisis, con un psicoterapeuta con maestría en Terapia Familiar y de Pareja.",
+    lead: "Un espacio de acompañamiento para comprender cómo se manifiestan las dificultades de la relación en el presente y reconocer los patrones que pueden estar generando distancia, conflicto o malestar.",
     whenIntro:
-      "Toda relación atraviesa etapas difíciles. Pedir ayuda no significa que la relación haya fracasado: muchas parejas llegan a terapia precisamente porque quieren cuidarla. Puede ayudarles si, por ejemplo:",
+      "El proceso se adapta a las necesidades de ambos y busca construir formas de comunicarse y responder que sean coherentes con sus circunstancias. En las sesiones pueden trabajar:",
     when: [
-      "Discuten a menudo por los mismos temas y quieren comprender sus patrones de conflicto.",
-      "Sienten que no se escuchan o no se entienden, y quieren mejorar la comunicación.",
-      "Atraviesan un momento de distancia emocional o de crisis en la relación.",
-      "Hay celos o desconfianza que desgastan la relación.",
-      "Vivieron una infidelidad o una traición y han decidido continuar juntos: quieren explorar lo ocurrido, trabajar la confianza y definir cómo seguir adelante.",
-      "Necesitan tomar decisiones importantes sobre su relación.",
+      "La comunicación.",
+      "Los conflictos recurrentes.",
+      "Las crisis de confianza.",
+      "Las decisiones importantes sobre la relación.",
+      "Continuar juntos después de una infidelidad o una traición: explorar lo ocurrido, comprender cómo les ha afectado y abordar la reconstrucción de la confianza.",
     ],
     approach: [
       "Trabajo desde un enfoque sistémico breve: miramos la relación como un sistema. Más que buscar culpables, observamos los patrones que se repiten entre ustedes —cómo discuten, cómo se piden las cosas, qué pasa cuando uno se aleja— y buscamos juntos formas nuevas de relacionarse.",
-      "Mi papel no es tomar partido ni decirles si deben seguir juntos. Es ayudarles a comunicarse mejor, a entender lo que cada uno necesita y a construir soluciones que funcionen para los dos.",
-      "En la mayoría de los procesos combinamos sesiones conjuntas y, cuando hace falta, algún encuentro individual.",
+      "La terapia no busca imponer una decisión ni asignar culpables. Ofrece un espacio para que ambos puedan expresar lo que necesitan y avanzar hacia una mayor claridad sobre cómo desean continuar.",
     ],
     relevantCredentials: [
       "Maestría en Terapia Familiar y de Pareja",
@@ -189,11 +186,11 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
       {
         q: "¿Vas a decirnos si debemos separarnos?",
-        a: "No. Esa decisión les corresponde a ustedes. Mi trabajo es ayudarles a verla con claridad y a tomarla de la mejor manera posible.",
+        a: "No. La terapia no busca imponer una decisión ni asignar culpables: ofrece un espacio para que ambos expresen lo que necesitan y ganen claridad sobre cómo desean continuar.",
       },
       {
         q: "¿Sirve la terapia después de una infidelidad?",
-        a: "Sí. Acompaño a parejas que, después de una infidelidad o una traición, deciden continuar juntas: el proceso les permite explorar lo ocurrido, trabajar la confianza y definir cómo seguir adelante, respetando los tiempos de cada uno.",
+        a: "Sí, si deciden continuar juntos. El proceso les permite explorar lo ocurrido, comprender cómo les ha afectado y abordar la reconstrucción de la confianza, respetando los tiempos de cada uno.",
       },
       {
         q: "¿Cuántas sesiones vamos a necesitar?",

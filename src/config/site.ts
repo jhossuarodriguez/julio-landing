@@ -99,13 +99,13 @@ export const services: { slug: ServiceSlug; path: string; title: string; text: s
     slug: "pareja",
     path: "/terapia-de-pareja/",
     title: "Terapia de pareja",
-    text: "Para comprender sus patrones de conflicto, mejorar la comunicación y afrontar momentos de distancia, crisis o una infidelidad.",
+    text: "Para comprender los patrones que generan distancia o conflicto, y trabajar la comunicación, la confianza y las decisiones sobre la relación.",
   },
   {
     slug: "sexual",
     path: "/terapia-sexual/",
     title: "Terapia sexual",
-    text: "Un espacio respetuoso y sin juicios para conversar sobre tus inquietudes en torno a la sexualidad y la intimidad, a solas o en pareja.",
+    text: "Un espacio respetuoso y libre de juicios para conversar sobre la intimidad, las diferencias de deseo y los cambios en la vida sexual.",
   },
   {
     slug: "familiar",

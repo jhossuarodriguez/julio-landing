@@ -212,22 +212,23 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     slug: "individual",
     seoTitle: "Terapia Psicológica Individual en Santo Domingo · Julio Sánchez",
     description:
-      "Terapia psicológica individual en Santo Domingo con un psicólogo clínico. Ansiedad, tristeza, estrés, duelo y condiciones crónicas. Presencial u online.",
+      "Terapia individual en Santo Domingo con un psicólogo clínico: ansiedad, tristeza, estrés, duelo, rupturas y condiciones crónicas. Presencial u online.",
     h1: "Terapia psicológica individual en Santo Domingo",
-    lead: "Para comprender lo que sientes y afrontar situaciones que afectan tu bienestar, tus relaciones o tu vida cotidiana, acompañado por un psicólogo clínico.",
+    lead: "Un espacio de acompañamiento personalizado para comprender cómo se manifiestan tus dificultades en el presente y desarrollar respuestas coherentes con tus habilidades, necesidades y circunstancias.",
     whenIntro:
-      "No hace falta estar «muy mal» para ir a terapia. El proceso se adapta a las necesidades de cada persona. Puede ayudarte si, por ejemplo, vives:",
+      "La terapia también puede ayudarte a reconocer patrones, fortalecer tus recursos personales y explorar alternativas para avanzar con mayor claridad. No tienes que tener todas las respuestas antes de empezar; podemos comenzar por aquello que hoy te preocupa. En las sesiones podemos abordar temas como:",
     when: [
-      "Ansiedad o preocupación constante que te cuesta manejar.",
-      "Tristeza o desánimo que no termina de pasar.",
-      "Estrés que afecta tu día a día, tu descanso o tu trabajo.",
-      "Un duelo o una pérdida, incluida una ruptura de pareja.",
-      "Los desafíos emocionales de vivir con una condición de salud crónica.",
-      "Situaciones que afectan tus relaciones o tu vida cotidiana y que quieres comprender mejor.",
+      "Ansiedad.",
+      "Tristeza.",
+      "Estrés.",
+      "Duelo.",
+      "Dificultades en las relaciones.",
+      "Rupturas amorosas.",
+      "Los retos emocionales que pueden surgir al vivir con una condición crónica.",
     ],
     approach: [
       "Trabajo desde un enfoque sistémico breve, orientado a la construcción de soluciones. Eso significa que, además de entender lo que te ocurre, ponemos el foco en tus recursos, en lo que ya funciona y en los pasos concretos que puedes dar.",
-      "Tu historia, tus relaciones y tu contexto importan: no eres solo «el problema». Por eso miramos cómo influye tu entorno y qué pequeños cambios pueden tener un gran efecto.",
+      "El proceso se adapta a tus necesidades y a los objetivos que definamos juntos, respetando tu ritmo y tu historia.",
       "Como psicólogo no receto medicación. Si en algún momento puede ayudarte una valoración psiquiátrica, te lo diré y podemos trabajar de forma coordinada.",
     ],
     relevantCredentials: [

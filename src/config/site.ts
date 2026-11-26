@@ -93,7 +93,7 @@ export const services: { slug: ServiceSlug; path: string; title: string; text: s
     slug: "individual",
     path: "/terapia-individual/",
     title: "Terapia individual",
-    text: "Para comprender lo que sientes y afrontar la ansiedad, la tristeza, el estrés, el duelo o los desafíos emocionales de una condición crónica.",
+    text: "Un acompañamiento personalizado para comprender tus dificultades y afrontar la ansiedad, la tristeza, el estrés, el duelo o una ruptura.",
   },
   {
     slug: "pareja",

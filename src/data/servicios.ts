@@ -321,11 +321,11 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       },
       {
         title: "Primera sesión",
-        text: "Conversamos sobre lo que les trae y lo que cada uno quisiera que cambiara. Es un espacio seguro para todos.",
+        text: "Asisten quienes consideren apropiados. Conversamos sobre lo que les trae y lo que cada uno quisiera que cambiara.",
       },
       {
         title: "Objetivos en común",
-        text: "Acordamos qué quieren trabajar como familia, quiénes participarán y con qué frecuencia.",
+        text: "Acordamos qué quieren trabajar como familia. El propio proceso irá determinando quiénes deben participar y en qué momento.",
       },
       {
         title: "Seguimiento",
@@ -342,7 +342,11 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     faqs: [
       {
         q: "¿A qué familias está dirigida?",
-        a: "A familias con hijos adultos que desean mejorar la comunicación, comprender conflictos recurrentes o encontrar maneras más claras de relacionarse y apoyarse.",
+        a: "A familias con hijos adultos que desean mejorar la comunicación, comprender conflictos recurrentes o encontrar maneras más claras de relacionarse y apoyarse. No atiendo familias con hijos menores de edad.",
+      },
+      {
+        q: "¿Tienen que asistir todos los miembros de la familia?",
+        a: "No necesariamente. A la primera sesión es apropiado que asistan quienes consideren adecuados, y el propio proceso irá determinando quiénes deben participar y en qué momento, según se requiera en consulta. La terapia familiar —igual que la de pareja— no se define por el número de personas que asisten, sino por un método de trabajo con su propio marco teórico, orientado a resolver los problemas que motivan la consulta.",
       },
       {
         q: "¿Tomas partido por alguien de la familia?",

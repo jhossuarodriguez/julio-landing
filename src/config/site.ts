@@ -24,7 +24,7 @@ export const site = {
   alternateNames: ["Julio Cesar Sánchez", "Julio Sánchez", "Julio Sánchez Medina", "Julio Sanchez Medina"],
   role: "Psicólogo clínico",
   /** Cómo se presenta Julio (y cómo lo buscan): se usan en textos y datos estructurados */
-  roles: ["Psicólogo clínico", "Psicoterapeuta", "Terapeuta de pareja", "Terapeuta familiar", "Terapeuta sexual", "Sexólogo"],
+  roles: ["Psicólogo clínico", "Psicoterapeuta", "Terapeuta de pareja", "Terapeuta familiar", "Terapeuta sexual"],
   title: "Psicólogo y Psicoterapeuta en Santo Domingo · Julio Sánchez",
   description:
     "Psicólogo clínico y psicoterapeuta en Santo Domingo. Terapia individual, de pareja, sexual y familiar con enfoque sistémico breve. Agenda por WhatsApp.",
@@ -80,7 +80,7 @@ export const bookingCenters: BookingCenter[] = [
     name: "Psicobienestar Centro Terapéutico",
     phone: "+1 (849) 629-1603",
     allowCalls: false,
-    address: { street: "C. Eugenio Deschamps 40", postalCode: "10131" },
+    address: { street: "C. Eugenio Deschamps 40", neighborhood: "Los Prados", postalCode: "10131" },
     mapsUrl: "https://maps.app.goo.gl/SgiDaiuN9QY8KucFA",
     geo: { lat: 18.4731599, lng: -69.9600407 },
     hours: [

@@ -72,6 +72,8 @@ export type BookingCenter = {
   geo?: { lat: number; lng: number };
   /** Horario de atención del centro (los días no listados, cerrado) */
   hours?: OpeningHours[];
+  /** Días en que Julio atiende en este centro */
+  julioDays?: Day[];
 };
 
 /** Centros donde se puede agendar cita (botón "Agenda tu cita"). Datos facilitados por Julio (nov. 2026). */
@@ -83,6 +85,7 @@ export const bookingCenters: BookingCenter[] = [
     address: { street: "C. Eugenio Deschamps 40", neighborhood: "Los Prados", postalCode: "10131" },
     mapsUrl: "https://maps.app.goo.gl/SgiDaiuN9QY8KucFA",
     geo: { lat: 18.4731599, lng: -69.9600407 },
+    julioDays: ["Tu", "We"],
     hours: [
       { days: ["Mo", "Tu", "We", "Th", "Fr"], opens: "09:00", closes: "20:00" },
       { days: ["Sa"], opens: "09:00", closes: "17:00" },
@@ -96,6 +99,7 @@ export const bookingCenters: BookingCenter[] = [
     // Ficha del edificio (Torre Ejecutiva Sonora); coordenadas del edificio
     mapsUrl: "https://maps.app.goo.gl/uHbUzQEjcEtjyeDZA",
     geo: { lat: 18.4813319, lng: -69.9384818 },
+    julioDays: ["Mo", "Sa"],
     hours: [
       { days: ["Mo", "Tu", "We", "Th", "Fr"], opens: "09:00", closes: "20:00" },
       { days: ["Sa"], opens: "09:00", closes: "13:00" },
@@ -110,6 +114,7 @@ export const bookingCenters: BookingCenter[] = [
     address: { street: "Plaza Galerías Comerciales, local 309, Av. 27 de Febrero No. 54", neighborhood: "El Vergel", postalCode: "10107" },
     mapsUrl: "https://maps.app.goo.gl/BvqRkxKV56SDFXxT8",
     geo: { lat: 18.4737444, lng: -69.9172487 },
+    julioDays: ["Th"],
     hours: [
       { days: ["Mo", "Tu", "We", "Th", "Fr"], opens: "09:00", closes: "19:00" },
       { days: ["Sa"], opens: "09:00", closes: "16:00" },
@@ -136,6 +141,15 @@ export const formatHours = (hours: OpeningHours[] = []) => {
   const closed = allDays.filter((d) => !open.has(d));
   if (closed.length) lines.push(`${closed.map((d) => dayNames[d]).join(", ")}: cerrado`);
   return lines;
+};
+
+const dayLong: Record<Day, string> = { Mo: "lunes", Tu: "martes", We: "miércoles", Th: "jueves", Fr: "viernes", Sa: "sábados", Su: "domingos" };
+
+/** Días en texto: ["Mo","Sa"] → "Lunes y sábados" */
+export const formatDays = (days: Day[] = []) => {
+  const names = days.map((d) => dayLong[d]);
+  const text = names.length > 1 ? `${names.slice(0, -1).join(", ")} y ${names.at(-1)}` : (names[0] ?? "");
+  return text.charAt(0).toUpperCase() + text.slice(1);
 };
 
 /** Dirección en una línea: "Calle…, Sector, Santo Domingo" */

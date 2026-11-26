@@ -3,7 +3,7 @@ import { Image } from "astro:assets";
 import BgTexture from "@/components/ui/BgTexture.astro";
 import Icon from "@/components/ui/Icon.astro";
 import brainWhite from "@/assets/brand/brain-white.png";
-import { bookingCenters, bookingInfo, whatsappUrl, telUrl, formatHours, formatAddress, BOOKING_MESSAGE } from "@/config/site";
+import { bookingCenters, bookingInfo, whatsappUrl, telUrl, formatHours, formatAddress, formatDays, BOOKING_MESSAGE } from "@/config/site";
 
 interface Props {
   /** Mensaje prellenado de WhatsApp (p. ej. específico de un servicio) */
@@ -39,8 +39,8 @@ const steps = [
         Agenda tu cita
       </h2>
       <p class="mt-5 leading-relaxed font-light text-linen/80">
-        Elige el centro de tu preferencia y escríbenos por WhatsApp. Te responderán para coordinar el día y la hora de tu
-        sesión y confirmarte la disponibilidad de Julio en ese centro.
+        Elige el centro de tu preferencia y escríbenos por WhatsApp. Te responderán para coordinar la hora de tu sesión en los días
+        en que Julio atiende en ese centro.
       </p>
     </div>
 
@@ -86,6 +86,12 @@ const steps = [
             </div>
 
             <div class="mt-4 space-y-3 text-sm leading-relaxed text-forest/85">
+              {c.julioDays && (
+                <p class="inline-flex items-center gap-2 rounded-full bg-sage/25 px-3 py-1.5 font-medium text-forest">
+                  <Icon name="calendar" class="size-4 shrink-0" />
+                  Julio atiende: {formatDays(c.julioDays).toLowerCase()}
+                </p>
+              )}
               {c.address && (
                 <p class="flex gap-2.5">
                   <Icon name="pin" class="mt-0.5 size-4 shrink-0 text-terracotta-700" />

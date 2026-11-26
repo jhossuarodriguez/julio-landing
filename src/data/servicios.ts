@@ -22,6 +22,8 @@ export type ServicePage = {
   /** "¿Cuándo puede ayudarte?" */
   whenIntro: string;
   when: string[];
+  /** Experiencia propia de Julio (primera persona), destacada al inicio de "Cómo trabajo" */
+  practice: string;
   /** "Cómo trabajo" */
   approach: string[];
   /** Credenciales más relevantes para este servicio (títulos de @/config/site → credentials.education) */
@@ -74,6 +76,8 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       "Cambios en la vida sexual.",
       "Otras preocupaciones que estén afectando el bienestar o la relación.",
     ],
+    practice:
+      "Ofrezco un espacio respetuoso, sin juicios ni discriminación, para conversar sobre inquietudes relacionadas con la sexualidad y la intimidad. El acompañamiento se ajusta a las necesidades de cada persona o pareja y a los objetivos que acuerden en consulta.",
     approach: [
       "La terapia sexual es una forma de psicoterapia: se trabaja conversando. No hay exploraciones físicas ni ejercicios que te hagan sentir incómodo o incómoda; todo se hace a tu ritmo y con tu consentimiento.",
       "Trabajo desde un enfoque sistémico breve, orientado a la construcción de soluciones. Más que quedarnos solo en el problema, buscamos entender cómo se mantiene la dificultad en tu vida y en tu relación, y construimos pasos concretos para cambiarla. Juntos definiremos metas de trabajo realistas y respuestas acordes con sus circunstancias.",
@@ -156,6 +160,8 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       "Las decisiones importantes sobre la relación.",
       "Continuar juntos después de una infidelidad o una traición: explorar lo ocurrido, comprender cómo les ha afectado y abordar la reconstrucción de la confianza.",
     ],
+    practice:
+      "Acompaño a parejas que desean comprender sus dificultades, mejorar la comunicación y decidir cómo continuar su relación. También trabajo con quienes han decidido seguir juntos después de una infidelidad o una traición, ofreciendo un espacio para abordar lo ocurrido y explorar cómo reconstruir la confianza.",
     approach: [
       "Trabajo desde un enfoque sistémico breve: miramos la relación como un sistema. Más que buscar culpables, observamos los patrones que se repiten entre ustedes —cómo discuten, cómo se piden las cosas, qué pasa cuando uno se aleja— y buscamos juntos formas nuevas de relacionarse.",
       "La terapia no busca imponer una decisión ni asignar culpables. Ofrece un espacio para que ambos puedan expresar lo que necesitan y avanzar hacia una mayor claridad sobre cómo desean continuar.",
@@ -239,6 +245,8 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       "Rupturas amorosas.",
       "Los retos emocionales que pueden surgir al vivir con una condición crónica.",
     ],
+    practice:
+      "En mi práctica ofrezco un acompañamiento personalizado, enfocado en comprender cómo se manifiestan las dificultades en el presente y en construir respuestas acordes con las habilidades y necesidades de cada persona. Trabajo junto a quien consulta para reconocer sus recursos y definir objetivos que tengan sentido para su situación.",
     approach: [
       "Trabajo desde un enfoque sistémico breve, orientado a la construcción de soluciones. Eso significa que, además de entender lo que te ocurre, ponemos el foco en tus recursos, en lo que ya funciona y en los pasos concretos que puedes dar.",
       "El proceso se adapta a tus necesidades y a los objetivos que definamos juntos, respetando tu ritmo y tu historia.",
@@ -316,9 +324,10 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
       "Necesitan que cada integrante pueda expresar su perspectiva y sentirse escuchado.",
       "Buscan un equilibrio entre el apoyo familiar y la autonomía de cada persona adulta.",
     ],
+    practice:
+      "Acompaño a familias con hijos adultos que desean comprender sus dinámicas, abordar conflictos y mejorar la comunicación. El proceso toma en cuenta la perspectiva de cada integrante y busca construir formas de relacionarse que respondan a las necesidades de la familia.",
     approach: [
       "Trabajo desde un enfoque sistémico breve: miramos a la familia como un sistema en el que lo que hace cada integrante influye en los demás. Más que buscar culpables, observamos los patrones que se repiten y buscamos juntos formas nuevas de relacionarse.",
-      "El trabajo considera la perspectiva de cada integrante y la dinámica familiar en conjunto, respetando la autonomía y las necesidades de las personas adultas.",
     ],
     relevantCredentials: [
       "Maestría en Terapia Familiar y de Pareja",

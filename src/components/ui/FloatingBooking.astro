@@ -8,7 +8,7 @@ interface Props {
 const { href = BOOKING_HREF } = Astro.props;
 ---
 
-<!-- Botón flotante: aparece al bajar y se oculta cuando la sección de agenda está visible -->
+<!-- Botón flotante: aparece tras el hero, se oculta mientras se baja leyendo (no tapa texto) y cuando la agenda está visible -->
 <a
   id="floating-booking"
   href={href}
@@ -25,9 +25,17 @@ const { href = BOOKING_HREF } = Astro.props;
   const btn = document.getElementById("floating-booking")!;
   const agenda = document.getElementById("agenda");
   let agendaVisible = false;
+  // Al bajar se oculta para no tapar el texto que se lee; al subir vuelve a aparecer
+  let lastY = window.scrollY;
+  let scrollingDown = false;
 
   const update = () => {
-    const show = window.scrollY > window.innerHeight * 0.8 && !agendaVisible;
+    const y = window.scrollY;
+    if (Math.abs(y - lastY) > 8) {
+      scrollingDown = y > lastY;
+      lastY = y;
+    }
+    const show = y > window.innerHeight * 0.8 && !agendaVisible && !scrollingDown;
     btn.dataset.visible = String(show);
     btn.tabIndex = show ? 0 : -1;
     btn.setAttribute("aria-hidden", String(!show));

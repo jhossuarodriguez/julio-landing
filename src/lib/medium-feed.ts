@@ -39,11 +39,19 @@ const toText = (html: string) =>
       .replace(/<[^>]+>/g, " "),
   )
     .replace(/\s+/g, " ")
+    // Sin espacio antes de la puntuación ("pareja ." → "pareja.") al quitar etiquetas en línea
+    .replace(/\s+([.,;:!?)»”])/g, "$1")
     .trim();
 
-const truncate = (text: string, max = 180) => {
+/**
+ * Extracto de hasta `max` caracteres (sirve también de meta description): termina en una
+ * frase completa si cabe al menos una razonable; si no, corta en una palabra y añade "…".
+ */
+const truncate = (text: string, max = 155) => {
   if (text.length <= max) return text;
   const cut = text.slice(0, max);
+  const sentenceEnd = Math.max(cut.lastIndexOf(". "), cut.lastIndexOf("? "), cut.lastIndexOf("! "));
+  if (sentenceEnd >= 80) return cut.slice(0, sentenceEnd + 1);
   return cut.slice(0, cut.lastIndexOf(" ")).replace(/[\s,.;:—-]+$/, "") + "…";
 };
 

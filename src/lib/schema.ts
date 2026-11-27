@@ -208,7 +208,8 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
           name: "Servicios de psicoterapia",
           itemListElement: services.map((s) => ({
             "@type": "Offer",
-            itemOffered: {
+            // En la página del servicio, su Service completo ya es la entidad principal: aquí solo se referencia
+            itemOffered: abs(`${s.path}#servicio`) === mainEntityId ? { "@id": mainEntityId } : {
               "@type": "Service",
               "@id": abs(`${s.path}#servicio`),
               url: abs(s.path),
@@ -232,16 +233,8 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
               sameAs: site.social.medium,
               inLanguage: "es",
               author: { "@id": id.person },
-              blogPost: articles.map((a) => ({
-                "@type": "BlogPosting",
-                "@id": abs(`${articlePath(a)}#articulo`),
-                headline: a.title,
-                url: abs(articlePath(a)),
-                sameAs: a.url,
-                datePublished: a.date,
-                inLanguage: "es",
-                author: { "@id": id.person },
-              })),
+              // Solo referencias: cada BlogPosting se describe completo en su propia página
+              blogPost: articles.map((a) => ({ "@id": abs(`${articlePath(a)}#articulo`) })),
             },
           ]
         : []),

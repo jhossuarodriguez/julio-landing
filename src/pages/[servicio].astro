@@ -15,6 +15,7 @@ import Icon from "@/components/ui/Icon.astro";
 import { services, credentials, site, type ServiceSlug } from "@/config/site";
 import { servicePages } from "@/data/servicios";
 import { getArticles, ARTICLES_SHOWN, articlePath } from "@/lib/medium";
+import { relatedService } from "@/lib/articulo";
 import julioDePie from "@/assets/images/julio-de-pie.png";
 import julioSonrisa from "@/assets/images/julio-sonrisa.png";
 import julioBn from "@/assets/images/julio-bn.png";
@@ -33,7 +34,12 @@ const service = services.find((s) => s.slug === slug)!;
 const others = services.filter((s) => s.slug !== slug);
 const images = { "julio-de-pie": julioDePie, "julio-sonrisa": julioSonrisa, "julio-bn": julioBn, "julio-sentado": julioSentado };
 const relevant = credentials.education.filter((e) => page.relevantCredentials.includes(e.title));
-const articles = page.showArticles ? (await getArticles()).slice(0, ARTICLES_SHOWN) : [];
+// Artículos afines al servicio. Los 4 más recientes ya salen en la home: aquí se priorizan
+// los demás, para que cada artículo reciba enlaces internos además del índice /articulos/.
+const allArticles = await getArticles();
+const onHome = new Set(allArticles.slice(0, ARTICLES_SHOWN).map((a) => a.id));
+const afines = allArticles.filter((a) => relatedService(a).slug === page.slug);
+const articles = [...afines.filter((a) => !onHome.has(a.id)), ...afines.filter((a) => onHome.has(a.id))].slice(0, ARTICLES_SHOWN);
 
 const fmtDate = (iso: string) =>
   new Intl.DateTimeFormat("es-DO", {
@@ -182,7 +188,7 @@ const schema = [
                 <li class="flex gap-3">
                   <Icon name="graduation" class="mt-0.5 size-5 shrink-0 text-sage" />
                   <span>
-                    <span class="block leading-snug">{e.title}</span>
+                    <span class="block leading-snug">{e.title}</span>{" "}
                     <span class="mt-0.5 block text-sm text-linen/70">{"short" in e && e.short ? e.short : e.institution}</span>
                   </span>
                 </li>
@@ -190,7 +196,8 @@ const schema = [
             }
           </ul>
           <p class="mt-6 flex flex-wrap gap-x-4 gap-y-1 border-t border-linen/15 pt-5 text-sm text-linen/80">
-            <span>Exequátur {credentials.exequatur}</span>
+            <span>Exequátur {credentials.exequatur}</span>{" "}
+            <span aria-hidden="true" class="text-linen/40">·</span>{" "}
             <span>CODOPSI {credentials.codopsi}</span>
           </p>
           <a href="/#sobre-mi" class="mt-4 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-apricot-300 hover:text-linen">
@@ -274,7 +281,9 @@ const schema = [
             <div class="reveal flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
               <div>
                 <p class="eyebrow text-terracotta-700">Lecturas recomendadas</p>
-                <h2 class="mt-5 font-display text-3xl leading-tight text-forest sm:text-4xl">Artículos sobre la vida en pareja</h2>
+                <h2 class="mt-5 font-display text-3xl leading-tight text-forest sm:text-4xl">
+                  {page.slug === "pareja" ? "Artículos sobre la vida en pareja" : "Artículos relacionados"}
+                </h2>
               </div>
               <a href="/articulos/" class="btn-outline-dark self-start md:self-auto">
                 Ver todos los artículos
@@ -317,7 +326,7 @@ const schema = [
                   class="group flex h-full flex-col rounded-3xl border border-forest/10 bg-white/60 p-7 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10"
                 >
                   <span class="font-display text-2xl text-forest group-hover:text-terracotta-700">{o.title}</span>{" "}
-                  <span class="mt-2 flex-1 text-sm leading-relaxed text-forest/85">{o.text}</span>
+                  <span class="mt-2 flex-1 text-sm leading-relaxed text-forest/85">{o.text}</span>{" "}
                   <span class="mt-5 inline-flex items-center gap-2 text-sm font-medium text-forest">
                     Saber más
                     <Icon name="arrow" class="size-4 transition group-hover:translate-x-1" />

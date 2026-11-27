@@ -8,6 +8,7 @@ import Header from "@/components/layout/Header.astro";
 import Footer from "@/components/layout/Footer.astro";
 import BgTexture from "@/components/ui/BgTexture.astro";
 import Icon from "@/components/ui/Icon.astro";
+import WhatsAppChannel from "@/components/ui/WhatsAppChannel.astro";
 import { site } from "@/config/site";
 import { getArticles, articlePath } from "@/lib/medium";
 import { remoteImage, fmtDate } from "@/lib/articulo";
@@ -88,7 +89,6 @@ const schema = [
                     sizes="(min-width: 1024px) 34rem, 92vw"
                     alt=""
                     loading="eager"
-                    fetchpriority="high"
                     class="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-[1.03]"
                   />
                 ) : (
@@ -161,4 +161,5 @@ const schema = [
     </section>
   </main>
   <Footer />
+  <WhatsAppChannel />
 </Layout>

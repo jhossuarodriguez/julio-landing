@@ -38,8 +38,6 @@ export type ServicePage = {
   /** Imagen del encabezado (nombre en src/assets/images) */
   image: "julio-de-pie" | "julio-sonrisa" | "julio-bn" | "julio-sentado";
   imageAlt: string;
-  /** Mostrar artículos de Medium relacionados */
-  showArticles?: boolean;
 };
 
 /** Confidencialidad: texto de Julio (Código de Ética y Disciplina del CODOPSI). */
@@ -228,7 +226,6 @@ export const servicePages: Record<ServiceSlug, ServicePage> = {
     whatsappMessage: "Hola, nos gustaría agendar una cita de terapia de pareja con el psicólogo Julio Cesar Sánchez.",
     image: "julio-sonrisa",
     imageAlt: "Julio Cesar Sánchez Medina, psicólogo y terapeuta de pareja en Santo Domingo",
-    showArticles: true,
   },
 
   individual: {

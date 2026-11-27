@@ -31,6 +31,8 @@ export const site = {
   locale: "es_DO",
   /** Última revisión del contenido de la home (AAAA-MM-DD). Actualízala al cambiar textos, no en cada deploy. */
   contentUpdated: "2026-11-26",
+  /** Última revisión de /privacidad/ (AAAA-MM-DD) */
+  privacyUpdated: "2026-11-27",
   social: {
     mediumUser: "medina.juliocesar16",
     medium: "https://medium.com/@medina.juliocesar16",

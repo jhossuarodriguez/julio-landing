@@ -7,15 +7,21 @@ import "@fontsource/poppins/600.css";
 import "@/styles/global.css";
 import { site } from "@/config/site";
 import { buildJsonLd } from "@/lib/schema";
-import { getArticles, ARTICLES_SHOWN } from "@/lib/medium";
+import { getArticles } from "@/lib/medium";
 // Fuente de los titulares (H1 = LCP): se precarga para no retrasar el primer pintado
 import gildaWoff2 from "@fontsource/gilda-display/files/gilda-display-latin-400-normal.woff2?url";
 
 interface Props {
   title?: string;
   description?: string;
-  /** Imagen para compartir (ruta dentro de /public, 1200×630, JPG/PNG) */
+  /** Imagen para compartir (ruta del sitio, JPG). Por defecto la general de 1200×630 */
   ogImage?: string;
+  /** Tamaño de `ogImage` si no es la general */
+  ogImageSize?: { width: number; height: number };
+  /** Texto alternativo de `ogImage` */
+  ogImageAlt?: string;
+  /** Datos de artículo (og:type="article") */
+  article?: { publishedTime: string; modifiedTime?: string };
   /** Excluir de buscadores (p. ej. la página 404) */
   noindex?: boolean;
   /** Nodos JSON-LD adicionales de la página (se añaden al @graph común) */
@@ -32,6 +38,9 @@ const {
   title = site.title,
   description = site.description,
   ogImage = "/og-image.jpg",
+  ogImageSize = { width: 1200, height: 630 },
+  ogImageAlt: ogImageAltProp,
+  article,
   noindex = false,
   schema = [],
   mainEntityId,
@@ -43,10 +52,10 @@ const {
 const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
 const canonical = Astro.site && !noindex ? new URL(Astro.url.pathname, Astro.site).href : null;
 const ogImageUrl = abs(ogImage);
-const ogImageAlt = `${site.name}, ${site.role.toLowerCase()} en Santo Domingo`;
+const ogImageAlt = ogImageAltProp ?? `${site.name}, ${site.role.toLowerCase()} en Santo Domingo`;
 
 // Datos estructurados generados desde los mismos datos que muestra la página
-const featuredArticles = (await getArticles()).slice(0, ARTICLES_SHOWN);
+const articles = await getArticles();
 // Retrato de Julio con URL fija (public/), para que no cambie en cada build
 const jsonLd = buildJsonLd({
   abs,
@@ -57,7 +66,7 @@ const jsonLd = buildJsonLd({
   mainEntityId,
   breadcrumbId,
   dateModified: noindex ? undefined : dateModified,
-  articles: featuredArticles,
+  articles,
 });
 jsonLd["@graph"].push(...(schema as any[]));
 ---
@@ -75,7 +84,10 @@ jsonLd["@graph"].push(...(schema as any[]));
     <link rel="preload" href={gildaWoff2} as="font" type="font/woff2" crossorigin />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={article ? "article" : "website"} />
+    {article && <meta property="article:published_time" content={article.publishedTime} />}
+    {article && <meta property="article:modified_time" content={article.modifiedTime ?? article.publishedTime} />}
+    {article && <meta property="article:author" content={abs("/#sobre-mi")} />}
     <meta property="og:site_name" content={site.name} />
     <meta property="og:locale" content={site.locale} />
     <meta property="og:title" content={title} />
@@ -83,8 +95,8 @@ jsonLd["@graph"].push(...(schema as any[]));
     {canonical && <meta property="og:url" content={canonical} />}
     <meta property="og:image" content={ogImageUrl} />
     <meta property="og:image:type" content="image/jpeg" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content={String(ogImageSize.width)} />
+    <meta property="og:image:height" content={String(ogImageSize.height)} />
     <meta property="og:image:alt" content={ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />

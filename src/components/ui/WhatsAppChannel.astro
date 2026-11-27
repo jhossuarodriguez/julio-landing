@@ -5,6 +5,7 @@
  *
  * - En móvil es solo un icono (48 px) para no tapar contenido; desde `sm` muestra el texto.
  * - Aparece al pasar el hero y se oculta mientras "Agenda tu cita" está en pantalla, para no cubrir contenido ni reservas.
+ * - Se oculta mientras se baja leyendo y vuelve al subir, para no tapar el final de las líneas en móvil.
  */
 import Icon from "@/components/ui/Icon.astro";
 import { site } from "@/config/site";
@@ -65,9 +66,17 @@ import { site } from "@/config/site";
   const zones = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[];
   const visible = new Set<Element>();
 
-  // Visible solo después de pasar el hero (no tapa su contenido) y fuera de "Agenda tu cita"
+  let lastY = window.scrollY;
+  let scrollingDown = false;
+
+  // Visible solo después de pasar el hero (no tapa su contenido), fuera de "Agenda tu cita" y al subir
   const update = () => {
-    const hide = window.scrollY < window.innerHeight * 0.6 || visible.size > 0;
+    const y = window.scrollY;
+    if (Math.abs(y - lastY) > 8) {
+      scrollingDown = y > lastY;
+      lastY = y;
+    }
+    const hide = y < window.innerHeight * 0.6 || visible.size > 0 || scrollingDown;
     box.dataset.hidden = String(hide);
     links.forEach((a) => {
       a.tabIndex = hide ? -1 : 0;

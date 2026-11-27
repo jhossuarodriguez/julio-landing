@@ -29,7 +29,9 @@ export async function remoteImage(src: string | null, alt = ""): Promise<RemoteI
  * renderice con <Image />. Las que no se pueden descargar se eliminan (nunca se cargan
  * desde Medium). También devuelve la URL optimizada de la portada, para el schema.
  */
-export async function splitArticle(html: string): Promise<{ parts: ArticlePart[]; cover: string | null }> {
+export async function splitArticle(
+  html: string,
+): Promise<{ parts: ArticlePart[]; cover: { src: string; width: number; height: number } | null }> {
   const images = new Map<string, RemoteImage | null>();
   for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
     const src = tag.match(/src="([^"]+)"/)?.[1] ?? null;
@@ -51,11 +53,11 @@ export async function splitArticle(html: string): Promise<{ parts: ArticlePart[]
 
   // Portada para el schema (JPG: el formato más compatible para buscadores y redes)
   const first = parts.find((p): p is Extract<ArticlePart, { type: "img" }> => p.type === "img")?.img;
-  let cover: string | null = null;
+  let cover: { src: string; width: number; height: number } | null = null;
   if (first) {
     const width = Math.min(first.width, 1200);
     const height = Math.round((first.height * width) / first.width);
-    cover = (await getImage({ src: first.src, width, height, format: "jpg" })).src;
+    cover = { src: (await getImage({ src: first.src, width, height, format: "jpg" })).src, width, height };
   }
   return { parts, cover };
 }
@@ -70,6 +72,22 @@ export function relatedService(a: Article) {
   const pareja = /(terapia-de-pareja|couples|parejas)/.test(cats);
   const slug = individual && !pareja ? "individual" : "pareja";
   return services.find((s) => s.slug === slug)!;
+}
+
+/**
+ * Artículos relacionados: primero los que llevan al mismo servicio y comparten más temas
+ * (categorías de Medium); a igualdad, los más cercanos en fecha.
+ */
+export function relatedArticles(article: Article, all: Article[], n = 3): Article[] {
+  const cats = new Set(article.categories.map((c) => c.toLowerCase()));
+  const service = relatedService(article).slug;
+  const t = +new Date(article.date);
+  const score = (a: Article) =>
+    (relatedService(a).slug === service ? 10 : 0) + a.categories.filter((c) => cats.has(c.toLowerCase())).length;
+  return all
+    .filter((a) => a.id !== article.id)
+    .sort((a, b) => score(b) - score(a) || Math.abs(+new Date(a.date) - t) - Math.abs(+new Date(b.date) - t))
+    .slice(0, n);
 }
 
 /** Fecha legible en español (República Dominicana) */

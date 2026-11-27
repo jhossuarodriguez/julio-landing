@@ -10,11 +10,12 @@ import Header from "@/components/layout/Header.astro";
 import Footer from "@/components/layout/Footer.astro";
 import Booking from "@/components/sections/Booking.astro";
 import FloatingBooking from "@/components/ui/FloatingBooking.astro";
+import WhatsAppChannel from "@/components/ui/WhatsAppChannel.astro";
 import BgTexture from "@/components/ui/BgTexture.astro";
 import Icon from "@/components/ui/Icon.astro";
 import { site, credentials } from "@/config/site";
 import { getArticles, articlePath, type Article } from "@/lib/medium";
-import { splitArticle, relatedService, fmtDate } from "@/lib/articulo";
+import { splitArticle, relatedService, relatedArticles, fmtDate } from "@/lib/articulo";
 import retrato from "@/assets/images/julio-retrato.png";
 
 export async function getStaticPaths() {
@@ -26,7 +27,10 @@ const { article } = Astro.props as { article: Article };
 const { parts, cover } = await splitArticle(article.html);
 const service = relatedService(article);
 const firstImage = parts.findIndex((p) => p.type === "img");
-const others = (await getArticles()).filter((a) => a.id !== article.id).slice(0, 3);
+const others = relatedArticles(article, await getArticles());
+// Título ≤60 caracteres: el nombre solo se añade si cabe
+const fullTitle = `${article.title} · Julio Sánchez`;
+const title = fullTitle.length <= 60 ? fullTitle : article.title;
 
 // Datos estructurados: BlogPosting + migas
 const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
@@ -49,8 +53,8 @@ const schema = [
     author: { "@id": abs("/#persona") },
     publisher: { "@id": abs("/#persona") },
     isPartOf: { "@id": abs("/articulos/#blog") },
-    ...(cover ? { image: abs(cover) } : {}),
-    keywords: article.categories.join(", "),
+    // Sin foto propia: la imagen general del sitio (Google pide una imagen en Article)
+    image: cover ? abs(cover.src) : abs("/og-image.jpg"),
     sameAs: article.url,
   },
   {
@@ -66,8 +70,10 @@ const schema = [
 ---
 
 <Layout
-  title={`${article.title} · Julio Sánchez`}
+  title={title}
   description={article.excerpt}
+  article={{ publishedTime: article.date }}
+  {...cover ? { ogImage: cover.src, ogImageSize: { width: cover.width, height: cover.height }, ogImageAlt: article.title } : {}}
   schema={schema}
   mainEntityId={postingId}
   breadcrumbId={breadcrumbId}
@@ -75,7 +81,9 @@ const schema = [
 >
   <Header bookingHref="#agenda" />
   <main id="contenido">
-    <section class="relative isolate overflow-hidden bg-forest text-linen">
+    <!-- Título, autor y cuerpo dentro de <article>: así los lectores e IA los extraen juntos -->
+    <article>
+    <header class="relative isolate overflow-hidden bg-forest text-linen">
       <BgTexture class="-z-10" eager lowPriority={false} />
       <div class="container-page max-w-3xl pt-32 pb-14 md:pt-36">
         <nav aria-label="Migas de pan" class="text-sm text-cream/75">
@@ -89,12 +97,12 @@ const schema = [
         <p class="mt-6 text-sm text-linen/85">
           Por <a href="/#sobre-mi" class="font-medium text-cream underline underline-offset-2 hover:text-linen">{site.name}</a>{
             `, ${site.role.toLowerCase()} · `
-          }<time datetime={article.date}>{fmtDate(article.date)}</time>{` · ${article.readingMinutes} min de lectura`}
+          }<span>{fmtDate(article.date)}</span>{` · ${article.readingMinutes} min de lectura`}
         </p>
       </div>
-    </section>
+    </header>
 
-    <article class="py-14 sm:py-20">
+    <div class="py-14 sm:py-20">
       <div class="container-page max-w-3xl">
         <div class="prose-articulo">
           {
@@ -106,12 +114,11 @@ const schema = [
                   src={p.img.src}
                   width={p.img.width}
                   height={p.img.height}
-                  alt={p.img.alt}
+                  alt={p.img.alt || (i === firstImage ? `Imagen ilustrativa del artículo «${article.title}»` : "")}
                   format="avif"
                   widths={[...new Set([400, 640, 960].map((w) => Math.min(w, p.img.width)))]}
                   sizes="(min-width: 48rem) 45rem, calc(100vw - 2.5rem)"
                   loading={i === firstImage ? "eager" : "lazy"}
-                  fetchpriority={i === firstImage ? "high" : undefined}
                 />
               ),
             )
@@ -157,6 +164,7 @@ const schema = [
           </div>
         </div>
       </div>
+    </div>
     </article>
 
     {
@@ -192,5 +200,6 @@ const schema = [
     <Booking />
   </main>
   <Footer />
+  <WhatsAppChannel />
   <FloatingBooking href="#agenda" />
 </Layout>

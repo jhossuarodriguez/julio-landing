@@ -4,7 +4,7 @@ import Icon from "@/components/ui/Icon.astro";
 import BgTexture from "@/components/ui/BgTexture.astro";
 import markWhite from "@/assets/brand/logo-mark-white.png";
 import brainDark from "@/assets/brand/brain-dark.png";
-import { getArticles, ARTICLES_SHOWN } from "@/lib/medium";
+import { getArticles, ARTICLES_SHOWN, articlePath } from "@/lib/medium";
 import { site } from "@/config/site";
 
 /** Cuántos artículos se muestran (el primero va destacado): ver ARTICLES_SHOWN en @/lib/medium. */
@@ -60,13 +60,8 @@ const fmtDate = (iso: string) =>
           comprenderte mejor.
         </p>
       </div>
-      <a
-        href={site.social.medium}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-outline-dark shrink-0 self-start md:self-auto"
-      >
-        Ver todos en Medium
+      <a href="/articulos/" class="btn-outline-dark shrink-0 self-start md:self-auto">
+        Ver todos los artículos
         <Icon name="arrow" class="size-4" />
       </a>
     </div>
@@ -74,9 +69,7 @@ const fmtDate = (iso: string) =>
     {
       featured && (
         <a
-          href={featured.url}
-          target="_blank"
-          rel="noopener noreferrer"
+          href={articlePath(featured)}
           class="reveal group mt-14 grid overflow-hidden rounded-[2rem] border border-forest/10 bg-white/70 transition duration-300 ease-out hover:shadow-2xl hover:shadow-forest/10 lg:grid-cols-2"
         >
           <div class="relative aspect-[16/10] overflow-hidden bg-forest lg:aspect-auto lg:min-h-[22rem]">
@@ -120,9 +113,7 @@ const fmtDate = (iso: string) =>
       {
         rest.map((a) => (
           <a
-            href={a.url}
-            target="_blank"
-            rel="noopener noreferrer"
+            href={articlePath(a)}
             class="reveal group flex flex-col overflow-hidden rounded-3xl border border-forest/10 bg-white/70 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10"
           >
             <div class="relative aspect-[16/10] overflow-hidden bg-forest">
@@ -151,7 +142,7 @@ const fmtDate = (iso: string) =>
               <h3 class="mt-3 font-display text-xl leading-snug text-forest group-hover:text-terracotta-700">{a.title}</h3>{" "}
               <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-forest/85">{a.excerpt}</p>
               <p class="mt-auto flex items-center gap-2 pt-5 text-sm font-medium text-forest">
-                Leer en Medium
+                Leer artículo
                 <Icon name="arrow" class="size-4 transition group-hover:translate-x-1" />
               </p>
             </div>

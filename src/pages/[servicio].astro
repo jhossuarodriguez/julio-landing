@@ -14,7 +14,7 @@ import BgTexture from "@/components/ui/BgTexture.astro";
 import Icon from "@/components/ui/Icon.astro";
 import { services, credentials, site, type ServiceSlug } from "@/config/site";
 import { servicePages } from "@/data/servicios";
-import { getArticles, ARTICLES_SHOWN } from "@/lib/medium";
+import { getArticles, ARTICLES_SHOWN, articlePath } from "@/lib/medium";
 import julioDePie from "@/assets/images/julio-de-pie.png";
 import julioSonrisa from "@/assets/images/julio-sonrisa.png";
 import julioBn from "@/assets/images/julio-bn.png";
@@ -276,8 +276,8 @@ const schema = [
                 <p class="eyebrow text-terracotta-700">Lecturas recomendadas</p>
                 <h2 class="mt-5 font-display text-3xl leading-tight text-forest sm:text-4xl">Artículos sobre la vida en pareja</h2>
               </div>
-              <a href={site.social.medium} target="_blank" rel="noopener noreferrer" class="btn-outline-dark self-start md:self-auto">
-                Ver todos en Medium
+              <a href="/articulos/" class="btn-outline-dark self-start md:self-auto">
+                Ver todos los artículos
                 <Icon name="arrow" class="size-4" />
               </a>
             </div>
@@ -285,9 +285,7 @@ const schema = [
               {articles.map((a) => (
                 <li>
                   <a
-                    href={a.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href={articlePath(a)}
                     class="group flex h-full flex-col rounded-2xl border border-forest/10 bg-white/60 p-6 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10"
                   >
                     <span class="text-xs tracking-[0.2em] text-olive uppercase">

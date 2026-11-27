@@ -8,7 +8,7 @@
  *        · Blog con BlogPosting (artículos de Medium).
  */
 import { site, services, bookingCenters, bookingInfo, credentials, e164, type Day } from "@/config/site";
-import type { Article } from "@/lib/medium";
+import { articlePath, type Article } from "@/lib/medium";
 
 type Options = {
   /** Convierte una ruta en URL absoluta (depende de `site` en astro.config) */
@@ -50,7 +50,7 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
     site: abs("/#sitio"),
     person: abs("/#persona"),
     service: abs("/#servicio"),
-    blog: abs("/#blog"),
+    blog: abs("/articulos/#blog"),
   };
   const santoDomingo = {
     "@type": "City",
@@ -228,17 +228,19 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
               "@type": "Blog",
               "@id": id.blog,
               name: `Artículos de ${site.name}`,
-              url: site.social.medium,
+              url: abs("/articulos/"),
+              sameAs: site.social.medium,
               inLanguage: "es",
               author: { "@id": id.person },
               blogPost: articles.map((a) => ({
                 "@type": "BlogPosting",
+                "@id": abs(`${articlePath(a)}#articulo`),
                 headline: a.title,
-                url: a.url,
+                url: abs(articlePath(a)),
+                sameAs: a.url,
                 datePublished: a.date,
                 inLanguage: "es",
                 author: { "@id": id.person },
-                ...(a.image ? { image: a.image } : {}),
               })),
             },
           ]

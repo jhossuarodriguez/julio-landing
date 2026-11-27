@@ -1,0 +1,142 @@
+---
+/**
+ * Índice de artículos de Julio: /articulos/
+ */
+import Layout from "@/layouts/Layout.astro";
+import Header from "@/components/layout/Header.astro";
+import Footer from "@/components/layout/Footer.astro";
+import BgTexture from "@/components/ui/BgTexture.astro";
+import Icon from "@/components/ui/Icon.astro";
+import { site } from "@/config/site";
+import { getArticles, articlePath } from "@/lib/medium";
+import { localizeImages, fmtDate } from "@/lib/articulo";
+
+const articles = await getArticles();
+// Portada de cada artículo, optimizada y servida desde el propio dominio
+const items = await Promise.all(
+  articles.map(async (a) => {
+    const firstImg = a.html.match(/<img\b[^>]*>/)?.[0] ?? "";
+    const { cover } = firstImg ? await localizeImages(firstImg) : { cover: null };
+    return { ...a, cover };
+  }),
+);
+const [featured, ...rest] = items;
+
+const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
+const breadcrumbId = abs("/articulos/#migas");
+const schema = [
+  {
+    "@type": "CollectionPage",
+    "@id": abs("/articulos/#coleccion"),
+    url: abs("/articulos/"),
+    name: "Artículos",
+    mainEntity: { "@id": abs("/articulos/#blog") },
+  },
+  {
+    "@type": "BreadcrumbList",
+    "@id": breadcrumbId,
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Inicio", item: abs("/") },
+      { "@type": "ListItem", position: 2, name: "Artículos", item: abs("/articulos/") },
+    ],
+  },
+];
+---
+
+<Layout
+  title="Artículos sobre pareja y bienestar emocional · Julio Sánchez"
+  description="Artículos de Julio Cesar Sánchez Medina, psicólogo clínico en Santo Domingo, sobre relaciones de pareja, infidelidad, celos, rupturas y bienestar emocional."
+  schema={schema}
+  mainEntityId={abs("/articulos/#blog")}
+  breadcrumbId={breadcrumbId}
+  dateModified={articles[0]?.date.slice(0, 10)}
+>
+  <Header />
+  <main id="contenido">
+    <section class="relative isolate overflow-hidden bg-forest text-linen">
+      <BgTexture class="-z-10" eager lowPriority={false} />
+      <div class="container-page pt-32 pb-14 md:pt-36">
+        <nav aria-label="Migas de pan" class="text-sm text-cream/75">
+          <ol class="flex flex-wrap items-center gap-2">
+            <li><a href="/" class="inline-flex min-h-11 items-center hover:text-linen">Inicio</a></li>
+            <li aria-hidden="true">›</li>
+            <li aria-current="page" class="text-cream">Artículos</li>
+          </ol>
+        </nav>
+        <h1 class="mt-4 font-display text-4xl leading-tight text-cream sm:text-5xl">
+          Artículos sobre pareja y bienestar emocional
+        </h1>
+        <p class="mt-5 max-w-2xl leading-relaxed font-light text-linen/85">
+          Reflexiones de {site.name}, {site.role.toLowerCase()}, sobre relaciones de pareja, confianza, rupturas y lo que
+          observa en consulta.
+        </p>
+      </div>
+    </section>
+
+    <section class="py-14 sm:py-20">
+      <div class="container-page">
+        {
+          featured && (
+            <a
+              href={articlePath(featured)}
+              class="group grid overflow-hidden rounded-[2rem] border border-forest/10 bg-white/70 transition duration-300 ease-out hover:shadow-2xl hover:shadow-forest/10 lg:grid-cols-2"
+            >
+              <div class="relative aspect-[16/10] overflow-hidden bg-forest lg:aspect-auto lg:min-h-[20rem]">
+                {featured.cover ? (
+                  <img src={featured.cover} alt="" loading="eager" decoding="async" class="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-[1.03]" />
+                ) : (
+                  <BgTexture width={960} />
+                )}
+              </div>
+              <div class="flex flex-col p-8 sm:p-10">
+                <p class="text-xs tracking-[0.2em] text-olive uppercase">
+                  <span class="rounded-full bg-apricot/10 px-3 py-1 tracking-[0.15em] text-terracotta-700">Más reciente</span>{" "}
+                  <time datetime={featured.date}>{fmtDate(featured.date, "short")}</time> · {featured.readingMinutes} min
+                </p>{" "}
+                <h2 class="mt-5 font-display text-3xl leading-snug text-forest group-hover:text-terracotta-700 sm:text-4xl">{featured.title}</h2>{" "}
+                <p class="mt-4 leading-relaxed text-forest/85">{featured.excerpt}</p>
+                <p class="mt-auto flex items-center gap-2 pt-8 text-sm font-medium text-forest">
+                  Leer artículo
+                  <Icon name="arrow" class="size-4 transition group-hover:translate-x-1" />
+                </p>
+              </div>
+            </a>
+          )
+        }
+
+        <ul class="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            rest.map((a) => (
+              <li>
+                <a
+                  href={articlePath(a)}
+                  class="group flex h-full flex-col overflow-hidden rounded-3xl border border-forest/10 bg-white/70 transition duration-300 ease-out hover:-translate-y-1 hover:shadow-xl hover:shadow-forest/10"
+                >
+                  <div class="relative aspect-[16/10] overflow-hidden bg-forest">
+                    {a.cover ? (
+                      <img src={a.cover} alt="" loading="lazy" decoding="async" class="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-[1.04]" />
+                    ) : (
+                      <BgTexture width={480} />
+                    )}
+                  </div>
+                  <div class="flex flex-1 flex-col p-6">
+                    <p class="text-xs tracking-[0.2em] text-olive uppercase">
+                      <time datetime={a.date}>{fmtDate(a.date, "short")}</time> · {a.readingMinutes} min
+                    </p>{" "}
+                    <h2 class="mt-3 font-display text-xl leading-snug text-forest group-hover:text-terracotta-700">{a.title}</h2>{" "}
+                    <p class="mt-3 line-clamp-3 text-sm leading-relaxed text-forest/85">{a.excerpt}</p>
+                    <p class="mt-auto flex items-center gap-2 pt-5 text-sm font-medium text-forest">
+                      Leer artículo
+                      <Icon name="arrow" class="size-4 transition group-hover:translate-x-1" />
+                    </p>
+                  </div>
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

@@ -216,7 +216,7 @@ export const services: { slug: ServiceSlug; path: string; title: string; text: s
 export const navLinks = [
   { href: "/#sobre-mi", label: "Sobre mí" },
   { href: "/#servicios", label: "Servicios" },
-  { href: "/#articulos", label: "Artículos" },
+  { href: "/articulos/", label: "Artículos" },
   { href: "/#contacto", label: "Contacto" },
 ] as const;
 

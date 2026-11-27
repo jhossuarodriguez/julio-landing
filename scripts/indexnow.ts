@@ -3,8 +3,6 @@
  * Ejecútalo DESPUÉS de publicar:  pnpm indexnow
  * La clave vive en public/<clave>.txt y se publica junto al sitio.
  */
-import { services } from "../src/config/site.ts";
-
 const KEY = "2a8cd436d68695b7d232718a5c3d32d7";
 const site = (process.env.SITE_URL ?? process.argv[2] ?? "https://juliocesarsanchez.com").replace(/\/$/, "");
 if (!site.startsWith("https://")) {
@@ -12,8 +10,13 @@ if (!site.startsWith("https://")) {
   process.exit(1);
 }
 const host = new URL(site).host;
-// Home + páginas de servicio
-const urlList = [`${site}/`, ...services.map((s) => `${site}${s.path}`), `${site}/privacidad/`];
+// Todas las URLs del sitemap publicado (home, servicios, artículos, privacidad…)
+const sitemap = await (await fetch(`${site}/sitemap-0.xml`, { signal: AbortSignal.timeout(15000) })).text();
+const urlList = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]);
+if (!urlList.length) {
+  console.error("No se encontraron URLs en el sitemap publicado.");
+  process.exit(1);
+}
 
 const res = await fetch("https://api.indexnow.org/indexnow", {
   method: "POST",
@@ -23,3 +26,5 @@ const res = await fetch("https://api.indexnow.org/indexnow", {
 console.log(res.ok ? `✓ IndexNow aceptó ${urlList.length} URL(s) (HTTP ${res.status})` : `✗ IndexNow respondió HTTP ${res.status}: ${await res.text()}`);
 if (!res.ok) process.exit(1);
 
+
+export {};

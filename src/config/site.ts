@@ -36,6 +36,7 @@ export const site = {
     medium: "https://medium.com/@medina.juliocesar16",
     whatsappChannel: "https://whatsapp.com/channel/0029VbCWN3L89inroLqmzc1C",
     linkedin: "https://www.linkedin.com/in/psi-julioc-sanchez-medina/",
+    instagram: "https://www.instagram.com/julioc.s.m/",
   },
   contact: {
     email: "psi.juliosanchez@gmail.com",

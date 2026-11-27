@@ -1,7 +1,7 @@
 ---
 /**
- * Botón fijo "Únete a nuestro canal" (canal de WhatsApp).
- * Usa los verdes de la marca en lugar del verde de WhatsApp y queda por encima de todo (z-[100]).
+ * Botones fijos: Instagram (icono) y "Únete a nuestro canal" (canal de WhatsApp).
+ * Usan los verdes de la marca en lugar del verde de WhatsApp y queda por encima de todo (z-[100]).
  *
  * - En móvil es solo un icono (48 px) para no tapar contenido; desde `sm` muestra el texto.
  * - Aparece al pasar el hero y se oculta mientras "Agenda tu cita" está en pantalla, para no cubrir contenido ni reservas.
@@ -10,31 +10,55 @@ import Icon from "@/components/ui/Icon.astro";
 import { site } from "@/config/site";
 ---
 
-<a
-  id="whatsapp-channel"
+<div
+  id="social-float"
   data-hidden="true"
-  aria-hidden="true"
-  tabindex="-1"
-  href={site.social.whatsappChannel}
-  target="_blank"
-  rel="noopener noreferrer"
-  aria-label="Únete a nuestro canal de WhatsApp (se abre en una pestaña nueva)"
-  title="Únete a nuestro canal de WhatsApp"
-  class="group fixed bottom-4 left-4 z-[100] inline-flex items-center gap-3 rounded-full bg-forest p-1 text-linen shadow-2xl ring-1 shadow-forest-900/40 ring-cream/30 transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-forest-800 hover:ring-sage data-[hidden=true]:pointer-events-none data-[hidden=true]:translate-y-24 data-[hidden=true]:opacity-0 sm:bottom-6 sm:left-6 sm:py-1.5 sm:pr-5 sm:pl-1.5"
+  class="fixed bottom-4 left-4 z-[100] flex items-center gap-2 transition duration-300 ease-out data-[hidden=true]:pointer-events-none data-[hidden=true]:translate-y-24 data-[hidden=true]:opacity-0 sm:bottom-6 sm:left-6"
 >
-  <span
-    class="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-sage text-forest-900 transition duration-300 ease-out group-hover:scale-105 sm:size-11"
+  <a
+    data-social
+    aria-hidden="true"
+    tabindex="-1"
+    href={site.social.instagram}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Sígueme en Instagram (se abre en una pestaña nueva)"
+    title="Instagram de Julio"
+    class="group inline-flex rounded-full bg-forest p-1 text-linen shadow-2xl ring-1 shadow-forest-900/40 ring-cream/30 transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-forest-800 hover:ring-sage sm:p-1.5"
   >
-    <Icon name="whatsapp" class="size-6" />
-  </span>
-  <span class="hidden flex-col text-left leading-tight sm:flex">
-    <span class="text-[0.625rem] tracking-[0.2em] text-sage-300 uppercase">Canal de WhatsApp</span>
-    <span class="text-sm font-medium whitespace-nowrap">Únete a nuestro canal</span>
-  </span>
-</a>
+    <span
+      class="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-sage text-forest-900 transition duration-300 ease-out group-hover:scale-105 sm:size-11"
+    >
+      <Icon name="instagram" class="size-6" />
+    </span>
+  </a>
+
+  <a
+    data-social
+    aria-hidden="true"
+    tabindex="-1"
+    href={site.social.whatsappChannel}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Únete a nuestro canal de WhatsApp (se abre en una pestaña nueva)"
+    title="Únete a nuestro canal de WhatsApp"
+    class="group inline-flex items-center gap-3 rounded-full bg-forest p-1 text-linen shadow-2xl ring-1 shadow-forest-900/40 ring-cream/30 transition duration-300 ease-out hover:-translate-y-0.5 hover:bg-forest-800 hover:ring-sage sm:py-1.5 sm:pr-5 sm:pl-1.5"
+  >
+    <span
+      class="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-sage text-forest-900 transition duration-300 ease-out group-hover:scale-105 sm:size-11"
+    >
+      <Icon name="whatsapp" class="size-6" />
+    </span>
+    <span class="hidden flex-col text-left leading-tight sm:flex">
+      <span class="text-[0.625rem] tracking-[0.2em] text-sage-300 uppercase">Canal de WhatsApp</span>
+      <span class="text-sm font-medium whitespace-nowrap">Únete a nuestro canal</span>
+    </span>
+  </a>
+</div>
 
 <script>
-  const btn = document.getElementById("whatsapp-channel")!;
+  const box = document.getElementById("social-float")!;
+  const links = box.querySelectorAll<HTMLAnchorElement>("[data-social]");
   // Secciones donde el botón estorba: las tarjetas de reserva y el bloque de contacto
   // En móvil también sobre la cuadrícula de servicios, donde taparía los enlaces "Saber más"
   const ids = ["agenda", "contacto", ...(window.matchMedia("(max-width: 639px)").matches ? ["servicios"] : [])];
@@ -44,9 +68,11 @@ import { site } from "@/config/site";
   // Visible solo después de pasar el hero (no tapa su contenido) y fuera de "Agenda tu cita"
   const update = () => {
     const hide = window.scrollY < window.innerHeight * 0.6 || visible.size > 0;
-    btn.dataset.hidden = String(hide);
-    btn.tabIndex = hide ? -1 : 0;
-    btn.setAttribute("aria-hidden", String(hide));
+    box.dataset.hidden = String(hide);
+    links.forEach((a) => {
+      a.tabIndex = hide ? -1 : 0;
+      a.setAttribute("aria-hidden", String(hide));
+    });
   };
 
   if (zones.length && "IntersectionObserver" in window) {

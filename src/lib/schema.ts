@@ -189,7 +189,7 @@ export function buildJsonLd({ abs, pageUrl, pageTitle, imageUrl, personImageUrl,
         workLocation: centers.filter((c) => "address" in c).map((c) => ({ "@id": c["@id"] })),
         areaServed: santoDomingo,
         address: { "@type": "PostalAddress", addressLocality: "Santo Domingo", addressCountry: "DO" },
-        sameAs: [site.social.linkedin, site.social.medium, site.social.whatsappChannel],
+        sameAs: [site.social.linkedin, site.social.instagram, site.social.medium, site.social.whatsappChannel],
       },
       {
         "@type": "ProfessionalService",

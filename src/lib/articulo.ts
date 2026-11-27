@@ -5,35 +5,59 @@ import { getImage, inferRemoteSize } from "astro:assets";
 import { services } from "@/config/site";
 import type { Article } from "@/lib/medium";
 
+export type RemoteImage = { src: string; width: number; height: number; alt: string };
+export type ArticlePart = { type: "html"; html: string } | { type: "img"; img: RemoteImage };
+
 /**
- * Reemplaza las imágenes remotas de Medium por versiones optimizadas servidas desde el
- * propio dominio (así no hay conexiones a terceros, como promete la página de privacidad).
- * Si una imagen no se puede descargar, se elimina en lugar de cargarla desde Medium.
+ * Tamaño de una imagen remota de Medium, necesario para optimizarla con <Image />
+ * (AVIF servido desde el propio dominio: sin conexiones a terceros, como promete la
+ * página de privacidad). Devuelve null si no se puede descargar.
  */
-export async function localizeImages(html: string): Promise<{ html: string; cover: string | null }> {
-  const tags = [...html.matchAll(/<img\b[^>]*>/g)].map((m) => m[0]);
-  let cover: string | null = null;
-  for (const tag of tags) {
-    const src = tag.match(/src="([^"]+)"/)?.[1];
-    const alt = tag.match(/alt="([^"]*)"/)?.[1] ?? "";
-    let replacement = "";
-    if (src) {
-      try {
-        const { width, height } = await inferRemoteSize(src);
-        const w = Math.min(width, 960);
-        const h = Math.round((height * w) / width);
-        const img = await getImage({ src, width: w, height: h, format: "avif" });
-        replacement = `<img src="${img.src}" alt="${alt}" width="${w}" height="${h}" loading="lazy" decoding="async">`;
-        cover ??= img.src;
-      } catch {
-        console.warn(`[articulos] No se pudo descargar una imagen de Medium; se omite: ${src}`);
-      }
-    }
-    html = html.replace(tag, replacement);
+export async function remoteImage(src: string | null, alt = ""): Promise<RemoteImage | null> {
+  if (!src) return null;
+  try {
+    const { width, height } = await inferRemoteSize(src);
+    return { src, width, height, alt };
+  } catch {
+    console.warn(`[articulos] No se pudo descargar una imagen de Medium; se omite: ${src}`);
+    return null;
   }
-  // Figuras que quedaron vacías
+}
+
+/**
+ * Divide el HTML del artículo en trozos de texto e imágenes, para que cada imagen se
+ * renderice con <Image />. Las que no se pueden descargar se eliminan (nunca se cargan
+ * desde Medium). También devuelve la URL optimizada de la portada, para el schema.
+ */
+export async function splitArticle(html: string): Promise<{ parts: ArticlePart[]; cover: string | null }> {
+  const images = new Map<string, RemoteImage | null>();
+  for (const [tag] of html.matchAll(/<img\b[^>]*>/g)) {
+    const src = tag.match(/src="([^"]+)"/)?.[1] ?? null;
+    const alt = tag.match(/alt="([^"]*)"/)?.[1] ?? "";
+    images.set(tag, await remoteImage(src, alt));
+  }
+  // Quita las imágenes fallidas y las figuras que quedaron vacías
+  for (const [tag, img] of images) if (!img) html = html.replaceAll(tag, "");
   html = html.replace(/<figure>\s*<\/figure>/g, "");
-  return { html, cover };
+
+  const parts: ArticlePart[] = [];
+  let last = 0;
+  for (const m of html.matchAll(/<img\b[^>]*>/g)) {
+    if (m.index > last) parts.push({ type: "html", html: html.slice(last, m.index) });
+    parts.push({ type: "img", img: images.get(m[0])! });
+    last = m.index + m[0].length;
+  }
+  if (last < html.length) parts.push({ type: "html", html: html.slice(last) });
+
+  // Portada para el schema (JPG: el formato más compatible para buscadores y redes)
+  const first = parts.find((p): p is Extract<ArticlePart, { type: "img" }> => p.type === "img")?.img;
+  let cover: string | null = null;
+  if (first) {
+    const width = Math.min(first.width, 1200);
+    const height = Math.round((first.height * width) / first.width);
+    cover = (await getImage({ src: first.src, width, height, format: "jpg" })).src;
+  }
+  return { parts, cover };
 }
 
 /**

@@ -2,6 +2,7 @@
 /**
  * Índice de artículos de Julio: /articulos/
  */
+import { Image } from "astro:assets";
 import Layout from "@/layouts/Layout.astro";
 import Header from "@/components/layout/Header.astro";
 import Footer from "@/components/layout/Footer.astro";
@@ -9,17 +10,12 @@ import BgTexture from "@/components/ui/BgTexture.astro";
 import Icon from "@/components/ui/Icon.astro";
 import { site } from "@/config/site";
 import { getArticles, articlePath } from "@/lib/medium";
-import { localizeImages, fmtDate } from "@/lib/articulo";
+import { remoteImage, fmtDate } from "@/lib/articulo";
+import markWhite from "@/assets/brand/logo-mark-white.png";
 
 const articles = await getArticles();
-// Portada de cada artículo, optimizada y servida desde el propio dominio
-const items = await Promise.all(
-  articles.map(async (a) => {
-    const firstImg = a.html.match(/<img\b[^>]*>/)?.[0] ?? "";
-    const { cover } = firstImg ? await localizeImages(firstImg) : { cover: null };
-    return { ...a, cover };
-  }),
-);
+// Portada de cada artículo: se optimiza con <Image /> y se sirve desde el propio dominio
+const items = await Promise.all(articles.map(async (a) => ({ ...a, cover: await remoteImage(a.image) })));
 const [featured, ...rest] = items;
 
 const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : path);
@@ -83,9 +79,23 @@ const schema = [
             >
               <div class="relative aspect-[16/10] overflow-hidden bg-forest lg:aspect-auto lg:min-h-[20rem]">
                 {featured.cover ? (
-                  <img src={featured.cover} alt="" loading="eager" decoding="async" class="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-[1.03]" />
+                  <Image
+                    src={featured.cover.src}
+                    width={featured.cover.width}
+                    height={featured.cover.height}
+                    format="avif"
+                    widths={[480, 720, 960]}
+                    sizes="(min-width: 1024px) 34rem, 92vw"
+                    alt=""
+                    loading="eager"
+                    fetchpriority="high"
+                    class="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-[1.03]"
+                  />
                 ) : (
-                  <BgTexture width={960} />
+                  <>
+                    <BgTexture width={960} sizes="(min-width: 1024px) 34rem, 92vw" />
+                    <Image format="avif" src={markWhite} alt="" width={240} class="absolute inset-0 m-auto w-28 opacity-80" />
+                  </>
                 )}
               </div>
               <div class="flex flex-col p-8 sm:p-10">
@@ -114,9 +124,21 @@ const schema = [
                 >
                   <div class="relative aspect-[16/10] overflow-hidden bg-forest">
                     {a.cover ? (
-                      <img src={a.cover} alt="" loading="lazy" decoding="async" class="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-[1.04]" />
+                      <Image
+                        src={a.cover.src}
+                        width={a.cover.width}
+                        height={a.cover.height}
+                        format="avif"
+                        widths={[400, 640]}
+                        sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 92vw"
+                        alt=""
+                        class="absolute inset-0 size-full object-cover transition duration-700 group-hover:scale-[1.04]"
+                      />
                     ) : (
-                      <BgTexture width={480} />
+                      <>
+                        <BgTexture width={480} sizes="(min-width: 1024px) 22rem, (min-width: 640px) 45vw, 92vw" />
+                        <Image format="avif" src={markWhite} alt="" width={200} class="absolute inset-0 m-auto w-20 opacity-80" />
+                      </>
                     )}
                   </div>
                   <div class="flex flex-1 flex-col p-6">

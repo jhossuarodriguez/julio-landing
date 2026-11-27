@@ -14,7 +14,7 @@ import BgTexture from "@/components/ui/BgTexture.astro";
 import Icon from "@/components/ui/Icon.astro";
 import { site, credentials } from "@/config/site";
 import { getArticles, articlePath, type Article } from "@/lib/medium";
-import { localizeImages, relatedService, fmtDate } from "@/lib/articulo";
+import { splitArticle, relatedService, fmtDate } from "@/lib/articulo";
 import retrato from "@/assets/images/julio-retrato.png";
 
 export async function getStaticPaths() {
@@ -23,8 +23,9 @@ export async function getStaticPaths() {
 }
 
 const { article } = Astro.props as { article: Article };
-const { html, cover } = await localizeImages(article.html);
+const { parts, cover } = await splitArticle(article.html);
 const service = relatedService(article);
+const firstImage = parts.findIndex((p) => p.type === "img");
 const others = (await getArticles()).filter((a) => a.id !== article.id).slice(0, 3);
 
 // Datos estructurados: BlogPosting + migas
@@ -32,7 +33,7 @@ const abs = (path: string) => (Astro.site ? new URL(path, Astro.site).href : pat
 const path = articlePath(article);
 const postingId = abs(`${path}#articulo`);
 const breadcrumbId = abs(`${path}#migas`);
-const words = html.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
+const words = article.html.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
 const schema = [
   {
     "@type": "BlogPosting",
@@ -95,7 +96,27 @@ const schema = [
 
     <article class="py-14 sm:py-20">
       <div class="container-page max-w-3xl">
-        <div class="prose-articulo" set:html={html} />
+        <div class="prose-articulo">
+          {
+            parts.map((p, i) =>
+              p.type === "html" ? (
+                <Fragment set:html={p.html} />
+              ) : (
+                <Image
+                  src={p.img.src}
+                  width={p.img.width}
+                  height={p.img.height}
+                  alt={p.img.alt}
+                  format="avif"
+                  widths={[...new Set([400, 640, 960].map((w) => Math.min(w, p.img.width)))]}
+                  sizes="(min-width: 48rem) 45rem, calc(100vw - 2.5rem)"
+                  loading={i === firstImage ? "eager" : "lazy"}
+                  fetchpriority={i === firstImage ? "high" : undefined}
+                />
+              ),
+            )
+          }
+        </div>
 
         <!-- Autor -->
         <div class="mt-16 flex flex-col gap-5 rounded-3xl border border-forest/10 bg-white/60 p-6 sm:flex-row sm:items-center sm:p-8">
